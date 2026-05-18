@@ -1,0 +1,7 @@
+freeze: true
+author: "Ze Wang"
+title-block-banner: false
+format:
+  html:
+    toc: true
+    code-tools: true

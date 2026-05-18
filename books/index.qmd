@@ -1,0 +1,18 @@
+---
+title: "Books"
+title-block-banner: false
+---
+
+Two open-access books I've written for graduate-level quantitative methods courses.
+
+## Quantitative Foundations in Educational Research
+
+A self-contained introduction to applied statistics for educational and social-science research: descriptive statistics, probability, sampling, inference, regression, and ANOVA. Originally written to support a master's-level methods course.
+
+*Migration in progress — the book is being ported from its original R Bookdown source into a native Quarto book. In the meantime it remains available at the [previous site](https://zewang.netlify.app/books/quant-foundations/_book/).*
+
+## Structural Equation Modeling Using R and Mplus
+
+A practical introduction to structural equation modeling with worked examples in both R (`lavaan`) and Mplus. Covers measurement models, path analysis, latent variable models, model fit, and multi-group / multilevel extensions.
+
+*Migration in progress — the book is being ported from its original R Bookdown source into a native Quarto book. In the meantime it remains available at the [previous site](https://zewang.netlify.app/books/sem/_book/).*

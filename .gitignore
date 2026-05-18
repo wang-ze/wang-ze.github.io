@@ -1,0 +1,16 @@
+/.quarto/
+/_site/
+/_freeze/
+
+.DS_Store
+.Rproj.user/
+.Rhistory
+.RData
+.Ruserdata
+
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+
+.env
+.env.local

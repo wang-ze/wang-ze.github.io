@@ -1,0 +1,45 @@
+---
+title: "Ze Wang"
+pagetitle: "Ze Wang"
+about:
+  template: trestles
+  image: profile.jpg
+  image-shape: rounded
+  links:
+    - icon: linkedin
+      text: LinkedIn
+      href: https://www.linkedin.com/in/wang-ze/
+    - icon: github
+      text: GitHub
+      href: https://github.com/wang-ze
+    - icon: mortarboard
+      text: Google Scholar
+      href: https://scholar.google.com/citations?user=b8eqmyEAAAAJ&hl=en
+    - icon: envelope
+      text: Email
+      href: mailto:zewang@gmail.com
+---
+
+I am a Research Scientist at [Amazon Web Services](https://aws.amazon.com/), based in Ashburn, VA. I lead end-to-end analytical and machine learning initiatives that shape product decisions, automate data pipelines, and improve operational efficiency, and I serve as the certification psychometrician for multiple AWS certification exams. My work bridges deep statistical expertise — causal inference, structural equation modeling, Bayesian methods, item response theory — with scalable Python, R, SQL, and AWS infrastructure.
+
+Before AWS, I was a tenured Associate Professor of Statistics, Measurement, and Evaluation in Education at the [University of Missouri](https://www.missouri.edu/) (2008–2022). My academic research focused on statistical modeling using large-scale assessment data, measurement, scale development, and program evaluation. I co-developed the Classroom Engagement Inventory and authored 50+ peer-reviewed papers, three books, and six book chapters.
+
+## What I work on
+
+- **Causal inference and experimental design.** Designing observational and quasi-experimental studies for product and operational decisions.
+- **Psychometrics and measurement.** Item response theory, structural equation modeling, scale development, standard setting.
+- **Machine learning at AWS scale.** Predictive modeling of operational metrics; balancing performance with interpretability for business stakeholders.
+- **Generative AI applications.** Internal AWS GenAI projects; review of GenAI research proposals.
+
+## Education
+
+- **PhD**, Educational Psychology (Statistics & Measurement) — University of Missouri
+- **MA**, Statistics — University of Missouri
+- **BE**, Electronic & Information Engineering; **BS**, English & Science — University of Science and Technology of China
+
+## AWS certifications
+
+- AWS Certified AI Practitioner *(Early Adopter, Aug 2024)*
+- AWS Certified Machine Learning Engineer *(Early Adopter, Sep 2024)*
+- AWS Certified Machine Learning – Specialty *(Oct 2024)*
+- AWS Certified Solutions Architect – Associate *(Aug 2025)*

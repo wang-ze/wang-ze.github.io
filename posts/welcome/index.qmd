@@ -1,0 +1,10 @@
+---
+title: "Welcome"
+date: "2026-05-18"
+categories: [meta]
+description: "A new home for writing and projects."
+---
+
+This is the new home for my writing and projects. The old site (a Hugo + blogdown academic page from my University of Missouri years) is preserved separately; this site is built on [Quarto](https://quarto.org) and reflects where I work now — as a Research Scientist at AWS.
+
+Expect posts on causal inference, psychometrics in industry, machine learning at AWS scale, and the occasional GenAI experiment.

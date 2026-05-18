@@ -1,0 +1,49 @@
+project:
+  type: website
+  output-dir: _site
+
+website:
+  title: "Ze Wang"
+  description: "Research Scientist at AWS. Former tenured professor of statistics, measurement, and evaluation."
+  site-url: https://wang-ze.github.io
+  repo-url: https://github.com/wang-ze/wang-ze.github.io
+  open-graph: true
+  twitter-card: false
+
+  navbar:
+    pinned: true
+    left:
+      - href: index.qmd
+        text: About
+      - href: posts/index.qmd
+        text: Blog
+      - href: projects/index.qmd
+        text: Projects
+      - href: books/index.qmd
+        text: Books
+    right:
+      - icon: github
+        href: https://github.com/wang-ze
+        aria-label: GitHub
+      - icon: linkedin
+        href: https://www.linkedin.com/in/wang-ze/
+        aria-label: LinkedIn
+      - icon: mortarboard
+        href: https://scholar.google.com/citations?user=b8eqmyEAAAAJ&hl=en
+        aria-label: Google Scholar
+
+  page-footer:
+    left: "&copy; Ze Wang"
+    right: "Built with [Quarto](https://quarto.org)"
+
+format:
+  html:
+    theme: cosmo
+    css: styles.css
+    toc: true
+    code-copy: true
+    code-overflow: wrap
+    anchor-sections: true
+
+execute:
+  freeze: auto

@@ -1,0 +1,13 @@
+---
+title: "Projects"
+listing:
+  contents: .
+  sort: "date desc"
+  type: grid
+  categories: true
+  sort-ui: false
+  filter-ui: false
+  fields: [image, title, description, date]
+page-layout: full
+title-block-banner: false
+---
