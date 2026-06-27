@@ -60,6 +60,8 @@ The two open-access books (`quant-foundations` and `sem`) follow a "source local
 
 > **Sources recovered and ported to Quarto.** The Bookdown `.Rmd` sources were found at `/Users/ze/Documents/projects/books/` and copied + ported to `.qmd` Quarto book projects under `books/quant-foundations-src/` and `books/sem-src/` (each with a `_quarto.yml` setting `output-dir: ../<slug>/`). These `-src/` dirs are gitignored; only the rendered HTML at `books/<slug>/` is committed. The committed HTML still reflects the old pre-rendered `_book/` output until the books are re-rendered from the ported sources. (xaringan slide sources for `quant-foundations` were likewise brought over to `slides/quant-foundations-src/`, also gitignored.)
 
+> **Lecture-slide links point to the old Netlify site, not the slides rendered in this repo.** In the `## Books` section of [index.qmd](index.qmd) the "Lecture slides →" links for both books resolve to the previous site hosted on Netlify (`https://zewang.netlify.app/slides/<slug>/#1`), *not* to local `/slides/<slug>/` paths in this project. This is deliberate: the canonical, working slide decks live on the Netlify site. Don't "fix" these to point at `/slides/...` here unless the slides have actually been rendered and committed into this repo. The "Previous site →" book links similarly point at the Netlify `_book/` output.
+
 Each source directory is its own Quarto book project. Its `_quarto.yml` should set:
 
 ```yaml

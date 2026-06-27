@@ -28,13 +28,6 @@ website:
   navbar:
     pinned: true
     logo: logo.png
-    left:
-      - href: index.qmd
-        text: About
-      - href: projects/index.qmd
-        text: Projects
-      - href: books/index.qmd
-        text: Books
     right:
       - icon: linkedin
         href: https://www.linkedin.com/in/wang-ze/

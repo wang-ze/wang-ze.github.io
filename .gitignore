@@ -27,3 +27,5 @@ __pycache__/
 # Slide sources live locally under slides/<slug>-src/ but are not committed.
 # Only the rendered HTML output (at slides/<slug>/) is pushed.
 /slides/*-src/
+
+draft.qmd

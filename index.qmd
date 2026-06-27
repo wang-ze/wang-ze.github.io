@@ -18,21 +18,51 @@ about:
       href: https://orcid.org/0000-0002-5979-5544
     - text: '<img src="https://cdn.simpleicons.org/researchgate/00CCBB" height="18" alt=""> ResearchGate'
       href: https://www.researchgate.net/profile/Ze-Wang-22
-    - icon: envelope
-      text: Email
-      href: mailto:zewang@gmail.com
 ---
 
-I am a Research Scientist at [Amazon Web Services](https://aws.amazon.com/), based in Ashburn, VA. I lead end-to-end analytical and machine learning initiatives that shape product decisions, automate data pipelines, and improve operational efficiency, and I serve as the certification psychometrician for multiple AWS certification exams. My work bridges deep statistical expertise — causal inference, structural equation modeling, Bayesian methods, item response theory — with scalable Python, R, SQL, and AWS infrastructure.
+Expert and highly experienced Research Scientist and Psychometrician with 15+ years of demonstrated success specializing in measurement science and research methods including Item Response Theory (IRT), Classical Test Theory (CTT), structual equation modeling (SEM), and causal inference. At [Amazon Web Services](https://aws.amazon.com/), I have led end-to-end analytical and machine learning initiatives that shape product decisions, automate data pipelines, and improve operational efficiency, and I serve as the certification psychometrician for multiple AWS certification exams. My work bridges deep measurement and statistical expertise  with scalable Python, R, SQL, and AWS infrastructure.
 
 Before AWS, I was a tenured Associate Professor of Statistics, Measurement, and Evaluation in Education at the [University of Missouri](https://www.missouri.edu/) (2008–2022). My academic research focused on statistical modeling using large-scale assessment data, measurement, scale development, and program evaluation. I co-developed the Classroom Engagement Inventory and authored 50+ peer-reviewed papers, three books, and six book chapters.
 
-## What I work on
+## Core competencies
 
-- **Causal inference and experimental design.** Designing observational and quasi-experimental studies for product and operational decisions.
-- **Psychometrics and measurement.** Item response theory, structural equation modeling, scale development, standard setting.
-- **Machine learning at AWS scale.** Predictive modeling of operational metrics; balancing performance with interpretability for business stakeholders.
-- **Generative AI applications.** Internal AWS GenAI projects; review of GenAI research proposals.
+- **Quantitative Research Methods**: Survey design & distribution,  experimental & quasi-experimental designs, causal inference, structual equation modeling, multilevel modeling, predictive modeling.
+- **Measurement & Psychometrics**: Scale development & validation,  measurement reliability, bias and fairness, job task analysis, standard setting, continuous improvement.
+- **Programming & Data**: R, Python, SQL, Mplus, automated data pipelines, AWS cloud computing.
+- **Consultation & Technical Writing**: Technical manual design, executive briefings, cross-functional collaboration, stakeholder management.
+
+## Experience
+
+### Amazon Web Services (AWS) 
+**Research Scientist/Certification Psychometrician** |2022–Present
+
+- Lead psychometrics work for multiple AWS certification exams.
+- Review/Develop business requirements, design research projects, propose analytical methods, gather and clean data, develop metrics, build statistical models, and write strategy and research papers. 
+- Proposed and implemented a design-based approach to headcount estimation to operate the AWS European Sovereign Cloud. Results were used by leadership to request/approve headcount.
+- Developed metrics to measure teams’ operational load and efficiency. Metrics were integrated into internal dashboards and data pipelines.
+- Built machine learning models of AWS service teams’ headcount and their operational load. Results were used to allocate headcount resources. 
+- Developed and automated processes to integrate various operational data sources and to generate data at different granularity levels for reporting and statistical analysis.
+- Led a GenAI project for an internal AWS hackathon. 
+- Developed an AI workflow to automate and integrate processes for psychometrics work.
+- Served as a regular reviewer for Amazon research conferences and AWS AI research proposals submitted by external researchers.
+- Presented at national professional conferences
+- Led and conducted the job task analysis; survey design, distribution, and analysis; and standard setting of the AWS Certified Generative AI Developer - Professional certification. 
+
+### University of Missouri  
+**Tenured Associate Professor of Statistics, Measurement, and Evaluation in Education** | 2014 – 2022  
+**Assistant Professor** | 2008 – 2014
+
+- Led the methodological design (e.g., replicated Latin Square Design, randomized controlled trials) and statistical implementation (e.g., power analysis, sampling, randomization, effect size estimation) of federal grants (NSF, IES)totaling over $10 million.
+- Led and managed research groups of 20+ postdocs and graduate and undergraduate students in total.
+- Led the development of the Classroom Engagement Inventory (350+ citations and adopted by 80+ scholars)
+- Published 55 journal articles, books, book chapters, and technical and evaluation reports (1800+ citations)
+- Gave 90+ conference presentations, workshops, and invited talks.
+- Provided 200+ statistical consulting sessions (research designs, factor analysis, power analysis, regression, propensity scores, multilevel modeling, structural equation modeling, psychometrics, survey development). 
+- Taught 7 research methods, applied statistics and measurement courses
+- Chaired 5 PhD committees and mentored 50+ doctoral and master’s students
+- Won multiple awards for research, service, mentoring, and teaching excellence
+- erved in leadership roles for national professional organizations
+- Served as advisor/consultant to research firms
 
 ## Education
 
@@ -56,4 +86,26 @@ Before AWS, I was a tenured Associate Professor of Statistics, Measurement, and 
 5. **Wang, Z.**, Bergin, C., & Bergin, D. A. (2014). [Measuring engagement in fourth to twelfth grade classrooms: The Classroom Engagement Inventory](https://doi.org/10.1037/spq0000050). *School Psychology Quarterly*, 29(4), 517–535. *(350+ citations)*
 6. **Wang, Z.**, & Su, I. (2013). [Longitudinal factor structure of general self-concept and locus of control among high school students](https://doi.org/10.1177/0734282913481651). *Journal of Psychoeducational Assessment*, 31(6), 554–565.
 
-[<i class="bi bi-file-earmark-pdf"></i>&nbsp;Download my CV](cv.pdf){.btn .btn-outline-secondary}
+## Books
+
+Two open-access books I've written for graduate-level quantitative methods courses.
+
+### [Quantitative Foundations in Educational Research](/books/quant-foundations/)
+
+A self-contained introduction to applied statistics for educational and social-science research: descriptive statistics, probability, sampling, inference, regression, and ANOVA. Developed for *ESC_PS 8850*, the master's-level methods course I taught at the University of Missouri. [Previous site →](https://zewang.netlify.app/books/quant-foundations/_book/) · [Lecture slides →](https://zewang.netlify.app/slides/quant-foundations/#1)
+
+### [Structural Equation Modeling Using R and Mplus](/books/sem/)
+
+A practical introduction to structural equation modeling with worked examples in both R (`lavaan`) and Mplus. Covers measurement models, path analysis, latent variable models, model fit, and multi-group / multilevel extensions. Built around *ESC_PS 9710*, a doctoral course I taught at the University of Missouri. [Previous site →](https://zewang.netlify.app/books/sem/_book/) · [Lecture slides →](https://zewang.netlify.app/slides/sem/#1)
+
+## Selected Projects
+
+### [Flipped Mathematics Study](https://flippedmathstudy.net/)
+
+NSF-funded research investigating how flipped-classroom instruction affects students' learning of mathematics across diverse classroom settings. **Award:** NSF DRL-1721025, $539,011 (2017–2021). PIs: Zandra de Araujo, Samuel J. Otten, Ze Wang, James Tarr.
+
+### [Latinx Workers](http://nsfengineerstudy.org/)
+
+NSF-funded collaborative research project, *Should I Stay or Should I Go? Understanding the Retention of Latinx in Engineering Jobs*. Designed and applied quantitative methods (survey design, multilevel modeling) to understand factors driving career persistence and attrition among Latinx engineers. **Award:** NSF 2000607, $1,546,428 (2020–2025). PIs: Lisa Y. Flores (University of Missouri), Rachel L. Navarro (University of North Dakota). Role: Key Personnel.
+
+[<i class="bi bi-file-earmark-pdf"></i>&nbsp;My CV](WangZe_CV_2026.3.pdf){.btn .btn-outline-secondary}
