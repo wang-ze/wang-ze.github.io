@@ -7,46 +7,25 @@
     "text": "NSF-funded collaborative research project: Should I Stay or Should I Go? Understanding the Retention of Latinx in Engineering Jobs. Designed and applied quantitative methods (survey design, multilevel modeling) to understand factors driving career persistence and attrition among Latinx engineers.\nAward: NSF 2000607, $1,546,428 (2020–2025). PIs: Lisa Y. Flores (University of Missouri), Rachel L. Navarro (University of North Dakota). Role: Key Personnel.\nProject site →"
   },
   {
-    "objectID": "projects/flipped-math-study/index.html",
-    "href": "projects/flipped-math-study/index.html",
-    "title": "Flipped Mathematics Study",
-    "section": "",
-    "text": "NSF-funded research investigating how flipped-classroom instruction affects students’ learning of mathematics across diverse classroom settings.\nAward: NSF DRL-1721025, $539,011 (2017–2021). PIs: Zandra de Araujo, Samuel J. Otten, Ze Wang, James Tarr.\nProject site →"
-  },
-  {
-    "objectID": "books/index.html",
-    "href": "books/index.html",
-    "title": "Books",
-    "section": "",
-    "text": "Two open-access books I’ve written for graduate-level quantitative methods courses."
-  },
-  {
-    "objectID": "books/index.html#quantitative-foundations-in-educational-research",
-    "href": "books/index.html#quantitative-foundations-in-educational-research",
-    "title": "Books",
-    "section": "Quantitative Foundations in Educational Research",
-    "text": "Quantitative Foundations in Educational Research\nA self-contained introduction to applied statistics for educational and social-science research: descriptive statistics, probability, sampling, inference, regression, and ANOVA. Developed for ESC_PS 8850, the master’s-level methods course I taught at the University of Missouri. Lecture slides → · Previous site →"
-  },
-  {
-    "objectID": "books/index.html#structural-equation-modeling-using-r-and-mplus",
-    "href": "books/index.html#structural-equation-modeling-using-r-and-mplus",
-    "title": "Books",
-    "section": "Structural Equation Modeling Using R and Mplus",
-    "text": "Structural Equation Modeling Using R and Mplus\nA practical introduction to structural equation modeling with worked examples in both R (lavaan) and Mplus. Covers measurement models, path analysis, latent variable models, model fit, and multi-group / multilevel extensions. Built around ESC_PS 9710, a doctoral course I taught at the University of Missouri. Lecture slides → · Previous site →"
-  },
-  {
     "objectID": "index.html",
     "href": "index.html",
     "title": "Ze Wang",
     "section": "",
-    "text": "I am a Research Scientist at Amazon Web Services, based in Ashburn, VA. I lead end-to-end analytical and machine learning initiatives that shape product decisions, automate data pipelines, and improve operational efficiency, and I serve as the certification psychometrician for multiple AWS certification exams. My work bridges deep statistical expertise — causal inference, structural equation modeling, Bayesian methods, item response theory — with scalable Python, R, SQL, and AWS infrastructure.\nBefore AWS, I was a tenured Associate Professor of Statistics, Measurement, and Evaluation in Education at the University of Missouri (2008–2022). My academic research focused on statistical modeling using large-scale assessment data, measurement, scale development, and program evaluation. I co-developed the Classroom Engagement Inventory and authored 50+ peer-reviewed papers, three books, and six book chapters."
+    "text": "Expert and highly experienced Research Scientist and Psychometrician with 15+ years of demonstrated success specializing in measurement science and research methods including Item Response Theory (IRT), Classical Test Theory (CTT), structual equation modeling (SEM), and causal inference. At Amazon Web Services, I have led end-to-end analytical and machine learning initiatives that shape product decisions, automate data pipelines, and improve operational efficiency, and I serve as the certification psychometrician for multiple AWS certification exams. My work bridges deep measurement and statistical expertise with scalable Python, R, SQL, and AWS infrastructure.\nBefore AWS, I was a tenured Associate Professor of Statistics, Measurement, and Evaluation in Education at the University of Missouri (2008–2022). My academic research focused on statistical modeling using large-scale assessment data, measurement, scale development, and program evaluation. I co-developed the Classroom Engagement Inventory and authored 50+ peer-reviewed papers, three books, and six book chapters."
   },
   {
-    "objectID": "index.html#what-i-work-on",
-    "href": "index.html#what-i-work-on",
+    "objectID": "index.html#core-competencies",
+    "href": "index.html#core-competencies",
     "title": "Ze Wang",
-    "section": "What I work on",
-    "text": "What I work on\n\nCausal inference and experimental design. Designing observational and quasi-experimental studies for product and operational decisions.\nPsychometrics and measurement. Item response theory, structural equation modeling, scale development, standard setting.\nMachine learning at AWS scale. Predictive modeling of operational metrics; balancing performance with interpretability for business stakeholders.\nGenerative AI applications. Internal AWS GenAI projects; review of GenAI research proposals."
+    "section": "Core competencies",
+    "text": "Core competencies\n\nQuantitative Research Methods: Survey design & distribution, experimental & quasi-experimental designs, causal inference, structual equation modeling, multilevel modeling, predictive modeling.\nMeasurement & Psychometrics: Scale development & validation, measurement reliability, bias and fairness, job task analysis, standard setting, continuous improvement.\nProgramming & Data: R, Python, SQL, Mplus, automated data pipelines, AWS cloud computing.\nConsultation & Technical Writing: Technical manual design, executive briefings, cross-functional collaboration, stakeholder management."
+  },
+  {
+    "objectID": "index.html#experience",
+    "href": "index.html#experience",
+    "title": "Ze Wang",
+    "section": "Experience",
+    "text": "Experience\n\nAmazon Web Services (AWS)\nResearch Scientist/Certification Psychometrician |2022–Present\n\nLead psychometrics work for multiple AWS certification exams.\nReview/Develop business requirements, design research projects, propose analytical methods, gather and clean data, develop metrics, build statistical models, and write strategy and research papers.\nProposed and implemented a design-based approach to headcount estimation to operate the AWS European Sovereign Cloud. Results were used by leadership to request/approve headcount.\nDeveloped metrics to measure teams’ operational load and efficiency. Metrics were integrated into internal dashboards and data pipelines.\nBuilt machine learning models of AWS service teams’ headcount and their operational load. Results were used to allocate headcount resources.\nDeveloped and automated processes to integrate various operational data sources and to generate data at different granularity levels for reporting and statistical analysis.\nLed a GenAI project for an internal AWS hackathon.\nDeveloped an AI workflow to automate and integrate processes for psychometrics work.\nServed as a regular reviewer for Amazon research conferences and AWS AI research proposals submitted by external researchers.\nPresented at national professional conferences\nLed and conducted the job task analysis; survey design, distribution, and analysis; and standard setting of the AWS Certified Generative AI Developer - Professional certification.\n\n\n\nUniversity of Missouri\nTenured Associate Professor of Statistics, Measurement, and Evaluation in Education | 2014 – 2022\nAssistant Professor | 2008 – 2014\n\nLed the methodological design (e.g., replicated Latin Square Design, randomized controlled trials) and statistical implementation (e.g., power analysis, sampling, randomization, effect size estimation) of federal grants (NSF, IES)totaling over $10 million.\nLed and managed research groups of 20+ postdocs and graduate and undergraduate students in total.\nLed the development of the Classroom Engagement Inventory (350+ citations and adopted by 80+ scholars)\nPublished 55 journal articles, books, book chapters, and technical and evaluation reports (1800+ citations)\nGave 90+ conference presentations, workshops, and invited talks.\nProvided 200+ statistical consulting sessions (research designs, factor analysis, power analysis, regression, propensity scores, multilevel modeling, structural equation modeling, psychometrics, survey development).\nTaught 7 research methods, applied statistics and measurement courses\nChaired 5 PhD committees and mentored 50+ doctoral and master’s students\nWon multiple awards for research, service, mentoring, and teaching excellence\nerved in leadership roles for national professional organizations\nServed as advisor/consultant to research firms"
   },
   {
     "objectID": "index.html#education",
@@ -67,13 +46,27 @@
     "href": "index.html#selected-publications",
     "title": "Ze Wang",
     "section": "Selected publications",
-    "text": "Selected publications\n\nWang, Z. (2022). A comparison of three approaches to covariate effects on latent factors. Large-scale Assessments in Education, 10(26).\nWang, Z. (2020). When large-scale assessments meet data science: The big-fish-little-pond effect in fourth- and eighth-grade mathematics across nations. Frontiers in Psychology, 11.\nWang, Z., & Bergin, D. (2017). Perceived relative standing and the big-fish-little-pond effect in 59 countries and regions: Analysis of TIMSS 2011 data. Learning and Individual Differences, 57, 141–156.\nWang, Z. (2015). Examining big-fish-little-pond-effects across 49 countries: a multilevel latent variable modelling approach. Educational Psychology, 35(2), 228–251.\nWang, Z., Bergin, C., & Bergin, D. A. (2014). Measuring engagement in fourth to twelfth grade classrooms: The Classroom Engagement Inventory. School Psychology Quarterly, 29(4), 517–535. (350+ citations)\nWang, Z., & Su, I. (2013). Longitudinal factor structure of general self-concept and locus of control among high school students. Journal of Psychoeducational Assessment, 31(6), 554–565.\n\n Download my CV"
+    "text": "Selected publications\n\nWang, Z. (2022). A comparison of three approaches to covariate effects on latent factors. Large-scale Assessments in Education, 10(26).\nWang, Z. (2020). When large-scale assessments meet data science: The big-fish-little-pond effect in fourth- and eighth-grade mathematics across nations. Frontiers in Psychology, 11.\nWang, Z., & Bergin, D. (2017). Perceived relative standing and the big-fish-little-pond effect in 59 countries and regions: Analysis of TIMSS 2011 data. Learning and Individual Differences, 57, 141–156.\nWang, Z. (2015). Examining big-fish-little-pond-effects across 49 countries: a multilevel latent variable modelling approach. Educational Psychology, 35(2), 228–251.\nWang, Z., Bergin, C., & Bergin, D. A. (2014). Measuring engagement in fourth to twelfth grade classrooms: The Classroom Engagement Inventory. School Psychology Quarterly, 29(4), 517–535. (350+ citations)\nWang, Z., & Su, I. (2013). Longitudinal factor structure of general self-concept and locus of control among high school students. Journal of Psychoeducational Assessment, 31(6), 554–565."
   },
   {
-    "objectID": "projects/index.html",
-    "href": "projects/index.html",
-    "title": "Projects",
+    "objectID": "index.html#books",
+    "href": "index.html#books",
+    "title": "Ze Wang",
+    "section": "Books",
+    "text": "Books\nTwo open-access books I’ve written for graduate-level quantitative methods courses.\n\nQuantitative Foundations in Educational Research\nA self-contained introduction to applied statistics for educational and social-science research: descriptive statistics, probability, sampling, inference, regression, and ANOVA. Developed for ESC_PS 8850, the master’s-level methods course I taught at the University of Missouri. Previous site → · Lecture slides →\n\n\nStructural Equation Modeling Using R and Mplus\nA practical introduction to structural equation modeling with worked examples in both R (lavaan) and Mplus. Covers measurement models, path analysis, latent variable models, model fit, and multi-group / multilevel extensions. Built around ESC_PS 9710, a doctoral course I taught at the University of Missouri. Previous site → · Lecture slides →"
+  },
+  {
+    "objectID": "index.html#selected-projects",
+    "href": "index.html#selected-projects",
+    "title": "Ze Wang",
+    "section": "Selected Projects",
+    "text": "Selected Projects\n\nFlipped Mathematics Study\nNSF-funded research investigating how flipped-classroom instruction affects students’ learning of mathematics across diverse classroom settings. Award: NSF DRL-1721025, $539,011 (2017–2021). PIs: Zandra de Araujo, Samuel J. Otten, Ze Wang, James Tarr.\n\n\nLatinx Workers\nNSF-funded collaborative research project, Should I Stay or Should I Go? Understanding the Retention of Latinx in Engineering Jobs. Designed and applied quantitative methods (survey design, multilevel modeling) to understand factors driving career persistence and attrition among Latinx engineers. Award: NSF 2000607, $1,546,428 (2020–2025). PIs: Lisa Y. Flores (University of Missouri), Rachel L. Navarro (University of North Dakota). Role: Key Personnel.\n My CV"
+  },
+  {
+    "objectID": "projects/flipped-math-study/index.html",
+    "href": "projects/flipped-math-study/index.html",
+    "title": "Flipped Mathematics Study",
     "section": "",
-    "text": "Latinx Workers\n\n\nNSF-funded study on the retention of Latinx workers in engineering jobs.\n\n\n\nAug 1, 2020\n\n\n\n\n\n\n\n\n\n\n\nFlipped Mathematics Study\n\n\nNSF-funded study examining relationships between flipped instruction and students’ learning of mathematics.\n\n\n\nAug 1, 2017\n\n\n\n\n\n\nNo matching items"
+    "text": "NSF-funded research investigating how flipped-classroom instruction affects students’ learning of mathematics across diverse classroom settings.\nAward: NSF DRL-1721025, $539,011 (2017–2021). PIs: Zandra de Araujo, Samuel J. Otten, Ze Wang, James Tarr.\nProject site →"
   }
 ]
