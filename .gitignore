@@ -14,3 +14,13 @@ __pycache__/
 
 .env
 .env.local
+
+**/*.quarto_ipynb
+
+# Book sources live locally under books/<slug>-src/ but are not committed.
+# Only the rendered HTML output (at books/<slug>/) is pushed.
+/books/*-src/
+
+# Slide sources live locally under slides/<slug>-src/ but are not committed.
+# Only the rendered HTML output (at slides/<slug>/) is pushed.
+/slides/*-src/

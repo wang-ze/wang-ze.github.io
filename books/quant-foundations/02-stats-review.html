@@ -1,0 +1,1547 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.38">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="description" content="Class notes and R syntax for ESC_PS 8850 Quantitative Foundations in Educational Research at the University of Missouri.">
+
+<title>2&nbsp; Review of Basic Statistics – Quantitative Foundations in Educational Research</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./03-correlation.html" rel="next">
+<link href="./01-intro.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-5ccb035bea26c1e21f80f44cf7c27909.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./02-stats-review.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Review of Basic Statistics</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Quantitative Foundations in Educational Research</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/ze-wang/quant-foundations" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01-intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction to R and RStudio</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02-stats-review.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Review of Basic Statistics</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03-correlation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Correlation</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./04-simple-regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Simple Linear Regression</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./05-multiple-regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Multiple Regression Analysis</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./06-binary-logistic-regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Binary Logistic Regression</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./07-anova.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Analysis of Variance</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./08-ancova.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Analysis of Covariance</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./09-repeated-measures-mixed-designs.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Repeated Measures ANOVA and Mixed Designs</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./10-power-analysis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Power Analysis</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./11-references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#calculating-variance-and-covariance" id="toc-calculating-variance-and-covariance" class="nav-link active" data-scroll-target="#calculating-variance-and-covariance"><span class="header-section-number">2.1</span> Calculating Variance and Covariance</a>
+  <ul class="collapse">
+  <li><a href="#covariance" id="toc-covariance" class="nav-link" data-scroll-target="#covariance"><span class="header-section-number">2.1.1</span> Covariance</a></li>
+  <li><a href="#correlation" id="toc-correlation" class="nav-link" data-scroll-target="#correlation"><span class="header-section-number">2.1.2</span> Correlation</a></li>
+  <li><a href="#using-matrix-algebra" id="toc-using-matrix-algebra" class="nav-link" data-scroll-target="#using-matrix-algebra"><span class="header-section-number">2.1.3</span> Using Matrix Algebra</a></li>
+  </ul></li>
+  <li><a href="#sec-basic" id="toc-sec-basic" class="nav-link" data-scroll-target="#sec-basic"><span class="header-section-number">2.2</span> Use R for Basic Statistics</a>
+  <ul class="collapse">
+  <li><a href="#import-and-export-data" id="toc-import-and-export-data" class="nav-link" data-scroll-target="#import-and-export-data"><span class="header-section-number">2.2.1</span> Import and export data</a></li>
+  <li><a href="#several-functions-for-basic-data-management" id="toc-several-functions-for-basic-data-management" class="nav-link" data-scroll-target="#several-functions-for-basic-data-management"><span class="header-section-number">2.2.2</span> Several functions for basic data management</a></li>
+  <li><a href="#some-descriptive-statistics" id="toc-some-descriptive-statistics" class="nav-link" data-scroll-target="#some-descriptive-statistics"><span class="header-section-number">2.2.3</span> Some descriptive statistics</a></li>
+  <li><a href="#check-normality" id="toc-check-normality" class="nav-link" data-scroll-target="#check-normality"><span class="header-section-number">2.2.4</span> Check normality</a></li>
+  <li><a href="#check-linearity" id="toc-check-linearity" class="nav-link" data-scroll-target="#check-linearity"><span class="header-section-number">2.2.5</span> Check linearity</a></li>
+  <li><a href="#pearsons-product-moment-correlation" id="toc-pearsons-product-moment-correlation" class="nav-link" data-scroll-target="#pearsons-product-moment-correlation"><span class="header-section-number">2.2.6</span> Pearson’s product moment correlation</a></li>
+  </ul></li>
+  <li><a href="#use-r-for-graphing-data" id="toc-use-r-for-graphing-data" class="nav-link" data-scroll-target="#use-r-for-graphing-data"><span class="header-section-number">2.3</span> Use R for Graphing Data</a>
+  <ul class="collapse">
+  <li><a href="#use-plot" id="toc-use-plot" class="nav-link" data-scroll-target="#use-plot"><span class="header-section-number">2.3.1</span> Use <code>plot()</code></a></li>
+  <li><a href="#use-ggplot2-package" id="toc-use-ggplot2-package" class="nav-link" data-scroll-target="#use-ggplot2-package"><span class="header-section-number">2.3.2</span> Use <code>ggplot2</code> package</a></li>
+  </ul></li>
+  <li><a href="#use-r-to-graph-a-correlation-matrix" id="toc-use-r-to-graph-a-correlation-matrix" class="nav-link" data-scroll-target="#use-r-to-graph-a-correlation-matrix"><span class="header-section-number">2.4</span> Use R to Graph a Correlation Matrix</a>
+  <ul class="collapse">
+  <li><a href="#use-plot-1" id="toc-use-plot-1" class="nav-link" data-scroll-target="#use-plot-1"><span class="header-section-number">2.4.1</span> Use <code>plot()</code></a></li>
+  <li><a href="#use-ggplot" id="toc-use-ggplot" class="nav-link" data-scroll-target="#use-ggplot"><span class="header-section-number">2.4.2</span> Use <code>ggplot()</code></a></li>
+  </ul></li>
+  <li><a href="#use-r-to-generate-random-data" id="toc-use-r-to-generate-random-data" class="nav-link" data-scroll-target="#use-r-to-generate-random-data"><span class="header-section-number">2.5</span> Use R to Generate Random Data</a>
+  <ul class="collapse">
+  <li><a href="#sampling-distribution" id="toc-sampling-distribution" class="nav-link" data-scroll-target="#sampling-distribution"><span class="header-section-number">2.5.1</span> Sampling distribution</a></li>
+  <li><a href="#simulate-data-from-a-model" id="toc-simulate-data-from-a-model" class="nav-link" data-scroll-target="#simulate-data-from-a-model"><span class="header-section-number">2.5.2</span> Simulate data from a model</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Review of Basic Statistics</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rio); <span class="fu">library</span>(psych); <span class="fu">library</span>(Hmisc); <span class="fu">library</span>(ggplot2); <span class="fu">library</span>(reshape2); <span class="fu">library</span>(QuantPsyc); <span class="fu">library</span>(MASS); <span class="fu">library</span>(lavaan)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'Hmisc'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following object is masked from 'package:psych':
+
+    describe</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:base':
+
+    format.pval, units</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'ggplot2'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:psych':
+
+    %+%, alpha</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required package: boot</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'boot'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following object is masked from 'package:psych':
+
+    logit</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required package: dplyr</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'dplyr'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:Hmisc':
+
+    src, summarize</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:stats':
+
+    filter, lag</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:base':
+
+    intersect, setdiff, setequal, union</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required package: purrr</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required package: MASS</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'MASS'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following object is masked from 'package:dplyr':
+
+    select</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'QuantPsyc'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following object is masked from 'package:base':
+
+    norm</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>This is lavaan 0.6-21
+lavaan is FREE software! Please report any bugs.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'lavaan'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following object is masked from 'package:psych':
+
+    cor2cov</code></pre>
+</div>
+</div>
+<section id="calculating-variance-and-covariance" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="calculating-variance-and-covariance"><span class="header-section-number">2.1</span> Calculating Variance and Covariance</h2>
+<section id="covariance" class="level3" data-number="2.1.1">
+<h3 data-number="2.1.1" class="anchored" data-anchor-id="covariance"><span class="header-section-number">2.1.1</span> Covariance</h3>
+<p><strong>population</strong>: <span class="math display">\[{{\sigma }_{\text{XY}}}=\frac{\sum{(X-{{\mu }_{\text{X}}})(Y-{{\mu }_{\text{Y}}})}}{{{N}_{pop}}}\]</span> <strong>sample</strong>: <span class="math display">\[{{s}_{XY}}={{\hat{\sigma }}_{XY}}=Cov(X,Y)=\frac{\sum{(X-\bar{X})(Y-\bar{Y})}}{(n-1)}\]</span></p>
+</section>
+<section id="correlation" class="level3" data-number="2.1.2">
+<h3 data-number="2.1.2" class="anchored" data-anchor-id="correlation"><span class="header-section-number">2.1.2</span> Correlation</h3>
+<p><strong>population</strong>: <span class="math display">\[{{\rho }_{\text{XY}}}=\frac{{{\sigma }_{\text{XY}}}}{\sqrt{{{\sigma }_{\text{X}}}^{2}{{\sigma }_{\text{Y}}}^{2}}}\]</span></p>
+<p><strong>sample</strong>: <span class="math display">\[{{r}_{\text{XY}}}={{\hat{\rho }}_{\text{XY}}}=\frac{Cov(X,Y)}{\sqrt{{{s}_{\text{X}}}^{2}{{s}_{\text{Y}}}^{2}}}\]</span></p>
+</section>
+<section id="using-matrix-algebra" class="level3" data-number="2.1.3">
+<h3 data-number="2.1.3" class="anchored" data-anchor-id="using-matrix-algebra"><span class="header-section-number">2.1.3</span> Using Matrix Algebra</h3>
+<p>Suppose we have a 5 by 2 data matrix <strong>X</strong> (2 variables and 5 participants, for example). $${} = $$</p>
+<p>First, we calculate the deviation score matrix <span class="math inline">\({{\bf{X}}_{\bf{d}}}\)</span>.</p>
+<p><span class="math display">\[{{\mathbf{X}}_{d}}\text{=}\mathbf{X-\bar{X}}=\left[ \begin{matrix}
+   1 &amp; 3  \\
+   4 &amp; -5  \\
+   1 &amp; 7  \\
+   3 &amp; 2  \\
+   7 &amp; -1  \\
+\end{matrix} \right]-\left[ \begin{matrix}
+   3.2 &amp; 1.2  \\
+   3.2 &amp; 1.2  \\
+   3.2 &amp; 1.2  \\
+   3.2 &amp; 1.2  \\
+   3.2 &amp; 1.2  \\
+\end{matrix} \right]=\left[ \begin{matrix}
+   -2.2 &amp; 1.8  \\
+   0.8 &amp; -6.2  \\
+   -2.2 &amp; 5.8  \\
+   -0.2 &amp; 0.8  \\
+   3.8 &amp; -2.2  \\
+\end{matrix} \right]\]</span></p>
+<p>Next, we multiple the transpose of <span class="math inline">\({{\bf{X}}_{\bf{d}}}\)</span> ( <span class="math inline">\({{\bf{X}}_{\bf{d}}}^{\bf{'}}\)</span> ) by <span class="math inline">\({{\bf{X}}_{\bf{d}}}\)</span> itself using matrix operations. We will get the deviation SSCP (sums of squares and cross products) matrix.</p>
+<p><strong>Deviation SSCP matrix:</strong><br>
+<span class="math display">\[{{\mathbf{X}}_{\mathbf{d}}}'{{\mathbf{X}}_{\mathbf{d}}}=\sum{{{x}_{i}}{{x}_{j}}=\left[ \begin{matrix}
+   \sum{x_{1}^{2}} &amp; \sum{{{x}_{1}}{{x}_{2}}}  \\
+   \sum{{{x}_{2}}{{x}_{1}}} &amp; \sum{x_{2}^{2}}  \\
+\end{matrix} \right]}=\left[ \begin{matrix}
+   24.8 &amp; -30.2  \\
+   -30.2 &amp; 80.8  \\
+\end{matrix} \right]\]</span> (Note: Lower case <span class="math inline">\({{x}_{i}}\)</span>’s represent deviation scores.)</p>
+<p>Since variance of of the first variable <span class="math inline">\(X_1\)</span> is <span class="math inline">\(\frac{1}{N-1}\sum{x_{1}^{2}}\)</span> and the covariance between <span class="math inline">\(X_1\)</span> and <span class="math inline">\(X_2\)</span> is <span class="math inline">\(\frac{1}{N-1}\sum{{{x}_{1}}{{x}_{2}}}\)</span>, the variance and covariance matrix (usually denoted by S) can be obtained by multiplying <span class="math inline">\(\frac{1}{N-1}\)</span> to the deviation score <strong>SSCP</strong>:</p>
+<p>Variance and Covariance matrix: <span class="math display">\[\mathbf{S}=\frac{1}{5-1}\left[ \begin{matrix}
+   24.8 &amp; -30.2  \\
+   -30.2 &amp; 80.8  \\
+\end{matrix} \right]=\left[ \begin{matrix}
+   6.2 &amp; -7.55  \\
+   -7.55 &amp; 20.2  \\
+\end{matrix} \right]\]</span></p>
+<p>$${}$$</p>
+<p><strong>Sample Covariance Matrix S</strong></p>
+<p>$${}$$</p>
+<p><strong>Sample Correlation R</strong> $${}$$</p>
+<p>Elements in sample covariance matrix divided by <span class="math inline">\({s_i}{s_j}\)</span> would result in the sample correlation matrix.</p>
+<p>Elements in sample correlation matrix multiplied by <span class="math inline">\({s_i}{s_j}\)</span> would result in the sample covariance matrix.</p>
+</section>
+</section>
+<section id="sec-basic" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="sec-basic"><span class="header-section-number">2.2</span> Use R for Basic Statistics</h2>
+<section id="import-and-export-data" class="level3" data-number="2.2.1">
+<h3 data-number="2.2.1" class="anchored" data-anchor-id="import-and-export-data"><span class="header-section-number">2.2.1</span> Import and export data</h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>mydata <span class="ot">&lt;-</span> <span class="fu">import</span>(<span class="st">"data/example.sav"</span>)</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="co"># head(mydata) # view first 6 observations</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">export</span>(mydata, <span class="at">file =</span> <span class="st">"data/dataset_example.csv"</span>)</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="fu">export</span>(mydata, <span class="at">file =</span> <span class="st">"data/dataset_example.xlsx"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="several-functions-for-basic-data-management" class="level3" data-number="2.2.2">
+<h3 data-number="2.2.2" class="anchored" data-anchor-id="several-functions-for-basic-data-management"><span class="header-section-number">2.2.2</span> Several functions for basic data management</h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(mydata)[<span class="fu">names</span>(mydata) <span class="sc">==</span> <span class="st">"ITSEX"</span>] <span class="ot">&lt;-</span> <span class="st">"gender"</span> <span class="co">#rename a variable</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(mydata)[<span class="fu">names</span>(mydata) <span class="sc">==</span> <span class="st">"BSMMAT01"</span>] <span class="ot">&lt;-</span> <span class="st">"math"</span> <span class="co">#rename another variable for math score</span></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(mydata)[<span class="fu">names</span>(mydata) <span class="sc">==</span> <span class="st">"BSBGHER"</span>] <span class="ot">&lt;-</span> <span class="st">"resource"</span> <span class="co">#education resource</span></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(mydata)[<span class="fu">names</span>(mydata) <span class="sc">==</span> <span class="st">"BSBGSCM"</span>] <span class="ot">&lt;-</span> <span class="st">"confidence"</span> <span class="co">#confidence in math</span></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(mydata)[<span class="fu">names</span>(mydata) <span class="sc">==</span> <span class="st">"BSBGSVM"</span>] <span class="ot">&lt;-</span> <span class="st">"value"</span> <span class="co">#valuing math</span></span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(mydata)[<span class="fu">names</span>(mydata) <span class="sc">==</span> <span class="st">"BSBGSSB"</span>] <span class="ot">&lt;-</span> <span class="st">"belonging"</span> <span class="co">#sense of belonging</span></span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>var <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"gender"</span>, <span class="st">"math"</span>, <span class="st">"resource"</span>, <span class="st">"confidence"</span>, <span class="st">"value"</span>, <span class="st">"belonging"</span>)</span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>dat1 <span class="ot">&lt;-</span> mydata[, var] <span class="co">#subset data</span></span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>dat2 <span class="ot">&lt;-</span> <span class="fu">na.omit</span>(dat1) <span class="co">#listwise deletion</span></span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>dat1<span class="sc">$</span>gender_c <span class="ot">&lt;-</span> <span class="fu">factor</span>(dat1<span class="sc">$</span>gender) <span class="co">#create a categorical variable for `gender`</span></span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(dat1<span class="sc">$</span>gender_c) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"f"</span>, <span class="st">"m"</span>) <span class="co">#change levels for `gender` variable</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="some-descriptive-statistics" class="level3" data-number="2.2.3">
+<h3 data-number="2.2.3" class="anchored" data-anchor-id="some-descriptive-statistics"><span class="header-section-number">2.2.3</span> Some descriptive statistics</h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(dat1) </span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(dat1<span class="sc">$</span>gender_c) <span class="co">#compute frequencies for categorical variables</span></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>psych<span class="sc">::</span><span class="fu">describe</span>(dat1) <span class="co">#compute descriptives for quantitative variables. Need to install and load the `psych` package</span></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="fu">attach</span>(dat1) <span class="co"># save some typing. Alternatively, `math &lt;- dat1$BSMMAT01` to create a separate vector.</span></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a><span class="fu">min</span>(math, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a><span class="fu">max</span>(math, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(math, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(math, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a><span class="fu">median</span>(math, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a><span class="fu">var</span>(math, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a><span class="fu">sd</span>(math, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a><span class="fu">sd</span>(math, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a><span class="fu">quantile</span>(math, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a><span class="fu">detach</span>(dat1)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="check-normality" class="level3" data-number="2.2.4">
+<h3 data-number="2.2.4" class="anchored" data-anchor-id="check-normality"><span class="header-section-number">2.2.4</span> Check normality</h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(dat1<span class="sc">$</span>math)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>You got an error message. <br> The Shapiro-Wilk test is for small to moderate samples.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">12345</span>) <span class="co">#for reproducibility</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>selected <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">nrow</span>(dat1), <span class="dv">100</span>) <span class="co">#randomly selection 100 numbers from 1 through the sample size</span></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>dat1_small <span class="ot">&lt;-</span> dat1[selected,] <span class="co">#create a smaller dataset of 100 students</span></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(dat1_small<span class="sc">$</span>math)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Shapiro-Wilk normality test
+
+data:  dat1_small$math
+W = 0.97872, p-value = 0.1056</code></pre>
+</div>
+</div>
+</section>
+<section id="check-linearity" class="level3" data-number="2.2.5">
+<h3 data-number="2.2.5" class="anchored" data-anchor-id="check-linearity"><span class="header-section-number">2.2.5</span> Check linearity</h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(dat2<span class="sc">$</span>confidence, dat2<span class="sc">$</span>math)</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="fu">lm</span>(math <span class="sc">~</span> confidence, <span class="at">data =</span>dat2), <span class="at">col =</span> <span class="st">"red"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="02-stats-review_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="pearsons-product-moment-correlation" class="level3" data-number="2.2.6">
+<h3 data-number="2.2.6" class="anchored" data-anchor-id="pearsons-product-moment-correlation"><span class="header-section-number">2.2.6</span> Pearson’s product moment correlation</h3>
+<p>Correlation between two variables, hypothesis test, and confidence interval.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor.test</span>(dat1<span class="sc">$</span>resource, dat1<span class="sc">$</span>math)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Pearson's product-moment correlation
+
+data:  dat1$resource and dat1$math
+t = 42.923, df = 10116, p-value &lt; 2.2e-16
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ 0.3759021 0.4088708
+sample estimates:
+      cor 
+0.3925126 </code></pre>
+</div>
+</div>
+<p>All pairwise correlations.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(dat1[,var], <span class="at">use =</span> <span class="st">"pairwise.complete.obs"</span>) <span class="co">#for numeric variables only; "gender" is still a numeric variable!</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                 gender       math   resource confidence      value   belonging
+gender      1.000000000 0.01305597 -0.0281559  0.0719095 0.03690314 0.007168246
+math        0.013055968 1.00000000  0.3925126  0.4280530 0.16511215 0.221113350
+resource   -0.028155898 0.39251256  1.0000000  0.1512655 0.10208246 0.152041678
+confidence  0.071909498 0.42805300  0.1512655  1.0000000 0.37535602 0.280950896
+value       0.036903141 0.16511215  0.1020825  0.3753560 1.00000000 0.366637734
+belonging   0.007168246 0.22111335  0.1520417  0.2809509 0.36663773 1.000000000</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">cor</span>(dat1[,var], <span class="at">use =</span> <span class="st">"pairwise.complete.obs"</span>), <span class="dv">2</span>) <span class="co">#round to 2 decimal places</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>           gender math resource confidence value belonging
+gender       1.00 0.01    -0.03       0.07  0.04      0.01
+math         0.01 1.00     0.39       0.43  0.17      0.22
+resource    -0.03 0.39     1.00       0.15  0.10      0.15
+confidence   0.07 0.43     0.15       1.00  0.38      0.28
+value        0.04 0.17     0.10       0.38  1.00      0.37
+belonging    0.01 0.22     0.15       0.28  0.37      1.00</code></pre>
+</div>
+</div>
+<p>Correlations and significance levels for the correlation matrix. Need to install and load the <code>Hmisc</code> package. Need to coerce from dataframe to matrix to get both a correlation matrix and p-values.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"Hmisc"</span>)</span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(Hmisc)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(dat1[,var]) <span class="co"># numeric variables only</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="fu">rcorr</span>(df)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>           gender math resource confidence value belonging
+gender       1.00 0.01    -0.03       0.07  0.04      0.01
+math         0.01 1.00     0.39       0.43  0.17      0.22
+resource    -0.03 0.39     1.00       0.15  0.10      0.15
+confidence   0.07 0.43     0.15       1.00  0.38      0.28
+value        0.04 0.17     0.10       0.38  1.00      0.37
+belonging    0.01 0.22     0.15       0.28  0.37      1.00
+
+n
+           gender  math resource confidence value belonging
+gender      10217 10217    10117      10052 10014     10111
+math        10217 10221    10118      10053 10015     10112
+resource    10117 10118    10118      10017  9978     10073
+confidence  10052 10053    10017      10053 10010     10035
+value       10014 10015     9978      10010 10015      9998
+belonging   10111 10112    10073      10035  9998     10112
+
+P
+           gender math   resource confidence value  belonging
+gender            0.1870 0.0046   0.0000     0.0002 0.4711   
+math       0.1870        0.0000   0.0000     0.0000 0.0000   
+resource   0.0046 0.0000          0.0000     0.0000 0.0000   
+confidence 0.0000 0.0000 0.0000              0.0000 0.0000   
+value      0.0002 0.0000 0.0000   0.0000            0.0000   
+belonging  0.4711 0.0000 0.0000   0.0000     0.0000          </code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="use-r-for-graphing-data" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="use-r-for-graphing-data"><span class="header-section-number">2.3</span> Use R for Graphing Data</h2>
+<section id="use-plot" class="level3" data-number="2.3.1">
+<h3 data-number="2.3.1" class="anchored" data-anchor-id="use-plot"><span class="header-section-number">2.3.1</span> Use <code>plot()</code></h3>
+<p>Use <code>browseURL("https://datalab.cc/rcolors")</code> to view different colors and methods to refer to them. Use <code>?palette</code> for palettes in R; use <code>palette()</code> for current palette</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(dat1<span class="sc">$</span>value, dat1<span class="sc">$</span>math)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="02-stats-review_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(dat1<span class="sc">$</span>value, <span class="fu">jitter</span>(dat1<span class="sc">$</span>math)) <span class="co"># add some random noise to Y</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="02-stats-review_files/figure-html/unnamed-chunk-13-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(dat1<span class="sc">$</span>value, <span class="fu">jitter</span>(dat1<span class="sc">$</span>math), <span class="at">xlab =</span> <span class="st">"Valuing Math"</span>, <span class="at">ylab =</span> <span class="st">"Math Score"</span>) <span class="co"># change labels</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="02-stats-review_files/figure-html/unnamed-chunk-13-3.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(dat1<span class="sc">$</span>value, <span class="fu">jitter</span>(dat1<span class="sc">$</span>math), <span class="at">xlab =</span> <span class="st">"Valuing Math"</span>, <span class="at">ylab =</span> <span class="st">"Math Score"</span>, <span class="at">col =</span> <span class="st">"red"</span>) <span class="co"># change color</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="02-stats-review_files/figure-html/unnamed-chunk-13-4.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="use-ggplot2-package" class="level3" data-number="2.3.2">
+<h3 data-number="2.3.2" class="anchored" data-anchor-id="use-ggplot2-package"><span class="header-section-number">2.3.2</span> Use <code>ggplot2</code> package</h3>
+<p>Read Chapter 4 of textbook Field, Miles, Field (2012).</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"ggplot2"</span>)</span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dat1, <span class="fu">aes</span>(math)) <span class="sc">+</span></span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>) <span class="sc">+</span></span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">y =</span> ..density..), <span class="at">colour =</span> <span class="st">"black"</span>, <span class="at">fill =</span> <span class="st">"white"</span>) <span class="sc">+</span> </span>
+<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Math"</span>, <span class="at">y =</span> <span class="st">"Density"</span>) <span class="sc">+</span> </span>
+<span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_function</span>(<span class="at">fun =</span> dnorm, <span class="at">args =</span> <span class="fu">list</span>(<span class="at">mean =</span> <span class="fu">mean</span>(dat1<span class="sc">$</span>math, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="at">sd =</span> <span class="fu">sd</span>(dat1<span class="sc">$</span>math, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)), <span class="at">colour =</span> <span class="st">"red"</span>, <span class="at">size =</span> <span class="dv">1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
+ℹ Please use `linewidth` instead.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: The dot-dot notation (`..density..`) was deprecated in ggplot2 3.4.0.
+ℹ Please use `after_stat(density)` instead.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`stat_bin()` using `bins = 30`. Pick better value `binwidth`.</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="02-stats-review_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="use-r-to-graph-a-correlation-matrix" class="level2" data-number="2.4">
+<h2 data-number="2.4" class="anchored" data-anchor-id="use-r-to-graph-a-correlation-matrix"><span class="header-section-number">2.4</span> Use R to Graph a Correlation Matrix</h2>
+<section id="use-plot-1" class="level3" data-number="2.4.1">
+<h3 data-number="2.4.1" class="anchored" data-anchor-id="use-plot-1"><span class="header-section-number">2.4.1</span> Use <code>plot()</code></h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(dat1[,var])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="02-stats-review_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="use-ggplot" class="level3" data-number="2.4.2">
+<h3 data-number="2.4.2" class="anchored" data-anchor-id="use-ggplot"><span class="header-section-number">2.4.2</span> Use <code>ggplot()</code></h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"reshape2"</span>)</span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(reshape2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>(cor_matrix <span class="ot">&lt;-</span> <span class="fu">cor</span>(dat1[,var], <span class="at">use =</span> <span class="st">"pairwise.complete.obs"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                 gender       math   resource confidence      value   belonging
+gender      1.000000000 0.01305597 -0.0281559  0.0719095 0.03690314 0.007168246
+math        0.013055968 1.00000000  0.3925126  0.4280530 0.16511215 0.221113350
+resource   -0.028155898 0.39251256  1.0000000  0.1512655 0.10208246 0.152041678
+confidence  0.071909498 0.42805300  0.1512655  1.0000000 0.37535602 0.280950896
+value       0.036903141 0.16511215  0.1020825  0.3753560 1.00000000 0.366637734
+belonging   0.007168246 0.22111335  0.1520417  0.2809509 0.36663773 1.000000000</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>(melt_cor_matrix <span class="ot">&lt;-</span> <span class="fu">melt</span>(cor_matrix))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>         Var1       Var2        value
+1      gender     gender  1.000000000
+2        math     gender  0.013055968
+3    resource     gender -0.028155898
+4  confidence     gender  0.071909498
+5       value     gender  0.036903141
+6   belonging     gender  0.007168246
+7      gender       math  0.013055968
+8        math       math  1.000000000
+9    resource       math  0.392512564
+10 confidence       math  0.428053003
+11      value       math  0.165112146
+12  belonging       math  0.221113350
+13     gender   resource -0.028155898
+14       math   resource  0.392512564
+15   resource   resource  1.000000000
+16 confidence   resource  0.151265456
+17      value   resource  0.102082458
+18  belonging   resource  0.152041678
+19     gender confidence  0.071909498
+20       math confidence  0.428053003
+21   resource confidence  0.151265456
+22 confidence confidence  1.000000000
+23      value confidence  0.375356020
+24  belonging confidence  0.280950896
+25     gender      value  0.036903141
+26       math      value  0.165112146
+27   resource      value  0.102082458
+28 confidence      value  0.375356020
+29      value      value  1.000000000
+30  belonging      value  0.366637734
+31     gender  belonging  0.007168246
+32       math  belonging  0.221113350
+33   resource  belonging  0.152041678
+34 confidence  belonging  0.280950896
+35      value  belonging  0.366637734
+36  belonging  belonging  1.000000000</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> melt_cor_matrix,</span>
+<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> Var1, <span class="at">y =</span> Var2, <span class="at">fill =</span> value)) <span class="sc">+</span> <span class="fu">geom_tile</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="02-stats-review_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="use-r-to-generate-random-data" class="level2" data-number="2.5">
+<h2 data-number="2.5" class="anchored" data-anchor-id="use-r-to-generate-random-data"><span class="header-section-number">2.5</span> Use R to Generate Random Data</h2>
+<section id="sampling-distribution" class="level3" data-number="2.5.1">
+<h3 data-number="2.5.1" class="anchored" data-anchor-id="sampling-distribution"><span class="header-section-number">2.5.1</span> Sampling distribution</h3>
+<p>Generate data.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a>size <span class="ot">&lt;-</span> <span class="dv">50</span></span>
+<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a>sample_means <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
+<span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">1000</span>) {</span>
+<span id="cb57-4"><a href="#cb57-4" aria-hidden="true" tabindex="-1"></a>  samp <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(size, <span class="dv">10</span>, <span class="dv">5</span>)</span>
+<span id="cb57-5"><a href="#cb57-5" aria-hidden="true" tabindex="-1"></a>  sample_means[i] <span class="ot">&lt;-</span> <span class="fu">mean</span>(samp)</span>
+<span id="cb57-6"><a href="#cb57-6" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Calculate the mean and SD of the sampling distribution.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(sample_means) <span class="co"># population mean is 10</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 10.007</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sd</span>(sample_means)  <span class="co"># SD of the sampling distribution</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.708293</code></pre>
+</div>
+</div>
+<p>Use <code>hist()</code> to graph the sample means for sampling distribution.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(sample_means, <span class="at">breaks =</span> <span class="dv">50</span>, <span class="at">main =</span> <span class="st">"N= 50"</span>, <span class="at">xlab =</span> <span class="st">"Sample Means"</span>, <span class="at">probability =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="02-stats-review_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Use <code>ggplot()</code> to graph the sample means for sampling distribution.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a>df_sample_means <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">i =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">1000</span>, sample_means) <span class="co"># data for ggplot has to be a data frame.</span></span>
+<span id="cb63-2"><a href="#cb63-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df_sample_means, <span class="fu">aes</span>(<span class="at">x =</span> sample_means)) <span class="sc">+</span></span>
+<span id="cb63-3"><a href="#cb63-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">y =</span> ..density..), <span class="at">colour =</span> <span class="st">"black"</span>, <span class="at">fill =</span> <span class="st">"white"</span>) <span class="sc">+</span> </span>
+<span id="cb63-4"><a href="#cb63-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Sample Means"</span>, <span class="at">y =</span> <span class="st">"Density"</span>) <span class="sc">+</span> </span>
+<span id="cb63-5"><a href="#cb63-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_function</span>(<span class="at">fun =</span> dnorm, <span class="at">args =</span> <span class="fu">list</span>(<span class="at">mean =</span> <span class="fu">mean</span>(df_sample_means<span class="sc">$</span>sample_means, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="at">sd =</span> <span class="fu">sd</span>(df_sample_means<span class="sc">$</span>sample_means, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)), <span class="at">colour =</span> <span class="st">"red"</span>, <span class="at">size =</span> <span class="dv">1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`stat_bin()` using `bins = 30`. Pick better value `binwidth`.</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="02-stats-review_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="simulate-data-from-a-model" class="level3" data-number="2.5.2">
+<h3 data-number="2.5.2" class="anchored" data-anchor-id="simulate-data-from-a-model"><span class="header-section-number">2.5.2</span> Simulate data from a model</h3>
+<p>####Simulate data based on a regression model####</p>
+<p><strong>Simple Linear Regression</strong> with 0.7 correlation between x and y</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">1000</span>, <span class="dv">10</span>, <span class="dv">2</span>)</span>
+<span id="cb65-2"><a href="#cb65-2" aria-hidden="true" tabindex="-1"></a>Zx <span class="ot">&lt;-</span> <span class="fu">scale</span>(x)</span>
+<span id="cb65-3"><a href="#cb65-3" aria-hidden="true" tabindex="-1"></a>Zy <span class="ot">&lt;-</span> .<span class="dv">7</span><span class="sc">*</span>Zx <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="dv">1000</span>, <span class="dv">0</span>, <span class="fu">sqrt</span>(<span class="dv">1</span><span class="sc">-</span>(.<span class="dv">7</span><span class="sc">^</span><span class="dv">2</span>)))</span>
+<span id="cb65-4"><a href="#cb65-4" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="dv">3</span><span class="sc">*</span>Zy <span class="sc">+</span> <span class="dv">5</span></span>
+<span id="cb65-5"><a href="#cb65-5" aria-hidden="true" tabindex="-1"></a>dat1 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(x,y)</span>
+<span id="cb65-6"><a href="#cb65-6" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(x,y)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>         [,1]
+[1,] 0.693814</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb67"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">lm</span>(Zy <span class="sc">~</span> <span class="dv">0</span> <span class="sc">+</span> Zx))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = Zy ~ 0 + Zx)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-1.93796 -0.49421 -0.01251  0.51644  2.37284 
+
+Coefficients:
+   Estimate Std. Error t value Pr(&gt;|t|)    
+Zx  0.71276    0.02341   30.44   &lt;2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.74 on 999 degrees of freedom
+Multiple R-squared:  0.4813,    Adjusted R-squared:  0.4807 
+F-statistic: 926.8 on 1 and 999 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb69"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">lm</span>(y <span class="sc">~</span>x))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = y ~ x)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-5.7646 -1.4334  0.0117  1.5986  7.1678 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept) -5.85417    0.36189  -16.18   &lt;2e-16 ***
+x            1.07541    0.03533   30.44   &lt;2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 2.221 on 998 degrees of freedom
+Multiple R-squared:  0.4814,    Adjusted R-squared:  0.4809 
+F-statistic: 926.3 on 1 and 998 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb71"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a>QuantPsyc<span class="sc">::</span><span class="fu">lm.beta</span>(<span class="fu">lm</span>(y <span class="sc">~</span>x))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       x 
+0.693814 </code></pre>
+</div>
+</div>
+<p><strong>Multiple Linear Regression</strong> with with known population standardized regression coefficients</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb73"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a>x1 <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">1000</span>, <span class="dv">10</span>, <span class="dv">2</span>)</span>
+<span id="cb73-2"><a href="#cb73-2" aria-hidden="true" tabindex="-1"></a>x2 <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">1000</span>, <span class="dv">5</span>, <span class="dv">1</span>)</span>
+<span id="cb73-3"><a href="#cb73-3" aria-hidden="true" tabindex="-1"></a>x3 <span class="ot">&lt;-</span> x1<span class="sc">*</span>x2</span>
+<span id="cb73-4"><a href="#cb73-4" aria-hidden="true" tabindex="-1"></a>Zx1 <span class="ot">&lt;-</span> <span class="fu">scale</span>(x1)</span>
+<span id="cb73-5"><a href="#cb73-5" aria-hidden="true" tabindex="-1"></a>Zx2 <span class="ot">&lt;-</span> <span class="fu">scale</span>(x2)</span>
+<span id="cb73-6"><a href="#cb73-6" aria-hidden="true" tabindex="-1"></a>Zx3 <span class="ot">&lt;-</span> <span class="fu">scale</span>(x3)</span>
+<span id="cb73-7"><a href="#cb73-7" aria-hidden="true" tabindex="-1"></a>Zy <span class="ot">&lt;-</span> .<span class="dv">7</span><span class="sc">*</span>Zx1 <span class="sc">+</span> .<span class="dv">5</span><span class="sc">*</span>Zx2 <span class="sc">+</span> <span class="dv">2</span><span class="sc">*</span>Zx3 <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="dv">1000</span>, <span class="dv">0</span>, <span class="fu">sqrt</span>(<span class="dv">1</span><span class="sc">-</span>(.<span class="dv">49</span><span class="fl">+.25+.04</span>)))</span>
+<span id="cb73-8"><a href="#cb73-8" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="dv">3</span><span class="sc">*</span>Zy <span class="sc">+</span> <span class="dv">5</span></span>
+<span id="cb73-9"><a href="#cb73-9" aria-hidden="true" tabindex="-1"></a>dat2 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(x1, x2, x3, y)</span>
+<span id="cb73-10"><a href="#cb73-10" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(dat2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>            x1          x2        x3         y
+x1  1.00000000 -0.04286003 0.6913052 0.7157652
+x2 -0.04286003  1.00000000 0.6791463 0.6401593
+x3  0.69130517  0.67914628 1.0000000 0.9848538
+y   0.71576517  0.64015925 0.9848538 1.0000000</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb75"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">lm</span>(Zy <span class="sc">~</span> <span class="dv">0</span> <span class="sc">+</span> x1 <span class="sc">+</span> x2 <span class="sc">+</span> x3))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = Zy ~ 0 + x1 + x2 + x3)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-2.66804 -0.42986 -0.03501  0.40424  2.11467 
+
+Coefficients:
+    Estimate Std. Error t value Pr(&gt;|t|)    
+x1 -0.964805   0.011053  -87.29   &lt;2e-16 ***
+x2 -2.076678   0.021641  -95.96   &lt;2e-16 ***
+x3  0.402948   0.003071  131.20   &lt;2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.6679 on 997 degrees of freedom
+Multiple R-squared:  0.9463,    Adjusted R-squared:  0.9462 
+F-statistic:  5859 on 3 and 997 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb77"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a href="#cb77-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">lm</span>(y <span class="sc">~</span> x1 <span class="sc">+</span> x2 <span class="sc">+</span> x3))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = y ~ x1 + x2 + x3)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-4.7735 -1.0049 -0.0068  0.9343  4.8428 
+
+Coefficients:
+             Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept) -35.01244    1.26879 -27.595  &lt; 2e-16 ***
+x1            0.98700    0.12530   7.877 8.72e-15 ***
+x2            1.39397    0.24608   5.665 1.93e-08 ***
+x3            0.46847    0.02437  19.227  &lt; 2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 1.418 on 996 degrees of freedom
+Multiple R-squared:  0.9731,    Adjusted R-squared:  0.9731 
+F-statistic: 1.203e+04 on 3 and 996 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb79"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb79-1"><a href="#cb79-1" aria-hidden="true" tabindex="-1"></a>QuantPsyc<span class="sc">::</span><span class="fu">lm.beta</span>(<span class="fu">lm</span>(y <span class="sc">~</span> x1 <span class="sc">+</span> x2 <span class="sc">+</span> x3))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       x1        x2        x3 
+0.2191362 0.1551256 0.7280108 </code></pre>
+</div>
+</div>
+<p><strong>Multiple Linear Regression</strong> with known population unstandardized regression coefficients</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb81"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb81-1"><a href="#cb81-1" aria-hidden="true" tabindex="-1"></a>b0 <span class="ot">&lt;-</span> <span class="dv">6</span></span>
+<span id="cb81-2"><a href="#cb81-2" aria-hidden="true" tabindex="-1"></a>b1 <span class="ot">&lt;-</span> <span class="sc">-</span><span class="dv">3</span></span>
+<span id="cb81-3"><a href="#cb81-3" aria-hidden="true" tabindex="-1"></a>b2 <span class="ot">&lt;-</span> <span class="dv">4</span></span>
+<span id="cb81-4"><a href="#cb81-4" aria-hidden="true" tabindex="-1"></a>sd <span class="ot">&lt;-</span> <span class="dv">2</span> <span class="co"># sd for the error distribution</span></span>
+<span id="cb81-5"><a href="#cb81-5" aria-hidden="true" tabindex="-1"></a>x1 <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">1000</span>, <span class="dv">10</span>, <span class="dv">2</span>)</span>
+<span id="cb81-6"><a href="#cb81-6" aria-hidden="true" tabindex="-1"></a>x2 <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">1000</span>, <span class="dv">5</span>, <span class="dv">1</span>)</span>
+<span id="cb81-7"><a href="#cb81-7" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> b0 <span class="sc">+</span> b1<span class="sc">*</span>x1 <span class="sc">+</span> b2<span class="sc">*</span>x2 <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="dv">1000</span>, <span class="dv">0</span>, sd)</span>
+<span id="cb81-8"><a href="#cb81-8" aria-hidden="true" tabindex="-1"></a>dat3 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(x1, x2, y)</span>
+<span id="cb81-9"><a href="#cb81-9" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">lm</span>(y <span class="sc">~</span> x1 <span class="sc">+</span> x2))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = y ~ x1 + x2)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-7.0986 -1.3831  0.0726  1.3308  6.0776 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)  5.75496    0.46551   12.36   &lt;2e-16 ***
+x1          -2.93915    0.03371  -87.19   &lt;2e-16 ***
+x2           3.92356    0.06521   60.17   &lt;2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 2.034 on 997 degrees of freedom
+Multiple R-squared:  0.916, Adjusted R-squared:  0.9159 
+F-statistic:  5439 on 2 and 997 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+</div>
+<p><strong>MUltivariate Data Structure</strong> with known correlations</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb83"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb83-1"><a href="#cb83-1" aria-hidden="true" tabindex="-1"></a>sigma <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="fl">1.0</span>, <span class="fl">0.7</span>, <span class="fl">0.5</span>, <span class="fl">0.3</span>,</span>
+<span id="cb83-2"><a href="#cb83-2" aria-hidden="true" tabindex="-1"></a>                <span class="fl">0.7</span>, <span class="fl">1.0</span>, <span class="fl">0.4</span>, <span class="fl">0.4</span>,</span>
+<span id="cb83-3"><a href="#cb83-3" aria-hidden="true" tabindex="-1"></a>                <span class="fl">0.5</span>, <span class="fl">0.4</span>, <span class="fl">1.0</span>, <span class="fl">0.5</span>,</span>
+<span id="cb83-4"><a href="#cb83-4" aria-hidden="true" tabindex="-1"></a>                <span class="fl">0.3</span>, <span class="fl">0.4</span>, <span class="fl">0.5</span>, <span class="fl">1.0</span>), <span class="at">nrow =</span> <span class="dv">4</span>)</span>
+<span id="cb83-5"><a href="#cb83-5" aria-hidden="true" tabindex="-1"></a>dat4 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(MASS<span class="sc">::</span><span class="fu">mvrnorm</span>(<span class="at">n =</span> <span class="dv">1000</span>, <span class="at">mu =</span> <span class="fu">rep</span>(<span class="dv">0</span>, <span class="dv">4</span>), <span class="at">Sigma =</span> sigma, <span class="at">empirical =</span> <span class="cn">TRUE</span>)) <span class="co">#replicate the exact correlations among the simulated variables</span></span>
+<span id="cb83-6"><a href="#cb83-6" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(dat4)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       X1                  X2                 X3                 X4           
+ Min.   :-3.599803   Min.   :-3.46973   Min.   :-3.15967   Min.   :-2.655511  
+ 1st Qu.:-0.690107   1st Qu.:-0.65780   1st Qu.:-0.62180   1st Qu.:-0.673038  
+ Median : 0.007892   Median :-0.05311   Median :-0.01556   Median : 0.002545  
+ Mean   : 0.000000   Mean   : 0.00000   Mean   : 0.00000   Mean   : 0.000000  
+ 3rd Qu.: 0.649518   3rd Qu.: 0.67668   3rd Qu.: 0.66693   3rd Qu.: 0.689088  
+ Max.   : 3.120066   Max.   : 3.11720   Max.   : 2.90204   Max.   : 2.843676  </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb85"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb85-1"><a href="#cb85-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(dat4)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    X1  X2  X3  X4
+X1 1.0 0.7 0.5 0.3
+X2 0.7 1.0 0.4 0.4
+X3 0.5 0.4 1.0 0.5
+X4 0.3 0.4 0.5 1.0</code></pre>
+</div>
+</div>
+<p><strong>Confirmatory Factor Analysis Model</strong></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb87"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb87-1"><a href="#cb87-1" aria-hidden="true" tabindex="-1"></a>pop.model <span class="ot">&lt;-</span> <span class="st">'</span></span>
+<span id="cb87-2"><a href="#cb87-2" aria-hidden="true" tabindex="-1"></a><span class="st">      f1 =~ 0.9*x1 + .7*x2 + .5*x3 + .3*x4</span></span>
+<span id="cb87-3"><a href="#cb87-3" aria-hidden="true" tabindex="-1"></a><span class="st">      f2 =~ 0.9*x5 + .7*x6 + .5*x7 + .3*x8</span></span>
+<span id="cb87-4"><a href="#cb87-4" aria-hidden="true" tabindex="-1"></a><span class="st">      f1 ~~ 1*f1</span></span>
+<span id="cb87-5"><a href="#cb87-5" aria-hidden="true" tabindex="-1"></a><span class="st">      f1 ~~ 0.5*f2'</span></span>
+<span id="cb87-6"><a href="#cb87-6" aria-hidden="true" tabindex="-1"></a>dat5 <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">simulateData</span>(<span class="at">model =</span> pop.model, <span class="at">sample.nobs =</span> <span class="dv">1000</span>)</span>
+<span id="cb87-7"><a href="#cb87-7" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(dat5)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       x1                 x2                 x3                 x4          
+ Min.   :-4.65126   Min.   :-3.77942   Min.   :-3.99859   Min.   :-3.24112  
+ 1st Qu.:-0.99119   1st Qu.:-0.89824   1st Qu.:-0.73440   1st Qu.:-0.71433  
+ Median :-0.04443   Median :-0.02801   Median :-0.02872   Median : 0.01853  
+ Mean   :-0.05300   Mean   :-0.03513   Mean   : 0.01288   Mean   : 0.02095  
+ 3rd Qu.: 0.89452   3rd Qu.: 0.81244   3rd Qu.: 0.80043   3rd Qu.: 0.74208  
+ Max.   : 5.60108   Max.   : 3.29324   Max.   : 3.58415   Max.   : 3.57729  
+       x5                 x6                 x7                 x8           
+ Min.   :-4.44575   Min.   :-4.11223   Min.   :-3.64002   Min.   :-3.502214  
+ 1st Qu.:-1.04031   1st Qu.:-0.82260   1st Qu.:-0.78240   1st Qu.:-0.730677  
+ Median :-0.14340   Median :-0.07939   Median :-0.01375   Median : 0.031434  
+ Mean   :-0.09666   Mean   :-0.05462   Mean   :-0.01113   Mean   :-0.008106  
+ 3rd Qu.: 0.82596   3rd Qu.: 0.70906   3rd Qu.: 0.72785   3rd Qu.: 0.725151  
+ Max.   : 4.12268   Max.   : 3.68373   Max.   : 3.60323   Max.   : 3.421959  </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb89"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb89-1"><a href="#cb89-1" aria-hidden="true" tabindex="-1"></a>analysis.model <span class="ot">&lt;-</span> <span class="st">'</span></span>
+<span id="cb89-2"><a href="#cb89-2" aria-hidden="true" tabindex="-1"></a><span class="st">      f1 =~ x1 + x2 + x3 + x4</span></span>
+<span id="cb89-3"><a href="#cb89-3" aria-hidden="true" tabindex="-1"></a><span class="st">      f2 =~ x5 + x6 + x7 +x8</span></span>
+<span id="cb89-4"><a href="#cb89-4" aria-hidden="true" tabindex="-1"></a><span class="st">      f1 ~~ f2'</span></span>
+<span id="cb89-5"><a href="#cb89-5" aria-hidden="true" tabindex="-1"></a>fit.model <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(<span class="at">model =</span> analysis.model, <span class="at">data =</span> dat5, <span class="at">std.lv =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb89-6"><a href="#cb89-6" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit.model)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>lavaan 0.6-21 ended normally after 24 iterations
+
+  Estimator                                         ML
+  Optimization method                           NLMINB
+  Number of model parameters                        17
+
+  Number of observations                          1000
+
+Model Test User Model:
+                                                      
+  Test statistic                                23.147
+  Degrees of freedom                                19
+  P-value (Chi-square)                           0.231
+
+Parameter Estimates:
+
+  Standard errors                             Standard
+  Information                                 Expected
+  Information saturated (h1) model          Structured
+
+Latent Variables:
+                   Estimate  Std.Err  z-value  P(&gt;|z|)
+  f1 =~                                               
+    x1                0.958    0.056   16.957    0.000
+    x2                0.723    0.048   15.150    0.000
+    x3                0.545    0.043   12.643    0.000
+    x4                0.280    0.040    6.933    0.000
+  f2 =~                                               
+    x5                0.842    0.057   14.869    0.000
+    x6                0.666    0.048   13.913    0.000
+    x7                0.523    0.045   11.542    0.000
+    x8                0.255    0.043    5.959    0.000
+
+Covariances:
+                   Estimate  Std.Err  z-value  P(&gt;|z|)
+  f1 ~~                                               
+    f2                0.449    0.046    9.711    0.000
+
+Variances:
+                   Estimate  Std.Err  z-value  P(&gt;|z|)
+   .x1                1.037    0.091   11.342    0.000
+   .x2                0.979    0.064   15.305    0.000
+   .x3                0.991    0.053   18.653    0.000
+   .x4                1.019    0.047   21.459    0.000
+   .x5                1.085    0.086   12.632    0.000
+   .x6                0.908    0.061   14.894    0.000
+   .x7                1.027    0.056   18.486    0.000
+   .x8                1.080    0.050   21.523    0.000
+    f1                1.000                           
+    f2                1.000                           </code></pre>
+</div>
+</div>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./01-intro.html" class="pagination-link" aria-label="Introduction to R and RStudio">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction to R and RStudio</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./03-correlation.html" class="pagination-link" aria-label="Correlation">
+        <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Correlation</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

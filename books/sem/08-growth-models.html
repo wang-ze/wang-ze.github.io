@@ -1,0 +1,1545 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.38">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="description" content="Supplementary R and Mplus syntax for the ESC_PS 9710 Structural Equation Modeling course at the University of Missouri.">
+
+<title>8&nbsp; Latent Growth Models – Structural Equation Modeling Using R and Mplus</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./09-mlm.html" rel="next">
+<link href="./07-latent-means.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-5ccb035bea26c1e21f80f44cf7c27909.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./08-growth-models.html"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Latent Growth Models</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Structural Equation Modeling Using R and Mplus</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/ze-wang/sem" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01-intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction to R and RStudio</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02-stats-review.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Review of Basic Statistics</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03-pa.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Path Analysis</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./04-cfa.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Confirmatory Factor Analysis</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./05-sem.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Full Structural Equation Models</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./06-mg-cfa.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Multigroup Confirmatory Factor Analysis</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./07-latent-means.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Models with Mean Structures</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./08-growth-models.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Latent Growth Models</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./09-mlm.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Multilevel Models</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./10-references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#syntax---r" id="toc-syntax---r" class="nav-link active" data-scroll-target="#syntax---r"><span class="header-section-number">8.1</span> Syntax - R</a>
+  <ul class="collapse">
+  <li><a href="#linear-latent-growth-models-without-means" id="toc-linear-latent-growth-models-without-means" class="nav-link" data-scroll-target="#linear-latent-growth-models-without-means"><span class="header-section-number">8.1.1</span> Linear latent growth models without means</a></li>
+  <li><a href="#linear-latent-growth-models-with-means" id="toc-linear-latent-growth-models-with-means" class="nav-link" data-scroll-target="#linear-latent-growth-models-with-means"><span class="header-section-number">8.1.2</span> Linear latent growth models with means</a></li>
+  <li><a href="#linear-latent-growth-models-with-predictors" id="toc-linear-latent-growth-models-with-predictors" class="nav-link" data-scroll-target="#linear-latent-growth-models-with-predictors"><span class="header-section-number">8.1.3</span> Linear latent growth models with predictors</a></li>
+  </ul></li>
+  <li><a href="#syntax---mplus" id="toc-syntax---mplus" class="nav-link" data-scroll-target="#syntax---mplus"><span class="header-section-number">8.2</span> Syntax - Mplus</a>
+  <ul class="collapse">
+  <li><a href="#linear-latent-growth-models-without-means-1" id="toc-linear-latent-growth-models-without-means-1" class="nav-link" data-scroll-target="#linear-latent-growth-models-without-means-1"><span class="header-section-number">8.2.1</span> Linear latent growth models without means</a></li>
+  <li><a href="#linear-latent-growth-models-with-means-1" id="toc-linear-latent-growth-models-with-means-1" class="nav-link" data-scroll-target="#linear-latent-growth-models-with-means-1"><span class="header-section-number">8.2.2</span> Linear latent growth models with means</a></li>
+  <li><a href="#linear-latent-growth-models-with-predictors-1" id="toc-linear-latent-growth-models-with-predictors-1" class="nav-link" data-scroll-target="#linear-latent-growth-models-with-predictors-1"><span class="header-section-number">8.2.3</span> Linear latent growth models with predictors</a></li>
+  <li><a href="#from-wang-su-2013" id="toc-from-wang-su-2013" class="nav-link" data-scroll-target="#from-wang-su-2013"><span class="header-section-number">8.2.4</span> From Wang &amp; Su (2013)</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Latent Growth Models</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="syntax---r" class="level2" data-number="8.1">
+<h2 data-number="8.1" class="anchored" data-anchor-id="syntax---r"><span class="header-section-number">8.1</span> Syntax - R</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lavaan); <span class="fu">library</span>(semPlot)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<section id="linear-latent-growth-models-without-means" class="level3" data-number="8.1.1">
+<h3 data-number="8.1.1" class="anchored" data-anchor-id="linear-latent-growth-models-without-means"><span class="header-section-number">8.1.1</span> Linear latent growth models without means</h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>LGROWTH.lower <span class="ot">&lt;-</span> <span class="st">'</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="st">40.628 </span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="st">37.741 53.568</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="st">40.052 48.500 60.778</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="st">50.643 63.169 70.200 107.869'</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>LGROWTH.cov <span class="ot">&lt;-</span> <span class="fu">getCov</span>(LGROWTH.lower, <span class="at">names =</span> <span class="fu">paste</span>(<span class="st">"Y"</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>, <span class="at">sep=</span><span class="st">""</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: 'getCov' is deprecated.
+Use 'lav_getcov' instead.
+See help("Deprecated")</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>lgm.linear.model <span class="ot">&lt;-</span> <span class="st">'</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="st">    F1 =~ 1*Y1 + 1*Y2 + 1*Y3 + 1*Y4</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="st">    F2 =~ 0*Y1 + 1*Y2 + 3*Y3 + 5*Y4</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="st">    F1 ~~ F2'</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>lgm.linear.fit <span class="ot">&lt;-</span> <span class="fu">cfa</span>(lgm.linear.model, <span class="at">sample.cov =</span> LGROWTH.cov, <span class="at">sample.nobs =</span> <span class="dv">204</span>)</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lgm.linear.fit, <span class="at">fit.measures =</span> <span class="cn">TRUE</span>, <span class="at">standardized =</span> <span class="cn">TRUE</span>, <span class="at">rsquare =</span> <span class="cn">TRUE</span>) </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>lavaan 0.6-21 ended normally after 44 iterations
+
+  Estimator                                         ML
+  Optimization method                           NLMINB
+  Number of model parameters                         7
+
+  Number of observations                           204
+
+Model Test User Model:
+                                                      
+  Test statistic                                10.114
+  Degrees of freedom                                 3
+  P-value (Chi-square)                           0.018
+
+Model Test Baseline Model:
+
+  Test statistic                               824.610
+  Degrees of freedom                                 6
+  P-value                                        0.000
+
+User Model versus Baseline Model:
+
+  Comparative Fit Index (CFI)                    0.991
+  Tucker-Lewis Index (TLI)                       0.983
+
+Loglikelihood and Information Criteria:
+
+  Loglikelihood user model (H0)              -2428.904
+  Loglikelihood unrestricted model (H1)      -2423.846
+                                                      
+  Akaike (AIC)                                4871.807
+  Bayesian (BIC)                              4895.034
+  Sample-size adjusted Bayesian (SABIC)       4872.856
+
+Root Mean Square Error of Approximation:
+
+  RMSEA                                          0.108
+  90 Percent confidence interval - lower         0.040
+  90 Percent confidence interval - upper         0.184
+  P-value H_0: RMSEA &lt;= 0.050                    0.075
+  P-value H_0: RMSEA &gt;= 0.080                    0.787
+
+Standardized Root Mean Square Residual:
+
+  SRMR                                           0.056
+
+Parameter Estimates:
+
+  Standard errors                             Standard
+  Information                                 Expected
+  Information saturated (h1) model          Structured
+
+Latent Variables:
+                   Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+  F1 =~                                                                 
+    Y1                1.000                               5.712    0.889
+    Y2                1.000                               5.712    0.816
+    Y3                1.000                               5.712    0.704
+    Y4                1.000                               5.712    0.570
+  F2 =~                                                                 
+    Y1                0.000                               0.000    0.000
+    Y2                1.000                               0.855    0.122
+    Y3                3.000                               2.566    0.316
+    Y4                5.000                               4.276    0.427
+
+Covariances:
+                   Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+  F1 ~~                                                                 
+    F2                3.322    0.575    5.773    0.000    0.680    0.680
+
+Variances:
+                   Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+   .Y1                8.657    1.373    6.303    0.000    8.657    0.210
+   .Y2                9.001    1.174    7.665    0.000    9.001    0.184
+   .Y3                6.684    1.164    5.742    0.000    6.684    0.102
+   .Y4               16.322    2.673    6.107    0.000   16.322    0.162
+    F1               32.630    3.806    8.574    0.000    1.000    1.000
+    F2                0.731    0.168    4.341    0.000    1.000    1.000
+
+R-Square:
+                   Estimate
+    Y1                0.790
+    Y2                0.816
+    Y3                0.898
+    Y4                0.838</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># If the "growth" function is used, the latent factor means are also estimated (although for this example, there is no information on means).</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>lgm.linear.fit2 <span class="ot">&lt;-</span> <span class="fu">growth</span>(lgm.linear.model, <span class="at">sample.cov =</span> LGROWTH.cov, <span class="at">sample.nobs =</span> <span class="dv">204</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: lavaan-&gt;lav_lavaan_step05_samplestats():  
+   sample.mean= argument is missing, but model contains mean/intercept 
+   parameters.</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lgm.linear.fit2, <span class="at">fit.measures =</span> <span class="cn">TRUE</span>, <span class="at">standardized =</span> <span class="cn">TRUE</span>, <span class="at">rsquare =</span> <span class="cn">TRUE</span>) </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>lavaan 0.6-21 ended normally after 44 iterations
+
+  Estimator                                         ML
+  Optimization method                           NLMINB
+  Number of model parameters                         9
+
+  Number of observations                           204
+
+Model Test User Model:
+                                                      
+  Test statistic                                10.114
+  Degrees of freedom                                 5
+  P-value (Chi-square)                           0.072
+
+Model Test Baseline Model:
+
+  Test statistic                               824.610
+  Degrees of freedom                                 6
+  P-value                                        0.000
+
+User Model versus Baseline Model:
+
+  Comparative Fit Index (CFI)                    0.994
+  Tucker-Lewis Index (TLI)                       0.993
+
+Loglikelihood and Information Criteria:
+
+  Loglikelihood user model (H0)              -2428.904
+  Loglikelihood unrestricted model (H1)      -2423.846
+                                                      
+  Akaike (AIC)                                4875.807
+  Bayesian (BIC)                              4905.670
+  Sample-size adjusted Bayesian (SABIC)       4877.156
+
+Root Mean Square Error of Approximation:
+
+  RMSEA                                          0.071
+  90 Percent confidence interval - lower         0.000
+  90 Percent confidence interval - upper         0.134
+  P-value H_0: RMSEA &lt;= 0.050                    0.242
+  P-value H_0: RMSEA &gt;= 0.080                    0.466
+
+Standardized Root Mean Square Residual:
+
+  SRMR                                           0.047
+
+Parameter Estimates:
+
+  Standard errors                             Standard
+  Information                                 Expected
+  Information saturated (h1) model          Structured
+
+Latent Variables:
+                   Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+  F1 =~                                                                 
+    Y1                1.000                               5.712    0.889
+    Y2                1.000                               5.712    0.816
+    Y3                1.000                               5.712    0.704
+    Y4                1.000                               5.712    0.570
+  F2 =~                                                                 
+    Y1                0.000                               0.000    0.000
+    Y2                1.000                               0.855    0.122
+    Y3                3.000                               2.566    0.316
+    Y4                5.000                               4.276    0.427
+
+Covariances:
+                   Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+  F1 ~~                                                                 
+    F2                3.322    0.575    5.773    0.000    0.680    0.680
+
+Intercepts:
+                   Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+    F1                0.000    0.432    0.000    1.000    0.000    0.000
+    F2                0.000    0.086    0.000    1.000    0.000    0.000
+
+Variances:
+                   Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+   .Y1                8.657    1.373    6.303    0.000    8.657    0.210
+   .Y2                9.001    1.174    7.665    0.000    9.001    0.184
+   .Y3                6.684    1.164    5.742    0.000    6.684    0.102
+   .Y4               16.322    2.673    6.107    0.000   16.322    0.162
+    F1               32.630    3.806    8.574    0.000    1.000    1.000
+    F2                0.731    0.168    4.341    0.000    1.000    1.000
+
+R-Square:
+                   Estimate
+    Y1                0.790
+    Y2                0.816
+    Y3                0.898
+    Y4                0.838</code></pre>
+</div>
+</div>
+</section>
+<section id="linear-latent-growth-models-with-means" class="level3" data-number="8.1.2">
+<h3 data-number="8.1.2" class="anchored" data-anchor-id="linear-latent-growth-models-with-means"><span class="header-section-number">8.1.2</span> Linear latent growth models with means</h3>
+<section id="use-the-cfa-function" class="level4" data-number="8.1.2.1">
+<h4 data-number="8.1.2.1" class="anchored" data-anchor-id="use-the-cfa-function"><span class="header-section-number">8.1.2.1</span> use the <code>cfa()</code> function</h4>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>LGROWTH.means <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">18.304</span>, <span class="fl">25.819</span>, <span class="fl">35.255</span>, <span class="fl">46.593</span>)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>lgm.linear.with.mean.model <span class="ot">&lt;-</span> <span class="st">'</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="st">    F1 =~ 1*Y1 + 1*Y2 + 1*Y3 + 1*Y4</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="st">    F2 =~ 0*Y1 + 1*Y2 + 3*Y3 + 5*Y4</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="st">    F1 ~~ F2</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="st">    F1 ~ 1</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="st">    F2 ~ 1</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="st">    Y1 ~ 0*1</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="st">    Y2 ~ 0*1</span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="st">    Y3 ~ 0*1</span></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a><span class="st">    Y4 ~ 0*1'</span></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>lgm.linear.with.mean.fit <span class="ot">&lt;-</span> <span class="fu">cfa</span>(lgm.linear.with.mean.model, <span class="at">sample.cov =</span> LGROWTH.cov, <span class="at">sample.mean =</span> LGROWTH.means, <span class="at">sample.nobs =</span> <span class="dv">204</span>)</span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lgm.linear.with.mean.fit, <span class="at">fit.measures =</span> <span class="cn">TRUE</span>, <span class="at">standardized =</span> <span class="cn">TRUE</span>, <span class="at">rsquare =</span> <span class="cn">TRUE</span>) </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>lavaan 0.6-21 ended normally after 75 iterations
+
+  Estimator                                         ML
+  Optimization method                           NLMINB
+  Number of model parameters                         9
+
+  Number of observations                           204
+
+Model Test User Model:
+                                                      
+  Test statistic                                56.800
+  Degrees of freedom                                 5
+  P-value (Chi-square)                           0.000
+
+Model Test Baseline Model:
+
+  Test statistic                               824.610
+  Degrees of freedom                                 6
+  P-value                                        0.000
+
+User Model versus Baseline Model:
+
+  Comparative Fit Index (CFI)                    0.937
+  Tucker-Lewis Index (TLI)                       0.924
+
+Loglikelihood and Information Criteria:
+
+  Loglikelihood user model (H0)              -2452.247
+  Loglikelihood unrestricted model (H1)      -2423.846
+                                                      
+  Akaike (AIC)                                4922.493
+  Bayesian (BIC)                              4952.356
+  Sample-size adjusted Bayesian (SABIC)       4923.841
+
+Root Mean Square Error of Approximation:
+
+  RMSEA                                          0.225
+  90 Percent confidence interval - lower         0.175
+  90 Percent confidence interval - upper         0.280
+  P-value H_0: RMSEA &lt;= 0.050                    0.000
+  P-value H_0: RMSEA &gt;= 0.080                    1.000
+
+Standardized Root Mean Square Residual:
+
+  SRMR                                           0.072
+
+Parameter Estimates:
+
+  Standard errors                             Standard
+  Information                                 Expected
+  Information saturated (h1) model          Structured
+
+Latent Variables:
+                   Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+  F1 =~                                                                 
+    Y1                1.000                               5.587    0.868
+    Y2                1.000                               5.587    0.784
+    Y3                1.000                               5.587    0.693
+    Y4                1.000                               5.587    0.557
+  F2 =~                                                                 
+    Y1                0.000                               0.000    0.000
+    Y2                1.000                               0.805    0.113
+    Y3                3.000                               2.415    0.300
+    Y4                5.000                               4.025    0.401
+
+Covariances:
+                   Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+  F1 ~~                                                                 
+    F2                3.599    0.586    6.140    0.000    0.800    0.800
+
+Intercepts:
+                   Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+    F1               19.029    0.430   44.287    0.000    3.406    3.406
+    F2                5.499    0.086   63.760    0.000    6.832    6.832
+   .Y1                0.000                               0.000    0.000
+   .Y2                0.000                               0.000    0.000
+   .Y3                0.000                               0.000    0.000
+   .Y4                0.000                               0.000    0.000
+
+Variances:
+                   Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+   .Y1               10.236    1.572    6.513    0.000   10.236    0.247
+   .Y2               11.711    1.442    8.119    0.000   11.711    0.231
+   .Y3                6.323    1.193    5.302    0.000    6.323    0.097
+   .Y4               17.238    2.727    6.321    0.000   17.238    0.171
+    F1               31.218    3.793    8.230    0.000    1.000    1.000
+    F2                0.648    0.172    3.766    0.000    1.000    1.000
+
+R-Square:
+                   Estimate
+    Y1                0.753
+    Y2                0.769
+    Y3                0.903
+    Y4                0.829</code></pre>
+</div>
+</div>
+</section>
+<section id="use-the-growth-function" class="level4" data-number="8.1.2.2">
+<h4 data-number="8.1.2.2" class="anchored" data-anchor-id="use-the-growth-function"><span class="header-section-number">8.1.2.2</span> use the <code>growth()</code> function</h4>
+<p>Technically, the <code>growth()</code> function is almost identical to the <code>sem()</code> function. But a mean structure is automatically assumed, and the observed intercepts are fixed to zero by default, while the latent variable intercepts/means are freely estimated.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>lgm.linear.model <span class="ot">&lt;-</span> <span class="st">'</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="st">    F1 =~ 1*Y1 + 1*Y2 + 1*Y3 + 1*Y4</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="st">    F2 =~ 0*Y1 + 1*Y2 + 3*Y3 + 5*Y4</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="st">    F1 ~~ F2'</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>lgm.linear.with.mean.fit2 <span class="ot">&lt;-</span> <span class="fu">growth</span>(lgm.linear.model, <span class="at">sample.cov =</span> LGROWTH.cov, <span class="at">sample.mean =</span> LGROWTH.means, <span class="at">sample.nobs =</span> <span class="dv">204</span>)</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lgm.linear.with.mean.fit2, <span class="at">fit.measures =</span> <span class="cn">TRUE</span>, <span class="at">standardized =</span> <span class="cn">TRUE</span>, <span class="at">rsquare =</span> <span class="cn">TRUE</span>) </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>lavaan 0.6-21 ended normally after 75 iterations
+
+  Estimator                                         ML
+  Optimization method                           NLMINB
+  Number of model parameters                         9
+
+  Number of observations                           204
+
+Model Test User Model:
+                                                      
+  Test statistic                                56.800
+  Degrees of freedom                                 5
+  P-value (Chi-square)                           0.000
+
+Model Test Baseline Model:
+
+  Test statistic                               824.610
+  Degrees of freedom                                 6
+  P-value                                        0.000
+
+User Model versus Baseline Model:
+
+  Comparative Fit Index (CFI)                    0.937
+  Tucker-Lewis Index (TLI)                       0.924
+
+Loglikelihood and Information Criteria:
+
+  Loglikelihood user model (H0)              -2452.247
+  Loglikelihood unrestricted model (H1)      -2423.846
+                                                      
+  Akaike (AIC)                                4922.493
+  Bayesian (BIC)                              4952.356
+  Sample-size adjusted Bayesian (SABIC)       4923.841
+
+Root Mean Square Error of Approximation:
+
+  RMSEA                                          0.225
+  90 Percent confidence interval - lower         0.175
+  90 Percent confidence interval - upper         0.280
+  P-value H_0: RMSEA &lt;= 0.050                    0.000
+  P-value H_0: RMSEA &gt;= 0.080                    1.000
+
+Standardized Root Mean Square Residual:
+
+  SRMR                                           0.072
+
+Parameter Estimates:
+
+  Standard errors                             Standard
+  Information                                 Expected
+  Information saturated (h1) model          Structured
+
+Latent Variables:
+                   Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+  F1 =~                                                                 
+    Y1                1.000                               5.587    0.868
+    Y2                1.000                               5.587    0.784
+    Y3                1.000                               5.587    0.693
+    Y4                1.000                               5.587    0.557
+  F2 =~                                                                 
+    Y1                0.000                               0.000    0.000
+    Y2                1.000                               0.805    0.113
+    Y3                3.000                               2.415    0.300
+    Y4                5.000                               4.025    0.401
+
+Covariances:
+                   Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+  F1 ~~                                                                 
+    F2                3.599    0.586    6.140    0.000    0.800    0.800
+
+Intercepts:
+                   Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+    F1               19.029    0.430   44.287    0.000    3.406    3.406
+    F2                5.499    0.086   63.760    0.000    6.832    6.832
+
+Variances:
+                   Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+   .Y1               10.236    1.572    6.513    0.000   10.236    0.247
+   .Y2               11.711    1.442    8.119    0.000   11.711    0.231
+   .Y3                6.323    1.193    5.302    0.000    6.323    0.097
+   .Y4               17.238    2.727    6.321    0.000   17.238    0.171
+    F1               31.218    3.793    8.230    0.000    1.000    1.000
+    F2                0.648    0.172    3.766    0.000    1.000    1.000
+
+R-Square:
+                   Estimate
+    Y1                0.753
+    Y2                0.769
+    Y3                0.903
+    Y4                0.829</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">semPaths</span>(lgm.linear.with.mean.fit2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="08-growth-models_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="linear-latent-growth-models-with-predictors" class="level3" data-number="8.1.3">
+<h3 data-number="8.1.3" class="anchored" data-anchor-id="linear-latent-growth-models-with-predictors"><span class="header-section-number">8.1.3</span> Linear latent growth models with predictors</h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>LGROWTHP.lower <span class="ot">&lt;-</span> <span class="st">'</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="st">40.628</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="st">37.741 53.568</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="st">40.052 48.500 60.778</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="st">50.643 63.169 70.200 107.869</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="st">8.949 10.493 9.430 12.843 7.290'</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>LGROWTHP.cov <span class="ot">&lt;-</span> <span class="fu">getCov</span>(LGROWTHP.lower, <span class="at">names =</span> <span class="fu">c</span>(<span class="fu">paste</span>(<span class="st">"Y"</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>, <span class="at">sep=</span><span class="st">""</span>), <span class="st">"X1"</span>))</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>lgm.linear.with.predictor.model <span class="ot">&lt;-</span> <span class="st">'</span></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a><span class="st">    F1 =~ 1*Y1 + 1*Y2 + 1*Y3 + 1*Y4</span></span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a><span class="st">    F2 =~ 0*Y1 + 1*Y2 + 3*Y3 + 5*Y4</span></span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a><span class="st">    F1 ~ X1</span></span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a><span class="st">    F2 ~ X1</span></span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a><span class="st">    F1 ~~ F2</span></span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a><span class="st">    X1 ~~ X1'</span></span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a>lgm.linear.with.predictor.fit <span class="ot">&lt;-</span> <span class="fu">cfa</span>(lgm.linear.with.predictor.model, <span class="at">sample.cov =</span> LGROWTHP.cov, <span class="at">sample.nobs =</span> <span class="dv">204</span>)</span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lgm.linear.with.predictor.fit, <span class="at">fit.measures =</span> <span class="cn">TRUE</span>, <span class="at">standardized =</span> <span class="cn">TRUE</span>, <span class="at">rsquare =</span> <span class="cn">TRUE</span>) </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>lavaan 0.6-21 ended normally after 46 iterations
+
+  Estimator                                         ML
+  Optimization method                           NLMINB
+  Number of model parameters                        10
+
+  Number of observations                           204
+
+Model Test User Model:
+                                                      
+  Test statistic                                14.308
+  Degrees of freedom                                 5
+  P-value (Chi-square)                           0.014
+
+Model Test Baseline Model:
+
+  Test statistic                               900.650
+  Degrees of freedom                                10
+  P-value                                        0.000
+
+User Model versus Baseline Model:
+
+  Comparative Fit Index (CFI)                    0.990
+  Tucker-Lewis Index (TLI)                       0.979
+
+Loglikelihood and Information Criteria:
+
+  Loglikelihood user model (H0)              -2884.566
+  Loglikelihood unrestricted model (H1)      -2877.412
+                                                      
+  Akaike (AIC)                                5789.132
+  Bayesian (BIC)                              5822.313
+  Sample-size adjusted Bayesian (SABIC)       5790.630
+
+Root Mean Square Error of Approximation:
+
+  RMSEA                                          0.096
+  90 Percent confidence interval - lower         0.039
+  90 Percent confidence interval - upper         0.155
+  P-value H_0: RMSEA &lt;= 0.050                    0.083
+  P-value H_0: RMSEA &gt;= 0.080                    0.719
+
+Standardized Root Mean Square Residual:
+
+  SRMR                                           0.051
+
+Parameter Estimates:
+
+  Standard errors                             Standard
+  Information                                 Expected
+  Information saturated (h1) model          Structured
+
+Latent Variables:
+                   Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+  F1 =~                                                                 
+    Y1                1.000                               5.721    0.889
+    Y2                1.000                               5.721    0.819
+    Y3                1.000                               5.721    0.704
+    Y4                1.000                               5.721    0.570
+  F2 =~                                                                 
+    Y1                0.000                               0.000    0.000
+    Y2                1.000                               0.850    0.122
+    Y3                3.000                               2.550    0.314
+    Y4                5.000                               4.250    0.424
+
+Regressions:
+                   Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+  F1 ~                                                                  
+    X1                1.248    0.135    9.277    0.000    0.218    0.588
+  F2 ~                                                                  
+    X1                0.067    0.032    2.118    0.034    0.079    0.212
+
+Covariances:
+                   Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+ .F1 ~~                                                                 
+   .F2                2.716    0.482    5.633    0.000    0.706    0.706
+
+Variances:
+                   Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+    X1                7.254    0.718   10.100    0.000    7.254    1.000
+   .Y1                8.725    1.331    6.553    0.000    8.725    0.210
+   .Y2                8.718    1.128    7.731    0.000    8.718    0.179
+   .Y3                6.830    1.173    5.824    0.000    6.830    0.103
+   .Y4               16.558    2.692    6.151    0.000   16.558    0.165
+   .F1               21.429    2.709    7.909    0.000    0.655    0.655
+   .F2                0.690    0.165    4.177    0.000    0.955    0.955
+
+R-Square:
+                   Estimate
+    Y1                0.790
+    Y2                0.821
+    Y3                0.897
+    Y4                0.835
+    F1                0.345
+    F2                0.045</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">semPaths</span>(lgm.linear.with.predictor.fit)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="08-growth-models_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="syntax---mplus" class="level2" data-number="8.2">
+<h2 data-number="8.2" class="anchored" data-anchor-id="syntax---mplus"><span class="header-section-number">8.2</span> Syntax - Mplus</h2>
+<section id="linear-latent-growth-models-without-means-1" class="level3" data-number="8.2.1">
+<h3 data-number="8.2.1" class="anchored" data-anchor-id="linear-latent-growth-models-without-means-1"><span class="header-section-number">8.2.1</span> Linear latent growth models without means</h3>
+<pre class="mplus"><code>TITLE:  LATENT GROWTH MODEL -- LINEAR
+DATA:  FILE IS "data\LGROWTH.txt";
+       TYPE IS COVARIANCE;
+       NOBSERVATIONS IS 204;
+VARIABLE:  NAMES ARE Y1-Y4;
+MODEL:  F1 BY Y1@1 Y2@1 Y3@1 Y4@1;
+        F2 BY Y1@0 Y2@1 Y3@3 Y4@5;
+        F1 WITH F2;
+OUTPUT:  SAMP STDYX RES;</code></pre>
+</section>
+<section id="linear-latent-growth-models-with-means-1" class="level3" data-number="8.2.2">
+<h3 data-number="8.2.2" class="anchored" data-anchor-id="linear-latent-growth-models-with-means-1"><span class="header-section-number">8.2.2</span> Linear latent growth models with means</h3>
+<section id="use-factor-analysis-to-specify-growth-models" class="level4" data-number="8.2.2.1">
+<h4 data-number="8.2.2.1" class="anchored" data-anchor-id="use-factor-analysis-to-specify-growth-models"><span class="header-section-number">8.2.2.1</span> use factor analysis to specify growth models</h4>
+<pre class="mplus"><code>TITLE:  LATENT GROWTH MODEL - LINEAR WITH MEANS
+DATA:  FILE IS "data\LGROWTHM.txt";
+       TYPE IS COVARIANCE MEANS;
+       NOBSERVATIONS IS 204;
+VARIABLE:  NAMES ARE Y1-Y4;
+MODEL:  F1 BY Y1@1 Y2@1 Y3@1 Y4@1;
+        F2 BY Y1@0 Y2@1 Y3@3 Y4@5;
+        F1 WITH F2;
+        [F1* F2* Y1-Y4@0];
+OUTPUT:  SAMP STDYX RES;</code></pre>
+</section>
+<section id="use-the-symbol-to-specify-growth-models" class="level4" data-number="8.2.2.2">
+<h4 data-number="8.2.2.2" class="anchored" data-anchor-id="use-the-symbol-to-specify-growth-models"><span class="header-section-number">8.2.2.2</span> use the <code>|</code> symbol to specify growth models</h4>
+<pre class="mplus"><code>TITLE:  LATENT GROWTH MODEL - LINEAR WITH MEANS
+DATA:  FILE IS "data\LGROWTHM.txt";
+       TYPE IS COVARIANCE MEANS;
+       NOBSERVATIONS IS 204;
+VARIABLE:  NAMES ARE Y1-Y4;
+MODEL: i s | Y1@0 Y2@1 Y3@3 Y4@5;
+OUTPUT:  SAMP STDYX RES;</code></pre>
+</section>
+</section>
+<section id="linear-latent-growth-models-with-predictors-1" class="level3" data-number="8.2.3">
+<h3 data-number="8.2.3" class="anchored" data-anchor-id="linear-latent-growth-models-with-predictors-1"><span class="header-section-number">8.2.3</span> Linear latent growth models with predictors</h3>
+<pre class="mplus"><code>TITLE:  LATENT GROWTH MODEL - LINEAR WITH PREDICTOR
+DATA:  FILE IS "data\LGROWTHP.txt";
+       TYPE IS COVARIANCE;
+       NOBSERVATIONS IS 204;
+VARIABLE:  NAMES ARE Y1-Y4 X1;
+MODEL:  F1 BY Y1-Y4@1;
+        F2 BY Y1@0 Y2@1 Y3@3 Y4@5;
+        F1 F2 ON X1;
+        F1 WITH F2;
+        X1*;
+OUTPUT:  SAMP STDYX RES;</code></pre>
+</section>
+<section id="from-wang-su-2013" class="level3" data-number="8.2.4">
+<h3 data-number="8.2.4" class="anchored" data-anchor-id="from-wang-su-2013"><span class="header-section-number">8.2.4</span> From Wang &amp; Su (2013)</h3>
+<section id="measurement-invariance-over-time" class="level4" data-number="8.2.4.1">
+<h4 data-number="8.2.4.1" class="anchored" data-anchor-id="measurement-invariance-over-time"><span class="header-section-number">8.2.4.1</span> measurement invariance over time</h4>
+<pre class="mplus"><code>TITLE: MEASUREMENT INVARIANCE OVER TIME
+DATA: FILE IS "data\NELSSelfConcept3waves.dat";
+      FORMAT IS F7 F4 2F2 F11.4 39F2;
+
+VARIABLE: NAMES ARE id status race gender weight 
+          byconf1 byconf2  byconf3  byconf4  byconf5  byconf6  byconf7  
+          byloc1  byloc2  byloc3  byloc4  byloc5  byloc6  
+          f1conf1 f1conf2  f1conf3 f1conf4  f1conf5  f1conf6  f1conf7 
+          f1loc1 f1loc2 f1loc3  f1loc4  f1loc5  f1loc6  
+          f2conf1 f2conf2  f2conf3  f2conf4 f2conf5 f2conf6 f2conf7  
+          f2loc1   f2loc2  f2loc3 f2loc4 f2loc5 f2loc6;
+          USEVARIABLES ARE  byconf1-byconf4  byloc1-byloc4
+                            f1conf1-f1conf4  f1loc1-f1loc4
+                            f2conf1-f2conf4  f2loc1-f2loc4;
+          CATEGORICAL ARE  byconf1-byconf4 byloc1-byloc4
+                            f1conf1-f1conf4 f1loc1-f1loc4
+                            f2conf1-f2conf4 f2loc1-f2loc4;
+          WEIGHT IS weight;
+          MISSING ARE race (99) gender (99) byconf1-f2loc6 (99);
+ANALYSIS: ESTIMATOR=WLSMV;
+OUTPUT: SAMPSTAT STANDARDIZED MODINDICES;
+MODEL: 
+   f1 BY byconf1@1;
+   f1 BY byconf2 (2);
+   f1 BY byconf3 (3);
+   f1 BY byconf4 (4);
+   f2 BY byloc1 (5);
+   f2 BY byloc2 (6);
+   f2 BY byloc3 (7);
+   f2 BY byloc4 (8);
+   f3 BY f1conf1@1;
+   f3 BY f1conf2 (2);
+   f3 BY f1conf3 (3);
+   f3 BY f1conf4 (4);
+   f4 BY f1loc1 (5);
+   f4 BY f1loc2 (6);
+   f4 BY f1loc3 (7);
+   f4 BY f1loc4 (8);
+   f5 BY f2conf1@1;
+   f5 BY f2conf2 (2);
+   f5 BY f2conf3 (3);
+   f5 BY f2conf4 (4);
+   f6 BY f2loc1 (5);
+   f6 BY f2loc2 (6);
+   f6 BY f2loc3 (7);
+   f6 BY f2loc4 (8);
+  [byconf1$1 f1conf1$1 f2conf1$1] (t1);  ! constraining thresholds over time
+  [byconf1$2 f1conf1$2 f2conf1$2] (t2); 
+  [byconf1$3 f1conf1$3 f2conf1$3] (t3);
+  [byconf2$1 f1conf2$1 f2conf2$1] (t4);  
+  [byconf2$2 f1conf2$2 f2conf2$2] (t5); 
+  [byconf2$3 f1conf2$3 f2conf2$3] (t6);
+  [byconf3$1 f1conf3$1 f2conf3$1] (t7);  
+  [byconf3$2 f1conf3$2 f2conf3$2] (t8); 
+  [byconf3$3 f1conf3$3 f2conf3$3] (t9);
+  [byconf4$1 f1conf4$1 f2conf4$1] (t10);  
+  [byconf4$2 f1conf4$2 f2conf4$2] (t11); 
+  [byconf4$3 f1conf4$3 f2conf4$3] (t12);
+  [byloc1$1 f1loc1$1 f2loc1$1] (t13);  
+  [byloc1$2 f1loc1$2 f2loc1$2] (t14); 
+  [byloc1$3 f1loc1$3 f2loc1$3] (t15); 
+  [byloc2$1 f1loc2$1 f2loc2$1] (t16);  
+  [byloc2$2 f1loc2$2 f2loc2$2] (t17); 
+  [byloc2$3 f1loc2$3 f2loc2$3] (t18);
+  [byloc3$1 f1loc3$1 f2loc3$1] (t19);  
+  [byloc3$2 f1loc3$2 f2loc3$2] (t20); 
+  [byloc3$3 f1loc3$3 f2loc3$3] (t21);
+  [byloc4$1 f1loc4$1 f2loc4$1] (t22);  
+  [byloc4$2 f1loc4$2 f2loc4$2] (t23); 
+  [byloc4$3 f1loc4$3 f2loc4$3] (t24);</code></pre>
+</section>
+<section id="measurement-invariance-over-time-and-across-gender-groups" class="level4" data-number="8.2.4.2">
+<h4 data-number="8.2.4.2" class="anchored" data-anchor-id="measurement-invariance-over-time-and-across-gender-groups"><span class="header-section-number">8.2.4.2</span> measurement invariance over time and across gender groups</h4>
+<pre class="mplus"><code>TITLE: MEASUREMENT INVARIANCE OVER TIME AND ACROSS GENDER GROUPS
+DATA: FILE IS "data\NELSSelfConcept3waves.dat";
+      FORMAT IS F7 F4 2F2 F11.4 39F2;
+VARIABLE: NAMES ARE id status race gender weight 
+          byconf1 byconf2  byconf3  byconf4  byconf5  byconf6  byconf7  
+          byloc1  byloc2  byloc3  byloc4  byloc5  byloc6  
+          f1conf1 f1conf2  f1conf3 f1conf4  f1conf5  f1conf6  f1conf7 
+          f1loc1 f1loc2 f1loc3  f1loc4  f1loc5  f1loc6  
+          f2conf1 f2conf2  f2conf3  f2conf4 f2conf5 f2conf6 f2conf7  
+          f2loc1   f2loc2  f2loc3 f2loc4 f2loc5 f2loc6;
+          USEVARIABLES ARE  gender byconf1-byconf4 byloc1-byloc4
+                            f1conf1-f1conf4 f1loc1-f1loc4
+                            f2conf1-f2conf4 f2loc1-f2loc4;
+          CATEGORICAL ARE  byconf1-byconf4 byloc1-byloc4
+                            f1conf1-f1conf4 f1loc1-f1loc4
+                            f2conf1-f2conf4 f2loc1-f2loc4;
+          WEIGHT IS weight;
+          MISSING ARE race (99) gender (99) byconf1-f2loc6 (99);
+          GROUPING IS gender (0=Male 1=Female);
+ANALYSIS: ESTIMATOR=WLSMV;
+OUTPUT: SAMPSTAT STANDARDIZED MODINDICES;
+MODEL: 
+  f1 BY byconf1@1;
+  f1 BY byconf2 (2);
+  f1 BY byconf3 (3);
+  f1 BY byconf4 (4);
+  f2 BY byloc1 (5);
+  f2 BY byloc2 (6);
+  f2 BY byloc3 (7);
+  f2 BY byloc4 (8);
+  f3 BY f1conf1@1;
+  f3 BY f1conf2 (2);
+  f3 BY f1conf3 (3);
+  f3 BY f1conf4 (4);
+  f4 BY f1loc1 (5);
+  f4 BY f1loc2 (6);
+  f4 BY f1loc3 (7);
+  f4 BY f1loc4 (8);
+  f5 BY f2conf1@1;
+  f5 BY f2conf2 (2);
+  f5 BY f2conf3 (3);
+  f5 BY f2conf4 (4);
+  f6 BY f2loc1 (5);
+  f6 BY f2loc2 (6);
+  f6 BY f2loc3 (7);
+  f6 BY f2loc4 (8);
+  [byconf1$1 f1conf1$1 f2conf1$1] (t1);  ! constraining thresholds over time
+ ! thresholds across groups are held equal by default 
+  [byconf1$2 f1conf1$2 f2conf1$2] (t2); 
+  [byconf1$3 f1conf1$3 f2conf1$3] (t3); 
+  [byconf2$1 f1conf2$1 f2conf2$1] (t4);  
+  [byconf2$2 f1conf2$2 f2conf2$2] (t5); 
+  [byconf2$3 f1conf2$3 f2conf2$3] (t6);
+  [byconf3$1 f1conf3$1 f2conf3$1] (t7);  
+  [byconf3$2 f1conf3$2 f2conf3$2] (t8); 
+  [byconf3$3 f1conf3$3 f2conf3$3] (t9);
+  [byconf4$1 f1conf4$1 f2conf4$1] (t10);  
+  [byconf4$2 f1conf4$2 f2conf4$2] (t11); 
+  [byconf4$3 f1conf4$3 f2conf4$3] (t12);
+  [byloc1$1 f1loc1$1 f2loc1$1] (t13);  
+  [byloc1$2 f1loc1$2 f2loc1$2] (t14); 
+  [byloc1$3 f1loc1$3 f2loc1$3] (t15); 
+  [byloc2$1 f1loc2$1 f2loc2$1] (t16);  
+  [byloc2$2 f1loc2$2 f2loc2$2] (t17); 
+  [byloc2$3 f1loc2$3 f2loc2$3] (t18);
+  [byloc3$1 f1loc3$1 f2loc3$1] (t19);  
+  [byloc3$2 f1loc3$2 f2loc3$2] (t20); 
+  [byloc3$3 f1loc3$3 f2loc3$3] (t21);
+  [byloc4$1 f1loc4$1 f2loc4$1] (t22);  
+  [byloc4$2 f1loc4$2 f2loc4$2] (t23); 
+  [byloc4$3 f1loc4$3 f2loc4$3] (t24);</code></pre>
+</section>
+<section id="piecewise-latent-growth-model-with-measurement-invariance-over-time" class="level4" data-number="8.2.4.3">
+<h4 data-number="8.2.4.3" class="anchored" data-anchor-id="piecewise-latent-growth-model-with-measurement-invariance-over-time"><span class="header-section-number">8.2.4.3</span> piecewise latent growth model with measurement invariance over time</h4>
+<pre class="mplus"><code>TITLE: PIECEWISE LATENT GROWTH MODEL WITH MEASUREMENT INVARIANCE OVER TIME
+DATA: FILE IS "data\NELSSelfConcept3waves.dat";
+      FORMAT IS F7 F4 2F2 F11.4 39F2;
+VARIABLE: NAMES ARE id status race gender weight 
+          byconf1 byconf2  byconf3  byconf4  byconf5  byconf6  byconf7  
+          byloc1  byloc2  byloc3  byloc4  byloc5  byloc6  
+          f1conf1 f1conf2  f1conf3 f1conf4  f1conf5  f1conf6  f1conf7 
+          f1loc1 f1loc2 f1loc3  f1loc4  f1loc5  f1loc6  
+          f2conf1 f2conf2  f2conf3  f2conf4 f2conf5 f2conf6 f2conf7  
+          f2loc1   f2loc2  f2loc3 f2loc4 f2loc5 f2loc6;
+          USEVARIABLES ARE  byconf1-byconf4  byloc1-byloc4
+                            f1conf1-f1conf4  f1loc1-f1loc4
+                            f2conf1-f2conf4  f2loc1-f2loc4;
+          CATEGORICAL ARE  byconf1-byconf4 byloc1-byloc4
+                            f1conf1-f1conf4 f1loc1-f1loc4
+                            f2conf1-f2conf4 f2loc1-f2loc4;
+          WEIGHT IS weight;
+          MISSING ARE race (99) gender (99) byconf1-f2loc6 (99);
+ANALYSIS: ESTIMATOR=WLSMV;
+OUTPUT: SAMPSTAT STANDARDIZED MODINDICES;
+PLOT:   TYPE = PLOT3;
+        SERIES = f1 f3 f5 (*) | f2 f4 f6(*);
+MODEL: f1 BY byconf1@1;
+       f1 BY byconf2 (2);
+       f1 BY byconf3 (3);
+       f1 BY byconf4 (4);
+       f2 BY byloc1 (5);
+       f2 BY byloc2 (6);
+       f2 BY byloc3 (7);
+       f2 BY byloc4 (8);
+       f3 BY f1conf1@1;
+       f3 BY f1conf2 (2);
+       f3 BY f1conf3 (3);
+       f3 BY f1conf4 (4);
+       f4 BY f1loc1 (5);
+       f4 BY f1loc2 (6);
+       f4 BY f1loc3 (7);
+       f4 BY f1loc4 (8);
+       f5 BY f2conf1@1;
+       f5 BY f2conf2 (2);
+       f5 BY f2conf3 (3);
+       f5 BY f2conf4 (4);
+       f6 BY f2loc1 (5);
+       f6 BY f2loc2 (6);
+       f6 BY f2loc3 (7);
+       f6 BY f2loc4 (8);
+       [byconf1$1 f1conf1$1 f2conf1$1] (t1);  
+       [byconf1$2 f1conf1$2 f2conf1$2] (t2); 
+       [byconf1$3 f1conf1$3 f2conf1$3] (t3); 
+       [byconf2$1 f1conf2$1 f2conf2$1] (t4);  
+       [byconf2$2 f1conf2$2 f2conf2$2] (t5); 
+       [byconf2$3 f1conf2$3 f2conf2$3] (t6);
+       [byconf3$1 f1conf3$1 f2conf3$1] (t7);  
+       [byconf3$2 f1conf3$2 f2conf3$2] (t8); 
+       [byconf3$3 f1conf3$3 f2conf3$3] (t9);
+       [byconf4$1 f1conf4$1 f2conf4$1] (t10);  
+       [byconf4$2 f1conf4$2 f2conf4$2] (t11); 
+       [byconf4$3 f1conf4$3 f2conf4$3] (t12);
+       [byloc1$1 f1loc1$1 f2loc1$1] (t13);  
+       [byloc1$2 f1loc1$2 f2loc1$2] (t14); 
+       [byloc1$3 f1loc1$3 f2loc1$3] (t15); 
+       [byloc2$1 f1loc2$1 f2loc2$1] (t16);  
+       [byloc2$2 f1loc2$2 f2loc2$2] (t17); 
+       [byloc2$3 f1loc2$3 f2loc2$3] (t18);
+       [byloc3$1 f1loc3$1 f2loc3$1] (t19);  
+       [byloc3$2 f1loc3$2 f2loc3$2] (t20); 
+       [byloc3$3 f1loc3$3 f2loc3$3] (t21);
+       [byloc4$1 f1loc4$1 f2loc4$1] (t22);  
+       [byloc4$2 f1loc4$2 f2loc4$2] (t23); 
+       [byloc4$3 f1loc4$3 f2loc4$3] (t24);
+       i s1 | f1@0 f3@1 f5@1;
+       i s2 | f1@0 f3@0 f5@1;
+       ii ss1 | f2@0 f4@1 f6@1;
+       ii ss2 | f2@0 f4@0 f6@1;
+       f1-f6@0; ! residual variance fixed at 0;
+       ! f1=i; f2=ii;
+       ! f3=i+s1; f4=ii+ss1;
+       ! f5=i+s1+s2; f6=ii+ss1+ss2;</code></pre>
+
+
+</section>
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./07-latent-means.html" class="pagination-link" aria-label="Models with Mean Structures">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Models with Mean Structures</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./09-mlm.html" class="pagination-link" aria-label="Multilevel Models">
+        <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Multilevel Models</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
