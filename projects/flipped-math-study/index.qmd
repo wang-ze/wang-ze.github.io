@@ -1,0 +1,12 @@
+---
+title: "Flipped Mathematics Study"
+date: "2017-08-01"
+description: "NSF-funded study examining relationships between flipped instruction and students' learning of mathematics."
+categories: [NSF, Math Education, Flipped Instruction]
+---
+
+NSF-funded research investigating how flipped-classroom instruction affects students' learning of mathematics across diverse classroom settings.
+
+**Award:** NSF DRL-1721025, $539,011 (2017–2021). PIs: Zandra de Araujo, Samuel J. Otten, Ze Wang, James Tarr.
+
+[Project site →](https://flippedmathstudy.net/){.btn .btn-outline-secondary}

@@ -4,7 +4,7 @@ pagetitle: "Ze Wang"
 about:
   template: trestles
   image: profile.jpg
-  image-shape: rounded
+  image-shape: round
   links:
     - icon: linkedin
       text: LinkedIn
@@ -12,9 +12,12 @@ about:
     - icon: github
       text: GitHub
       href: https://github.com/wang-ze
-    - icon: mortarboard
-      text: Google Scholar
+    - text: '<img src="https://cdn.simpleicons.org/googlescholar/4285F4" height="18" alt=""> Google Scholar'
       href: https://scholar.google.com/citations?user=b8eqmyEAAAAJ&hl=en
+    - text: '<img src="https://cdn.simpleicons.org/orcid/A6CE39" height="18" alt=""> ORCID'
+      href: https://orcid.org/0000-0002-5979-5544
+    - text: '<img src="https://cdn.simpleicons.org/researchgate/00CCBB" height="18" alt=""> ResearchGate'
+      href: https://www.researchgate.net/profile/Ze-Wang-22
     - icon: envelope
       text: Email
       href: mailto:zewang@gmail.com
@@ -39,7 +42,18 @@ Before AWS, I was a tenured Associate Professor of Statistics, Measurement, and 
 
 ## AWS certifications
 
-- AWS Certified AI Practitioner *(Early Adopter, Aug 2024)*
-- AWS Certified Machine Learning Engineer *(Early Adopter, Sep 2024)*
-- AWS Certified Machine Learning – Specialty *(Oct 2024)*
-- AWS Certified Solutions Architect – Associate *(Aug 2025)*
+- [AWS Certified AI Practitioner](https://www.credly.com/badges/751587a5-0135-4983-9105-fd2c518cc963) *(Early Adopter, Aug 2024)*
+- [AWS Certified Machine Learning Engineer](https://www.credly.com/badges/0c85fad4-b715-408c-b454-5c9ce2329ca2) *(Early Adopter, Sep 2024)*
+- [AWS Certified Machine Learning – Specialty](https://www.credly.com/badges/d74d0c51-7aed-456d-88e8-14470c0f61a7) *(Oct 2024)*
+- [AWS Certified Solutions Architect – Associate](https://www.credly.com/badges/a4dae1ef-b003-47c3-8e62-f96ee849e93c) *(Aug 2025)*
+
+## Selected publications
+
+1. **Wang, Z.** (2022). [A comparison of three approaches to covariate effects on latent factors](https://doi.org/10.1186/s40536-022-00148-2). *Large-scale Assessments in Education*, 10(26).
+2. **Wang, Z.** (2020). [When large-scale assessments meet data science: The big-fish-little-pond effect in fourth- and eighth-grade mathematics across nations](https://doi.org/10.3389/fpsyg.2020.579545). *Frontiers in Psychology*, 11.
+3. **Wang, Z.**, & Bergin, D. (2017). [Perceived relative standing and the big-fish-little-pond effect in 59 countries and regions: Analysis of TIMSS 2011 data](https://doi.org/10.1016/j.lindif.2017.04.003). *Learning and Individual Differences*, 57, 141–156.
+4. **Wang, Z.** (2015). [Examining big-fish-little-pond-effects across 49 countries: a multilevel latent variable modelling approach](https://doi.org/10.1080/01443410.2013.827155). *Educational Psychology*, 35(2), 228–251.
+5. **Wang, Z.**, Bergin, C., & Bergin, D. A. (2014). [Measuring engagement in fourth to twelfth grade classrooms: The Classroom Engagement Inventory](https://doi.org/10.1037/spq0000050). *School Psychology Quarterly*, 29(4), 517–535. *(350+ citations)*
+6. **Wang, Z.**, & Su, I. (2013). [Longitudinal factor structure of general self-concept and locus of control among high school students](https://doi.org/10.1177/0734282913481651). *Journal of Psychoeducational Assessment*, 31(6), 554–565.
+
+[<i class="bi bi-file-earmark-pdf"></i>&nbsp;Download my CV](cv.pdf){.btn .btn-outline-secondary}

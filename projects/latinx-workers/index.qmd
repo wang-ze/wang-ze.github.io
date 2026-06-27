@@ -1,0 +1,13 @@
+---
+title: "Latinx Workers"
+date: "2020-08-01"
+description: "NSF-funded study on the retention of Latinx workers in engineering jobs."
+categories: [NSF, Latinx, Engineering]
+image: featured.jpg
+---
+
+NSF-funded collaborative research project: *Should I Stay or Should I Go? Understanding the Retention of Latinx in Engineering Jobs*. Designed and applied quantitative methods (survey design, multilevel modeling) to understand factors driving career persistence and attrition among Latinx engineers.
+
+**Award:** NSF 2000607, $1,546,428 (2020–2025). PIs: Lisa Y. Flores (University of Missouri), Rachel L. Navarro (University of North Dakota). Role: Key Personnel.
+
+[Project site →](http://nsfengineerstudy.org/){.btn .btn-outline-secondary}

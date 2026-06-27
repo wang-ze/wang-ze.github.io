@@ -1,36 +1,56 @@
 project:
   type: website
   output-dir: _site
+  # Render only the site's .qmd pages; never descend into the local-only book/
+  # slide *source* projects (books/<slug>-src/, slides/<slug>-src/). Those are
+  # gitignored so CI never sees them, but a local render would otherwise try to
+  # render their .qmd/.Rmd and fail.
+  render:
+    - "**/*.qmd"
+    - "!books/*-src/**"
+    - "!slides/*-src/**"
+  # Pre-rendered books are static HTML (built separately from books/<slug>-src/).
+  # List them as resources so the website render copies them into _site verbatim
+  # instead of dropping them.
+  resources:
+    - books/quant-foundations/
+    - books/sem/
 
 website:
   title: "Ze Wang"
   description: "Research Scientist at AWS. Former tenured professor of statistics, measurement, and evaluation."
   site-url: https://wang-ze.github.io
   repo-url: https://github.com/wang-ze/wang-ze.github.io
+  favicon: favicon.png
   open-graph: true
   twitter-card: false
 
   navbar:
     pinned: true
+    logo: logo.png
     left:
       - href: index.qmd
         text: About
-      - href: posts/index.qmd
-        text: Blog
       - href: projects/index.qmd
         text: Projects
       - href: books/index.qmd
         text: Books
     right:
-      - icon: github
-        href: https://github.com/wang-ze
-        aria-label: GitHub
       - icon: linkedin
         href: https://www.linkedin.com/in/wang-ze/
         aria-label: LinkedIn
-      - icon: mortarboard
+      - icon: github
+        href: https://github.com/wang-ze
+        aria-label: GitHub
+      - text: '<img src="https://cdn.simpleicons.org/googlescholar/4285F4" height="20" alt="" style="vertical-align: middle;">'
         href: https://scholar.google.com/citations?user=b8eqmyEAAAAJ&hl=en
         aria-label: Google Scholar
+      - text: '<img src="https://cdn.simpleicons.org/orcid/A6CE39" height="20" alt="" style="vertical-align: middle;">'
+        href: https://orcid.org/0000-0002-5979-5544
+        aria-label: ORCID
+      - text: '<img src="https://cdn.simpleicons.org/researchgate/00CCBB" height="20" alt="" style="vertical-align: middle;">'
+        href: https://www.researchgate.net/profile/Ze-Wang-22
+        aria-label: ResearchGate
 
   page-footer:
     left: "&copy; Ze Wang"
@@ -44,6 +64,7 @@ format:
     code-copy: true
     code-overflow: wrap
     anchor-sections: true
+
 
 execute:
   freeze: auto

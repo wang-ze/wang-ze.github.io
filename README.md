@@ -23,7 +23,6 @@ Output goes to `_site/` (gitignored). On push to `main`, GitHub Actions renders 
 ## Structure
 
 - `index.qmd` — landing / about page
-- `posts/` — blog
 - `projects/` — portfolio
 - `books/` — open-access books (migration in progress)
 - `_quarto.yml` — site config

@@ -15,6 +15,9 @@ __pycache__/
 .env
 .env.local
 
+# Local Claude Code settings (not part of the site)
+.claude/
+
 **/*.quarto_ipynb
 
 # Book sources live locally under books/<slug>-src/ but are not committed.
