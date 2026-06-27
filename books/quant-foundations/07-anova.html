@@ -1,0 +1,2699 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.38">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="description" content="Class notes and R syntax for ESC_PS 8850 Quantitative Foundations in Educational Research at the University of Missouri.">
+
+<title>7&nbsp; Analysis of Variance – Quantitative Foundations in Educational Research</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./08-ancova.html" rel="next">
+<link href="./06-binary-logistic-regression.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-5ccb035bea26c1e21f80f44cf7c27909.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="site_libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./07-anova.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Analysis of Variance</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Quantitative Foundations in Educational Research</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/ze-wang/quant-foundations" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01-intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction to R and RStudio</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02-stats-review.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Review of Basic Statistics</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03-correlation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Correlation</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./04-simple-regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Simple Linear Regression</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./05-multiple-regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Multiple Regression Analysis</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./06-binary-logistic-regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Binary Logistic Regression</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./07-anova.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Analysis of Variance</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./08-ancova.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Analysis of Covariance</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./09-repeated-measures-mixed-designs.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Repeated Measures ANOVA and Mixed Designs</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./10-power-analysis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Power Analysis</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./11-references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#historical-background" id="toc-historical-background" class="nav-link active" data-scroll-target="#historical-background"><span class="header-section-number">7.1</span> Historical Background</a></li>
+  <li><a href="#the-general-linear-model-glm" id="toc-the-general-linear-model-glm" class="nav-link" data-scroll-target="#the-general-linear-model-glm"><span class="header-section-number">7.2</span> The General Linear Model (GLM)</a></li>
+  <li><a href="#one-way-anova-for-single-factor-designs" id="toc-one-way-anova-for-single-factor-designs" class="nav-link" data-scroll-target="#one-way-anova-for-single-factor-designs"><span class="header-section-number">7.3</span> One-Way ANOVA (for Single Factor Designs)</a>
+  <ul class="collapse">
+  <li><a href="#statistical-hypotheses" id="toc-statistical-hypotheses" class="nav-link" data-scroll-target="#statistical-hypotheses"><span class="header-section-number">7.3.1</span> Statistical hypotheses</a></li>
+  <li><a href="#basic-idea-of-anova" id="toc-basic-idea-of-anova" class="nav-link" data-scroll-target="#basic-idea-of-anova"><span class="header-section-number">7.3.2</span> Basic idea of ANOVA</a></li>
+  <li><a href="#empirical-example" id="toc-empirical-example" class="nav-link" data-scroll-target="#empirical-example"><span class="header-section-number">7.3.3</span> Empirical example</a></li>
+  <li><a href="#pairwise-comparisons" id="toc-pairwise-comparisons" class="nav-link" data-scroll-target="#pairwise-comparisons"><span class="header-section-number">7.3.4</span> Pairwise comparisons</a></li>
+  <li><a href="#planned-comparisons" id="toc-planned-comparisons" class="nav-link" data-scroll-target="#planned-comparisons"><span class="header-section-number">7.3.5</span> Planned comparisons</a></li>
+  <li><a href="#post-hoc-pairwise-comparisons" id="toc-post-hoc-pairwise-comparisons" class="nav-link" data-scroll-target="#post-hoc-pairwise-comparisons"><span class="header-section-number">7.3.6</span> Post-hoc pairwise comparisons</a></li>
+  </ul></li>
+  <li><a href="#sec-anova-assumptions" id="toc-sec-anova-assumptions" class="nav-link" data-scroll-target="#sec-anova-assumptions"><span class="header-section-number">7.4</span> ANOVA Assumptions</a>
+  <ul class="collapse">
+  <li><a href="#robustness" id="toc-robustness" class="nav-link" data-scroll-target="#robustness"><span class="header-section-number">7.4.1</span> Robustness</a></li>
+  </ul></li>
+  <li><a href="#one-way-anova-using-glm-approach" id="toc-one-way-anova-using-glm-approach" class="nav-link" data-scroll-target="#one-way-anova-using-glm-approach"><span class="header-section-number">7.5</span> One-way ANOVA Using GLM approach</a></li>
+  <li><a href="#factorial-analysis-of-variance-factorial-anova" id="toc-factorial-analysis-of-variance-factorial-anova" class="nav-link" data-scroll-target="#factorial-analysis-of-variance-factorial-anova"><span class="header-section-number">7.6</span> Factorial Analysis of Variance (Factorial ANOVA)</a>
+  <ul class="collapse">
+  <li><a href="#numerical-calcuations-for-two-way-anova" id="toc-numerical-calcuations-for-two-way-anova" class="nav-link" data-scroll-target="#numerical-calcuations-for-two-way-anova"><span class="header-section-number">7.6.1</span> Numerical calcuations for two-way ANOVA</a></li>
+  <li><a href="#partitioning-the-total-sum-of-squares" id="toc-partitioning-the-total-sum-of-squares" class="nav-link" data-scroll-target="#partitioning-the-total-sum-of-squares"><span class="header-section-number">7.6.2</span> Partitioning the total sum of squares</a></li>
+  <li><a href="#empirical-example---two-way-anova" id="toc-empirical-example---two-way-anova" class="nav-link" data-scroll-target="#empirical-example---two-way-anova"><span class="header-section-number">7.6.3</span> Empirical example - Two-way ANOVA</a></li>
+  <li><a href="#assumptions-for-factorial-anova-see-sec-anova-assumptions" id="toc-assumptions-for-factorial-anova-see-sec-anova-assumptions" class="nav-link" data-scroll-target="#assumptions-for-factorial-anova-see-sec-anova-assumptions"><span class="header-section-number">7.6.4</span> Assumptions for factorial ANOVA (see <span>Section 7.4</span>)</a></li>
+  <li><a href="#contrasts-using-the-multcomp-package" id="toc-contrasts-using-the-multcomp-package" class="nav-link" data-scroll-target="#contrasts-using-the-multcomp-package"><span class="header-section-number">7.6.5</span> Contrasts using the <code>multcomp</code> package</a></li>
+  </ul></li>
+  <li><a href="#factorial-anova-as-multiple-regression" id="toc-factorial-anova-as-multiple-regression" class="nav-link" data-scroll-target="#factorial-anova-as-multiple-regression"><span class="header-section-number">7.7</span> Factorial ANOVA as Multiple Regression</a></li>
+  <li><a href="#a-blog-on-anova-in-r" id="toc-a-blog-on-anova-in-r" class="nav-link" data-scroll-target="#a-blog-on-anova-in-r"><span class="header-section-number">7.8</span> A Blog on ANOVA in R</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Analysis of Variance</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rio); <span class="fu">library</span>(ggplot2); <span class="fu">library</span>(QuantPsyc); <span class="fu">library</span>(psych); <span class="fu">library</span>(car); <span class="fu">library</span>(interactions); <span class="fu">library</span>(memisc); <span class="fu">library</span>(multcomp)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required package: boot</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required package: dplyr</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'dplyr'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:stats':
+
+    filter, lag</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:base':
+
+    intersect, setdiff, setequal, union</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required package: purrr</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required package: MASS</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'MASS'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following object is masked from 'package:dplyr':
+
+    select</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'QuantPsyc'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following object is masked from 'package:base':
+
+    norm</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'psych'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following object is masked from 'package:boot':
+
+    logit</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:ggplot2':
+
+    %+%, alpha</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required package: carData</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'car'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following object is masked from 'package:psych':
+
+    logit</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following object is masked from 'package:purrr':
+
+    some</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following object is masked from 'package:dplyr':
+
+    recode</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following object is masked from 'package:boot':
+
+    logit</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required package: lattice</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'lattice'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following object is masked from 'package:boot':
+
+    melanoma</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'memisc'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following object is masked from 'package:car':
+
+    recode</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:dplyr':
+
+    collect, recode, rename, syms</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following object is masked from 'package:ggplot2':
+
+    syms</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:stats':
+
+    contr.sum, contr.treatment, contrasts</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following object is masked from 'package:base':
+
+    as.array</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required package: mvtnorm</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required package: survival</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'survival'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following object is masked from 'package:boot':
+
+    aml</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required package: TH.data</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'TH.data'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following object is masked from 'package:MASS':
+
+    geyser</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stderr">
+<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ forcats   1.0.1     ✔ stringr   1.6.0
+✔ lubridate 1.9.5     ✔ tibble    3.3.1
+✔ readr     2.2.0     ✔ tidyr     1.3.2
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ psych::%+%()             masks ggplot2::%+%()
+✖ psych::alpha()           masks ggplot2::alpha()
+✖ lubridate::as.interval() masks memisc::as.interval()
+✖ memisc::collect()        masks dplyr::collect()
+✖ dplyr::filter()          masks stats::filter()
+✖ lubridate::is.interval() masks memisc::is.interval()
+✖ dplyr::lag()             masks stats::lag()
+✖ memisc::recode()         masks car::recode(), dplyr::recode()
+✖ memisc::rename()         masks dplyr::rename()
+✖ MASS::select()           masks dplyr::select()
+✖ car::some()              masks purrr::some()
+✖ memisc::syms()           masks dplyr::syms(), ggplot2::syms()
+✖ tibble::view()           masks memisc::view()
+ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors
+
+Attaching package: 'kableExtra'
+
+
+The following object is masked from 'package:dplyr':
+
+    group_rows
+
+
+
+Attaching package: 'reshape2'
+
+
+The following object is masked from 'package:tidyr':
+
+    smiths</code></pre>
+</div>
+</div>
+<section id="historical-background" class="level2" data-number="7.1">
+<h2 data-number="7.1" class="anchored" data-anchor-id="historical-background"><span class="header-section-number">7.1</span> Historical Background</h2>
+<ul>
+<li><p>Regression models and ANOVA developed in different research areas and address different questions</p></li>
+<li><p><strong>Regression models</strong></p>
+<ul>
+<li><p>Emerged in biology and psychology at the end of the 19th century as scientists studied the correlation of human’s attributes and characteristics.</p></li>
+<li><p>For example: Sir Francis Galton described the “regression to the mean” phenomenon while studying the height of parents and their adult children (i.e., short parents’ children tended to be shorter than the average but they tended to be taller than their parents).</p></li>
+<li><p>Aim: Explaining/predicting/forecasting data and determining the relative contribution of each independent variable to the prediction.</p></li>
+</ul></li>
+<li><p>Regression models and ANOVA developed in different research areas and address different questions</p></li>
+<li><p><strong>Analysis of Variance (ANOVA)</strong></p>
+<ul>
+<li><p>Emerged in agricultural sciences in the early 20th century.</p></li>
+<li><p>William S. Gosset (pseudonym: “Student”) proposed the t-test for the comparison of means of two (experimental) groups.</p></li>
+<li><p>Sir Ronald A. Fisher proposed ANOVA to compare means from any number of experimental conditions without increase in Type I error.</p></li>
+<li><p>Aim: Evaluate whether mean scores of a dependent variable significantly differ across (experimental) conditions. ANOVA is the ideal technique for many psychological areas.</p></li>
+</ul></li>
+</ul>
+</section>
+<section id="the-general-linear-model-glm" class="level2" data-number="7.2">
+<h2 data-number="7.2" class="anchored" data-anchor-id="the-general-linear-model-glm"><span class="header-section-number">7.2</span> The General Linear Model (GLM)</h2>
+<ul>
+<li><p>Many statistic textbooks in education and social sciences describe regression models and ANOVA as distinct and independent statistical concepts.</p></li>
+<li><p>The General Linear Model (GLM) is the overarching method that includes regression and ANOVA.</p></li>
+<li><p>The GLM conception is that observed data can be described in terms of a particular model and some error,</p></li>
+</ul>
+<p><span class="math inline">\(data = model + error\)</span></p>
+<p>where the <em>model</em> term represents the hypothesis of interest; and the <em>error</em> term describes other (unconsidered) influences.</p>
+<ul>
+<li><p>The relative size of model and error components can be used to judge how well the model describes the data.</p></li>
+<li><p><strong>General</strong> refers to the fact that GLM can be used to analyze continuous independent variables (as in regression analysis) and categorical independent variables (e.g., groups; as in ANOVA).</p></li>
+<li><p>.red[<strong>Linear</strong>] means that linearity is assumed in terms of model parameters (not necessarily in terms of variables)</p>
+<ul>
+<li><p>Examples of linear models:</p>
+<p><span class="math inline">\({Y_i} = \alpha  + \beta {X_i} + {\varepsilon _i}\)</span></p>
+<p><span class="math inline">\({Y_i} = \alpha  + \beta X_i^2 + {\varepsilon _i}\)</span></p></li>
+</ul></li>
+</ul>
+</section>
+<section id="one-way-anova-for-single-factor-designs" class="level2" data-number="7.3">
+<h2 data-number="7.3" class="anchored" data-anchor-id="one-way-anova-for-single-factor-designs"><span class="header-section-number">7.3</span> One-Way ANOVA (for Single Factor Designs)</h2>
+<p>It answer the question: Are there significant differences between mean scores of a dependent variable across a number of groups (e.g., experimental conditions)?</p>
+<p><strong>True Experiment</strong></p>
+<ul>
+<li><p>An experiment that enables a researcher to test a hypothesized relationship between an independent variable and a dependent variable by manipulating the independent variable.</p></li>
+<li><p>True experiments are characterized by:</p>
+<ol type="1">
+<li><p>manipulation by the researcher of one or more independent variables</p></li>
+<li><p>use of controls such as the random assignment of participants to experimental conditions to<br>
+minimize the effects of nuisance variables</p></li>
+<li><p>careful observation or measurement of one or more dependent variables</p></li>
+</ol>
+<p><em>[1 and 2 are necessary for a true experiment]</em></p></li>
+</ul>
+<p><strong>Quasi-Experiment</strong></p>
+<ul>
+<li><p>A study in which at least one independent variable is manipulated, but participants are not randomly assigned to groups.</p></li>
+<li><p>Some studies do not meet the requirements of a true experiment. Due to ethical reasons or other relevant reasons, a researcher cannot always conduct a true experiment.</p></li>
+<li><p><strong>Example</strong>: If you want to know the effect of attending half-day daycare vs.&nbsp;attending full-day daycare, it is probably unlikely to randomly assign participants (e.g., parents may need to work so half-day daycare is not an option).</p></li>
+<li><p><em>Organismic Variable</em> (also called Subject Variables)</p>
+<ul>
+<li>They refer to already-existing characteristics of the subjects participating in the study (e.g., gender, age, intelligence, physical or psychiatric disorder, any personality attribute you can name).</li>
+<li>When using organismic variables in a study, the researcher cannot manipulate them directly but must select participants for the different conditions by virtue of the characteristics they already have.</li>
+<li>Other examples are Race/Ethnicity, ADHD, Introversion/Extroversion, Depression, SES</li>
+</ul></li>
+</ul>
+<section id="statistical-hypotheses" class="level3" data-number="7.3.1">
+<h3 data-number="7.3.1" class="anchored" data-anchor-id="statistical-hypotheses"><span class="header-section-number">7.3.1</span> Statistical hypotheses</h3>
+<ul>
+<li><p>Null Hypothesis: <span class="math inline">\({H_0}:{\mu _1} = {\mu _2} = {\mu _3} = ... = {\mu _k}\)</span> (The group means are equal in the population, where <em>k</em> is the number of groups)</p></li>
+<li><p>Alternative Hypothesis: At least two of the <span class="math inline">\({\mu _j}\)</span> (group means) are different in the population.</p></li>
+</ul>
+</section>
+<section id="basic-idea-of-anova" class="level3" data-number="7.3.2">
+<h3 data-number="7.3.2" class="anchored" data-anchor-id="basic-idea-of-anova"><span class="header-section-number">7.3.2</span> Basic idea of ANOVA</h3>
+<ul>
+<li><p>An <em>F</em> -statistic is used to determine whether significant differences in means exist.</p></li>
+<li><p>In traditional ANOVA, <em>F</em> -statistic is the ratio of between group variance and within group variance.</p></li>
+<li><p>The distribution of the <em>F</em>-statistics (with known degrees of freedom) is known, when the null hypothesis is correct.</p></li>
+<li><p>The probability that the observed (or more extreme) differences are due to chance (i.e., sampling variation) can be determined by comparing the distribution of <em>F</em>-statistics under <span class="math inline">\({H_0}\)</span> and the observed <em>F</em>-statistic.</p></li>
+<li><p>If this probability is sufficiently small, then the null hypothesis is rejected.</p></li>
+</ul>
+<p>Why not simply compare the group means two at a time using the <em>t</em> test for independent samples?</p>
+<p>Why not compare the following?: 1. <span class="math inline">\({\mu _1} = {\mu _2}\)</span> 2. <span class="math inline">\({\mu _1} = {\mu _3}\)</span> 3. <span class="math inline">\({\mu _2} = {\mu _3}\)</span></p>
+<p>Besides the extra time that it takes, especially as the number of groups (<em>k</em>) increase, the reason we do no conduct several <em>t</em> tests is because of <em>TYPE I ERROR INFLATION</em>.</p>
+<p><strong>TYPE I ERROR INFLATION</strong></p>
+<ul>
+<li><p>When we set alpha ( <span class="math inline">\(\alpha\)</span>) equal to .05, we are willing to risk being wrong 5% of the time when we reject the null hypothesis ( <span class="math inline">\({H_0}\)</span>). With just two group means to compare, there is just 1 <em>t</em> statistic calculation. We would compare our observed/obtained <em>t</em> value with the critical <em>t</em> value to see if our observed/obtained <em>t</em> value fell in the critical region for rejecting the null ( <span class="math inline">\({H_0}\)</span>). With alpha set at .05, the critical <em>t</em> value was originally determined by taking the sampling distribution of <em>t</em> for the appropriate df and locating the <em>t</em> value such that the proportion of the total number of <em>t</em> values that were equal to or more extreme than it equaled .05. That is, if we were randomly sampling one <em>t</em> score from the <em>t</em> distribution, the probability it would be greater than or equal to the critical <em>t</em> value is .05. Now what happens when we do an experiment involving many <em>t</em> comparisons, such as the 3 described above? We are no longer sampling 1 <em>t</em> value from the <em>t</em> distribution, but 3. The probability of getting <em>t</em> values greater than the critical <em>t</em> obviously goes up. It is no longer equal to .05. The probability of making a Type I error has gone up as a result of doing an experiment with many groups and analyzing the data with more than one comparison.</p></li>
+<li><p><em>Overall Alpha</em> for a set of tests is defined as the maximum risk one is willing to take in making at least one false rejection when the null is true (i.e., all the population means are equal in One-Way ANOVA), resulting in a Type I error.<br>
+Overall <span class="math inline">\(\alpha  \approx r\alpha\)</span> (It’s actually equal to <span class="math inline">\(1-{(1 - \alpha )^3}\)</span>), where <em>r</em> is the number of tests being done.</p></li>
+</ul>
+<div class="cell">
+<div class="cell-output-display">
+<table class="lightable-classic caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: center;" data-quarto-table-cell-role="th">Number of Groups</th>
+<th style="text-align: center;" data-quarto-table-cell-role="th">Number of $t$ tests [$k(k-1)/2$]</th>
+<th style="text-align: center;" data-quarto-table-cell-role="th">Approximate Overall $\alpha$ [$ \alpha \approx r\alpha$]</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">3(3-1)/2 = 3</td>
+<td style="text-align: center;">3 * 5 = .15</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">4(4-1)/2 = 6</td>
+<td style="text-align: center;">6 * .05 = .30</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">5(5-1)/2 = 10</td>
+<td style="text-align: center;">10 * .05 = .50</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">6</td>
+<td style="text-align: center;">6(6-1)/2 = 15</td>
+<td style="text-align: center;">15 * .05 = .75</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>With 3 tests, we have an approximate 15% chance of making at least 1 Type I error. The risk increases as the number of groups increase.</p>
+</section>
+<section id="empirical-example" class="level3" data-number="7.3.3">
+<h3 data-number="7.3.3" class="anchored" data-anchor-id="empirical-example"><span class="header-section-number">7.3.3</span> Empirical example</h3>
+<p>Reading achievement of 15 children for three experimental training conditions (A = control, B = non-parental training, and C = parental training).</p>
+<div class="cell">
+<div class="cell-output-display">
+<table class="lightable-classic caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th"></th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Condition A</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Condition B</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Condition C</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: right;">40.00</td>
+<td style="text-align: right;">48.00</td>
+<td style="text-align: right;">44.00</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: right;">33.00</td>
+<td style="text-align: right;">43.00</td>
+<td style="text-align: right;">46.00</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: right;">34.00</td>
+<td style="text-align: right;">51.00</td>
+<td style="text-align: right;">42.00</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: right;">35.00</td>
+<td style="text-align: right;">46.00</td>
+<td style="text-align: right;">54.00</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: right;">44.00</td>
+<td style="text-align: right;">38.00</td>
+<td style="text-align: right;">43.00</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left; font-weight: bold; color: white !important; background-color: black !important;">Mean</td>
+<td style="text-align: right; font-weight: bold; color: white !important; background-color: black !important;">37.20</td>
+<td style="text-align: right; font-weight: bold; color: white !important; background-color: black !important;">45.20</td>
+<td style="text-align: right; font-weight: bold; color: white !important; background-color: black !important;">45.80</td>
+<td style="text-align: left; font-weight: bold; color: white !important; background-color: black !important;">Grand Mean:</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; font-weight: bold; color: white !important; background-color: black !important;">SD</td>
+<td style="text-align: right; font-weight: bold; color: white !important; background-color: black !important;">4.66</td>
+<td style="text-align: right; font-weight: bold; color: white !important; background-color: black !important;">4.97</td>
+<td style="text-align: right; font-weight: bold; color: white !important; background-color: black !important;">4.82</td>
+<td style="text-align: left; font-weight: bold; color: white !important; background-color: black !important;">42.73</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<ul>
+<li><p><strong>Variance Partitioning</strong> (It’s all about the Variance). Traditinal ANOVA partitions the total variation of observed data into between-group and within-group components.</p></li>
+<li><p><strong>Total Sum of Squares</strong>: Equals the sum of squared deviations of individual data points around the overall mean (i.e., the grand mean) and serves as an indicator for the total variance of the dependent variable.</p></li>
+<li><p><strong>Between-group Sum of Squares</strong>: Equals the sum of squared deviations of the group means around the overall mean and serves as an indicator for the variance associated with group membership.</p></li>
+<li><p><strong>Within-group Sum of Squares</strong>: Equals the sum of squared deviations of individual data points around the group means and serves as an indicator for the unexplained variances existing within groups.</p></li>
+</ul>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="image/one_way_ANOVA_example_figure.png" class="img-fluid figure-img" style="width:120.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<table class="lightable-classic caption-top table table-sm table-striped small">
+<caption>ANOVA Table for One-Way ANOVA</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">Source of Variaton</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Sum of Squares</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Degrees of Freedom</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Mean Squares</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">$F$ Statistic</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left; border-left: 1px solid; border-right: 1px solid;">Between-group (model)</td>
+<td style="text-align: left; border-left: 1px solid; border-right: 1px solid;">$SS_b = \sum\limits_{j = 1}^k {{n_j}{{({\mu _j} - \mu )}^2}}$</td>
+<td style="text-align: left; border-left: 1px solid; border-right: 1px solid;">$df = k-1$</td>
+<td style="text-align: left; border-left: 1px solid; border-right: 1px solid;">$$MS _b = {SS_b} \over {k - 1}$$</td>
+<td style="text-align: left; border-left: 1px solid; border-right: 1px solid;">$F = {MS _b} \over {MS _w}$</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; border-left: 1px solid; border-right: 1px solid;">Within-group (error)</td>
+<td style="text-align: left; border-left: 1px solid; border-right: 1px solid;">$SS_w = \sum\limits_{j = 1}^k {\sum\limits_{i = 1}^{n _j} {{({y _ij} - \mu _j)}^2}}$</td>
+<td style="text-align: left; border-left: 1px solid; border-right: 1px solid;">$df = N-k$</td>
+<td style="text-align: left; border-left: 1px solid; border-right: 1px solid;">$$MS _w = {SS _w} \over {N-k}$$</td>
+<td style="text-align: left; border-left: 1px solid; border-right: 1px solid;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; border-left: 1px solid; border-right: 1px solid;">Total</td>
+<td style="text-align: left; border-left: 1px solid; border-right: 1px solid;">$SS_t = \sum\limits_{j = 1}^k {\sum\limits_{i=1}^{n _j} {{({y _ij} - \mu)}^2}}$</td>
+<td style="text-align: left; border-left: 1px solid; border-right: 1px solid;">$df = N-1$</td>
+<td style="text-align: left; border-left: 1px solid; border-right: 1px solid;"></td>
+<td style="text-align: left; border-left: 1px solid; border-right: 1px solid;"></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<ul>
+<li><p>The total sum of squares equals the between-group sum of squares plus the within-group sum of squares, i.e., <span class="math inline">\(S{S_t} = S{S_b} + S{S_w}\)</span></p></li>
+<li><p>Dividing these sums of squares by their respective degrees of freedom (<em>df</em>) makes these statistics more accurate estimates of the variability they represent in the population. The resulting value is referred to as the Mean Square or MS because it represents the mean of a particular sum of squares, which will be an unbiased estimate of the population variance.</p></li>
+<li><p>Using <span class="math inline">\(M{S_b}\)</span> and <span class="math inline">\(M{S_w}\)</span>, we can caluate the <em>F</em> ratio to test the null hypothesis that the group means are equal.</p>
+<p><span class="math inline">\(F = \frac{{M{S_b}}}{{M{S_w}}}\)</span></p></li>
+<li><p>The coefficient of determination is defined as <span class="math inline">\({R^2} = \frac{{S{S_b}}}{{S{S_t}}}\)</span></p></li>
+</ul>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>reading <span class="ot">&lt;-</span> <span class="fu">import</span>(<span class="st">"data/reading.txt"</span>)</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(reading)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  group reading
+1     1      40
+2     1      33
+3     1      34
+4     1      35
+5     1      44
+6     2      48</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>reading<span class="sc">$</span>group.f <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(reading<span class="sc">$</span>group)</span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(reading<span class="sc">$</span>group.f) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"C"</span>)</span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>mymodel <span class="ot">&lt;-</span> <span class="fu">aov</span>(reading <span class="sc">~</span> group.f, <span class="at">data=</span>reading)</span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mymodel)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>            Df Sum Sq Mean Sq F value Pr(&gt;F)  
+group.f      2  230.5   115.3   4.968 0.0268 *
+Residuals   12  278.4    23.2                 
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+</section>
+<section id="pairwise-comparisons" class="level3" data-number="7.3.4">
+<h3 data-number="7.3.4" class="anchored" data-anchor-id="pairwise-comparisons"><span class="header-section-number">7.3.4</span> Pairwise comparisons</h3>
+<ul>
+<li><p>Note that a significant <em>F</em>-test simply means that there are significant differences somewhere among means. No statements are made concerning which means differ.</p></li>
+<li><p>Planned or post-hoc comparisons are necessary to locate the source of a significant <em>F</em>-test.</p></li>
+<li><p>Planned Comparisons are those comparisons that are planned in advance of data collection. For example, in an experiment with two treatment groups and one control group (see empirical example), one may only want to compare the treatment groups with the control group (without comparing the treatment groups).</p></li>
+<li><p>Post-hoc comparisons are those comparisons withouth specific a priori theory (rather exploratory approach).</p></li>
+</ul>
+</section>
+<section id="planned-comparisons" class="level3" data-number="7.3.5">
+<h3 data-number="7.3.5" class="anchored" data-anchor-id="planned-comparisons"><span class="header-section-number">7.3.5</span> Planned comparisons</h3>
+<ul>
+<li><p>Each mean that reflects the planned hypothesis is weighted (i.e., numbers such as 0, 1, 1/2, etc).</p></li>
+<li><p>At least two of the means have to have nonzero weights.</p></li>
+<li><p>Groups with a weight of zero are left out of the comparison.</p></li>
+<li><p>Means that are contrasted with each other are assigned weights with opposite signs.</p></li>
+<li><p>The weights must sum to zero, i.e., <span class="math inline">\(\sum {{w_i} = 0}\)</span></p></li>
+</ul>
+<div class="cell">
+<div class="cell-output-display">
+<table class="lightable-classic caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">Constrasts</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Group A: Control</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Group B: Non-parental Training</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Group C: Parental Training</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">$\sum{w _i}$</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left; width: 10em; border-left: 1px solid; border-right: 1px solid;">control vs. average of training</td>
+<td style="text-align: right; width: 10em; border-left: 1px solid; border-right: 1px solid;">1</td>
+<td style="text-align: right; width: 10em; border-left: 1px solid; border-right: 1px solid;">-0.5</td>
+<td style="text-align: right; width: 10em; border-left: 1px solid; border-right: 1px solid;">0</td>
+<td style="text-align: right; width: 10em; border-left: 1px solid; border-right: 1px solid;">-0.5</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; width: 10em; border-left: 1px solid; border-right: 1px solid;">non-parental vs. parental training</td>
+<td style="text-align: right; width: 10em; border-left: 1px solid; border-right: 1px solid;">0</td>
+<td style="text-align: right; width: 10em; border-left: 1px solid; border-right: 1px solid;">-1.0</td>
+<td style="text-align: right; width: 10em; border-left: 1px solid; border-right: 1px solid;">0</td>
+<td style="text-align: right; width: 10em; border-left: 1px solid; border-right: 1px solid;">1.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; width: 10em; border-left: 1px solid; border-right: 1px solid;">contraol vs non-parental training</td>
+<td style="text-align: right; width: 10em; border-left: 1px solid; border-right: 1px solid;">1</td>
+<td style="text-align: right; width: 10em; border-left: 1px solid; border-right: 1px solid;">-1.0</td>
+<td style="text-align: right; width: 10em; border-left: 1px solid; border-right: 1px solid;">0</td>
+<td style="text-align: right; width: 10em; border-left: 1px solid; border-right: 1px solid;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; width: 10em; border-left: 1px solid; border-right: 1px solid;">control vs. parental training</td>
+<td style="text-align: right; width: 10em; border-left: 1px solid; border-right: 1px solid;">1</td>
+<td style="text-align: right; width: 10em; border-left: 1px solid; border-right: 1px solid;">0.0</td>
+<td style="text-align: right; width: 10em; border-left: 1px solid; border-right: 1px solid;">0</td>
+<td style="text-align: right; width: 10em; border-left: 1px solid; border-right: 1px solid;">-1.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>c1 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="sc">-</span><span class="dv">1</span><span class="sc">/</span><span class="dv">2</span>, <span class="sc">-</span><span class="dv">1</span><span class="sc">/</span><span class="dv">2</span>) <span class="co"># compares control vs. mean of both treatments groups</span></span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>c2 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>) <span class="co"># compares means of treatment groups</span></span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a><span class="fu">contrasts</span>(reading<span class="sc">$</span>group.f) <span class="ot">&lt;-</span> <span class="fu">cbind</span>(c1, c2) <span class="co"># add a "contrasts" attribute to  "reading$group.f" </span></span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>mymodel2 <span class="ot">&lt;-</span> model.c <span class="ot">&lt;-</span> <span class="fu">aov</span>(reading <span class="sc">~</span> group.f, <span class="at">data=</span>reading)</span>
+<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mymodel2, <span class="at">split =</span> <span class="fu">list</span>(<span class="at">group.f =</span> <span class="fu">list</span>(<span class="st">"Control vs Treatment"</span> <span class="ot">=</span> <span class="dv">1</span>,  <span class="st">"Treatment1 vs Treatment2"</span> <span class="ot">=</span> <span class="dv">2</span>)))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                                    Df Sum Sq Mean Sq F value  Pr(&gt;F)   
+group.f                              2  230.5   115.3   4.968 0.02679 * 
+  group.f: Control vs Treatment      1  229.6   229.6   9.898 0.00844 **
+  group.f: Treatment1 vs Treatment2  1    0.9     0.9   0.039 0.84716   
+Residuals                           12  278.4    23.2                   
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+</section>
+<section id="post-hoc-pairwise-comparisons" class="level3" data-number="7.3.6">
+<h3 data-number="7.3.6" class="anchored" data-anchor-id="post-hoc-pairwise-comparisons"><span class="header-section-number">7.3.6</span> Post-hoc pairwise comparisons</h3>
+<ul>
+<li><p>For example, for three groups one obtains three pairwise comparisons: A vs.&nbsp;B, A vs.&nbsp;C, and B vs.&nbsp;C</p></li>
+<li><p>The probability of not committing a Type I Error in three comparisons is <span class="math inline">\({(1 - \alpha )^3}\)</span> with <span class="math inline">\(\alpha\)</span> being the nominal significance level.</p></li>
+<li><p>The probability that at least one of the three comparisons commits a Type I Error is <span class="math inline">\(1-{(1 - \alpha )^3}\)</span>. E.g., using <span class="math inline">\(\alpha = 0.05\)</span>, we get an actual <span class="math inline">\(\alpha\)</span> of 0.143.</p></li>
+<li><p>Thus, when more than two groups are compared, a correction for multiple comparisons must be used to avoid Type I Error inflation.</p></li>
+</ul>
+<section id="bonferroni-correction" class="level4" data-number="7.3.6.1">
+<h4 data-number="7.3.6.1" class="anchored" data-anchor-id="bonferroni-correction"><span class="header-section-number">7.3.6.1</span> Bonferroni correction</h4>
+<ul>
+<li><p>Simplest method to adjust the nominal significance level.</p></li>
+<li><p>Given a significance level of <span class="math inline">\(\alpha\)</span>, the <em>p</em>-value of each of <em>k</em> tests must be smaller than <span class="math inline">\(\alpha /k\)</span>.</p></li>
+<li><p>For example, if <em>k</em> = 3 and <span class="math inline">\(\alpha = 0.05\)</span>: <span class="math inline">\(\alpha * = \frac{{0.05}}{3} = 0.017\)</span></p></li>
+</ul>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pairwise.t.test</span>(reading<span class="sc">$</span>reading, reading<span class="sc">$</span>group.f, <span class="at">p.adjust=</span><span class="st">"bonferroni"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Pairwise comparisons using t tests with pooled SD 
+
+data:  reading$reading and reading$group.f 
+
+  A     B    
+B 0.066 -    
+C 0.046 1.000
+
+P value adjustment method: bonferroni </code></pre>
+</div>
+</div>
+</section>
+<section id="tukeys-honest-significant-difference-hsd" class="level4" data-number="7.3.6.2">
+<h4 data-number="7.3.6.2" class="anchored" data-anchor-id="tukeys-honest-significant-difference-hsd"><span class="header-section-number">7.3.6.2</span> Tukey‘s Honest Significant Difference (HSD)</h4>
+<ul>
+<li><p>One of the most commonly used multiple comparison procedures.</p></li>
+<li><p>Performs all possible pairwise contrasts, where <span class="math inline">\({H_0}:{\mu _i} = {\mu _j}\)</span> for all <span class="math inline">\(i \ne j\)</span>.</p></li>
+<li><p>One of the most conservative procedures: Thus, low probability of Type I Error and less power.</p></li>
+</ul>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>mymodel3 <span class="ot">&lt;-</span><span class="fu">aov</span>(reading <span class="sc">~</span> group.f, <span class="at">data =</span> reading)</span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a><span class="fu">TukeyHSD</span>(mymodel3)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Tukey multiple comparisons of means
+    95% family-wise confidence level
+
+Fit: aov(formula = reading ~ group.f, data = reading)
+
+$group.f
+    diff        lwr       upr     p adj
+B-A  8.0 -0.1271377 16.127138 0.0537998
+C-A  8.6  0.4728623 16.727138 0.0380034
+C-B  0.6 -7.5271377  8.727138 0.9788785</code></pre>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="sec-anova-assumptions" class="level2" data-number="7.4">
+<h2 data-number="7.4" class="anchored" data-anchor-id="sec-anova-assumptions"><span class="header-section-number">7.4</span> ANOVA Assumptions</h2>
+<ul>
+<li><p><strong>Independence of observations</strong>: Observations are assumed to be randomly sampled from a pre-defined target population.</p>
+<ul>
+<li>Each participant’s score on the dependent variable is not affected by other participants in the same treatment group</li>
+</ul></li>
+<li><p><strong>Normality</strong>: The dependent variable (or the residuals) are assumed to be normally distributed in each sub-population (i.e., in each experimental cell).</p>
+<ul>
+<li>Visual displays of the data for each group (e.g., with histograms, QQ plots);</li>
+<li>Descriptive statistics (e.g., skewness and kurtosis);</li>
+<li>Use the Shapiro-Wilk test</li>
+</ul></li>
+<li><p><strong>Variance homogeneity</strong>: The variance is assumed to be the same for each sub-population.</p>
+<ul>
+<li><p>The <em>F</em> test performs acceptably when this assumption is violated if groups are equal in size or if the number in the largest group/the number in the smallest group &lt; 1.5. It becomes a problem when group sizes are extremely unequal (largest/smallest &gt; 1.5) and the assumption is violated.</p></li>
+<li><p>If larger variances are associated with small groups, the <em>F</em> test is liberal, meaning that the null is rejected falsely too often (i.e., greater than 5% of the time; actual <span class="math inline">\(\alpha\)</span> &gt; nominal <span class="math inline">\(\alpha\)</span>).</p></li>
+<li><p>If larger variances are associated with large groups, the F test is conservative, meaning that the null is rejected falsely much less than 5% of the time (actual <span class="math inline">\(\alpha\)</span> &lt; nominal <span class="math inline">\(\alpha\)</span>). While this may not appear to be a problem, you tend to lose power with smaller alpha levels.</p></li>
+<li><p>In R, use the <code>bartlett.test</code> function from the <code>stats</code> package or the <code>leveneTest</code> function from the <code>car</code> package to test the homogeneity assumption.</p></li>
+<li><p>The null hypothesis for Levene’s test and the Bartlett’s test is that the variances in different groups are equal. You DO NOT want to reject the null hypothesis.</p></li>
+</ul></li>
+</ul>
+<p><em>Bartlett’s test</em></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bartlett.test</span>(reading <span class="sc">~</span> group.f, <span class="at">data =</span> reading)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Bartlett test of homogeneity of variances
+
+data:  reading by group.f
+Bartlett's K-squared = 0.015081, df = 2, p-value = 0.9925</code></pre>
+</div>
+</div>
+<p><em>Levene’s test</em></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="fu">leveneTest</span>(reading <span class="sc">~</span> group.f, <span class="at">data =</span> reading)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Levene's Test for Homogeneity of Variance (center = median)
+      Df F value Pr(&gt;F)
+group  2  0.0363 0.9645
+      12               </code></pre>
+</div>
+</div>
+<p>What to do when the homogeneity of variance assumption is violated?</p>
+<ul>
+<li><p>Run an ANOVA that does not assume equal variances, such as the Kruskal-Wallis test.</p>
+<ul>
+<li>The Kruskal-Wallis test is a nonparametric test that is used with an independent groups design employing k samples. It is used as a substitute for the parametric one-way ANOVA when the assumptions of that test are seriously violated. The Kruskal-Wallis test does not assume normality, nor homogeneity of variance, as does the parametric ANOVA, and requires only ordinal scaling of the dependent variable (ranked data for the dependent variable). It is used when violations of normality and/or homogeneity of variance are extreme, or when interval or ratio scaling are not met by the data.</li>
+</ul></li>
+<li><p>Use a more stringent alpha level (e.g., .01, .001)</p></li>
+<li><p>Conduct a variance stabilizing transformation (e.g., square root or natural log) to the dependent variable</p></li>
+</ul>
+<section id="robustness" class="level3" data-number="7.4.1">
+<h3 data-number="7.4.1" class="anchored" data-anchor-id="robustness"><span class="header-section-number">7.4.1</span> Robustness</h3>
+<ul>
+<li><p>Robustness refers to the insensitivity of a statistical procedure against violations of model assumptions.</p></li>
+<li><p><em>Nominal alpha</em> (level of significance) is the level set by the experimenter and is the percent of time one is rejecting falsely when the null hypothesis is true and all assumptions are met.</p></li>
+<li><p><em>Actual alpha</em> is the percent of time one is rejecting falsely if 1 or more of the assumptions is violated.</p></li>
+<li><p>A test is <em>robust</em> if the actual alpha is very close to the nominal alpha.</p></li>
+<li><p>Robustness refers to the insensitivity of a statistical procedure against violations of model assumptions.</p></li>
+<li><p>Type I Error Robustness: A statistical procedure is said to be robust, if the procedure is able to protect the nominal significance level (e.g., <span class="math inline">\(\alpha = 0.05\)</span>).</p></li>
+<li><p>The ANOVA <em>F</em> -test is Type I Error robust against violations of the normality and variance homogeneity assumption (in particular, in balanced designs, i.e., equal sample sizes across conditions).</p></li>
+<li><p>However, Wilcox (1995) cautions that skewed distributions or distributions with high kurtosis lower the power of the ANOVA <em>F</em> -test to detect true mean differences.</p></li>
+<li><p>Wilcox (2012) suggests modern statistical techniques (e.g., bootstrapping) and Conover and Iman (1981) suggest rank transformations as potential remedies.</p></li>
+</ul>
+</section>
+</section>
+<section id="one-way-anova-using-glm-approach" class="level2" data-number="7.5">
+<h2 data-number="7.5" class="anchored" data-anchor-id="one-way-anova-using-glm-approach"><span class="header-section-number">7.5</span> One-way ANOVA Using GLM approach</h2>
+<ul>
+<li>The model underlying the (traditional) ANOVA can be written as: <span class="math inline">\({y_i} = \mu  + {\tau _j} + {\varepsilon _{i}}\)</span></li>
+</ul>
+<p>where <span class="math inline">\(\mu\)</span> is a constant representing the DV free of any group effects, <span class="math inline">\(\tau _j\)</span> is the effect of the <em>j</em>th group, and <span class="math inline">\({\varepsilon _i}\)</span> is the individual error</p>
+<ul>
+<li>The ANOVA model can also be written as a multiple regression model: <span class="math inline">\({y_i} = \alpha  + \sum\limits_j^{k - 1} {{\beta _j}{x_{ij}} + } {\varepsilon _i}\)</span></li>
+</ul>
+<p>where <span class="math inline">\(\alpha\)</span> is a constant representing the DV free of any group effects; <span class="math inline">\(\beta_j\)</span>’s are regression coefficients for the coded variables <span class="math inline">\(x_{ij}\)</span>; and {_i} is the individual error.</p>
+<ul>
+<li><p>We have used the GLM approached before when we had regression models with categorical predictors.</p>
+<ul>
+<li>With <em>k</em> groups, we only need (<em>k</em>-1) coded variables.</li>
+<li>Dummy coding and effect coding are often used coding schemes.</li>
+<li>Choose a reference group for coding</li>
+</ul></li>
+<li><p>ANOVA is a special case of multiple linear regression!</p></li>
+</ul>
+<p><strong>Dummy Coding </strong></p>
+<p>In R, dummy coding is called “treatment contrasts” (this is the default). the first group is used as the reference group by default.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a>reading <span class="ot">&lt;-</span> <span class="fu">import</span>(<span class="st">"data/reading.txt"</span>)</span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a>reading<span class="sc">$</span>group.f <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(reading<span class="sc">$</span>group)</span>
+<span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(reading<span class="sc">$</span>group.f) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"C"</span>)</span>
+<span id="cb53-4"><a href="#cb53-4" aria-hidden="true" tabindex="-1"></a><span class="fu">contrasts</span>(reading<span class="sc">$</span>group.f) <span class="co"># group A is the reference group</span></span>
+<span id="cb53-5"><a href="#cb53-5" aria-hidden="true" tabindex="-1"></a><span class="do">##   B C</span></span>
+<span id="cb53-6"><a href="#cb53-6" aria-hidden="true" tabindex="-1"></a><span class="do">## A 0 0</span></span>
+<span id="cb53-7"><a href="#cb53-7" aria-hidden="true" tabindex="-1"></a><span class="do">## B 1 0</span></span>
+<span id="cb53-8"><a href="#cb53-8" aria-hidden="true" tabindex="-1"></a><span class="do">## C 0 1</span></span>
+<span id="cb53-9"><a href="#cb53-9" aria-hidden="true" tabindex="-1"></a>mymodel4 <span class="ot">&lt;-</span> <span class="fu">lm</span>(reading <span class="sc">~</span> group.f, <span class="at">data=</span>reading) <span class="co">#&lt;&lt;</span></span>
+<span id="cb53-10"><a href="#cb53-10" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mymodel4)<span class="sc">$</span>coefficients</span>
+<span id="cb53-11"><a href="#cb53-11" aria-hidden="true" tabindex="-1"></a><span class="do">##             Estimate Std. Error   t value     Pr(&gt;|t|)</span></span>
+<span id="cb53-12"><a href="#cb53-12" aria-hidden="true" tabindex="-1"></a><span class="do">## (Intercept)     37.2   2.154066 17.269666 7.682923e-10</span></span>
+<span id="cb53-13"><a href="#cb53-13" aria-hidden="true" tabindex="-1"></a><span class="do">## group.fB         8.0   3.046309  2.626129 2.213323e-02</span></span>
+<span id="cb53-14"><a href="#cb53-14" aria-hidden="true" tabindex="-1"></a><span class="do">## group.fC         8.6   3.046309  2.823088 1.537161e-02</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<table class="lightable-classic caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: right;" data-quarto-table-cell-role="th">$y$</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">$\beta _0$</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">$x_B$</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">$x_C$</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">40</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">33</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">34</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">35</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">44</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">48</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">43</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">51</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">46</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">38</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">44</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">46</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">42</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">54</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">43</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>The reference group can be changed.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="fu">contrasts</span>(reading<span class="sc">$</span>group.f) <span class="ot">&lt;-</span> <span class="fu">contr.treatment</span>(<span class="at">n =</span> <span class="dv">3</span>, <span class="at">base =</span> <span class="dv">2</span>) <span class="co">#&lt;&lt;</span></span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a><span class="fu">contrasts</span>(reading<span class="sc">$</span>group.f) <span class="co"># 2nd group is the reference group</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  1 3
+A 1 0
+B 0 0
+C 0 1</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>mymodel5 <span class="ot">&lt;-</span> <span class="fu">lm</span>(reading <span class="sc">~</span> group.f, <span class="at">data=</span>reading) </span>
+<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mymodel5)<span class="sc">$</span>coefficients</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>            Estimate Std. Error    t value     Pr(&gt;|t|)
+(Intercept)     45.2   2.154066 20.9835732 7.957511e-11
+group.f1        -8.0   3.046309 -2.6261287 2.213323e-02
+group.f3         0.6   3.046309  0.1969596 8.471556e-01</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(mymodel5)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>(Intercept)    group.f1    group.f3 
+       45.2        -8.0         0.6 </code></pre>
+</div>
+</div>
+<p><strong>Effect Coding </strong> In R, effect coding is called “sum contrasts” (i.e., contrasts sum up to zero)</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="co"># library(memisc) # use the modified version of the contr.sum() function from the "memisc" group</span></span>
+<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a><span class="fu">contrasts</span>(reading<span class="sc">$</span>group.f) <span class="ot">&lt;-</span> <span class="fu">contr.sum</span>(<span class="at">n =</span> <span class="dv">3</span>, <span class="at">base =</span> <span class="dv">1</span>) <span class="co"># 1st group is the reference group</span></span>
+<span id="cb60-3"><a href="#cb60-3" aria-hidden="true" tabindex="-1"></a><span class="fu">contrasts</span>(reading<span class="sc">$</span>group.f)</span>
+<span id="cb60-4"><a href="#cb60-4" aria-hidden="true" tabindex="-1"></a><span class="do">##    2  3</span></span>
+<span id="cb60-5"><a href="#cb60-5" aria-hidden="true" tabindex="-1"></a><span class="do">## A -1 -1</span></span>
+<span id="cb60-6"><a href="#cb60-6" aria-hidden="true" tabindex="-1"></a><span class="do">## B  1  0</span></span>
+<span id="cb60-7"><a href="#cb60-7" aria-hidden="true" tabindex="-1"></a><span class="do">## C  0  1</span></span>
+<span id="cb60-8"><a href="#cb60-8" aria-hidden="true" tabindex="-1"></a>mymodel6 <span class="ot">&lt;-</span> <span class="fu">lm</span>(reading <span class="sc">~</span> group.f, <span class="at">data=</span>reading) </span>
+<span id="cb60-9"><a href="#cb60-9" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mymodel6)<span class="sc">$</span>coefficients</span>
+<span id="cb60-10"><a href="#cb60-10" aria-hidden="true" tabindex="-1"></a><span class="do">##              Estimate Std. Error   t value     Pr(&gt;|t|)</span></span>
+<span id="cb60-11"><a href="#cb60-11" aria-hidden="true" tabindex="-1"></a><span class="do">## (Intercept) 42.733333   1.243651 34.361207 2.350226e-13</span></span>
+<span id="cb60-12"><a href="#cb60-12" aria-hidden="true" tabindex="-1"></a><span class="do">## group.f2     2.466667   1.758787  1.402481 1.861089e-01</span></span>
+<span id="cb60-13"><a href="#cb60-13" aria-hidden="true" tabindex="-1"></a><span class="do">## group.f3     3.066667   1.758787  1.743626 1.067619e-01</span></span>
+<span id="cb60-14"><a href="#cb60-14" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(mymodel6)</span>
+<span id="cb60-15"><a href="#cb60-15" aria-hidden="true" tabindex="-1"></a><span class="do">## (Intercept)    group.f2    group.f3 </span></span>
+<span id="cb60-16"><a href="#cb60-16" aria-hidden="true" tabindex="-1"></a><span class="do">##   42.733333    2.466667    3.066667</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<table class="lightable-classic caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: right;" data-quarto-table-cell-role="th">$y$</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">$\beta _0$</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">$x_B$</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">$x_C$</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">40</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">-1</td>
+<td style="text-align: right;">-1</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">33</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">-1</td>
+<td style="text-align: right;">-1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">34</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">-1</td>
+<td style="text-align: right;">-1</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">35</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">-1</td>
+<td style="text-align: right;">-1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">44</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">-1</td>
+<td style="text-align: right;">-1</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">48</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">43</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">51</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">46</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">38</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">44</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">46</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">42</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">54</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">43</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a><span class="fu">contrasts</span>(reading<span class="sc">$</span>group.f) <span class="ot">&lt;-</span> <span class="fu">contr.sum</span>(<span class="at">n =</span> <span class="dv">3</span>, <span class="at">base =</span> <span class="dv">2</span>) <span class="co"># 2nd group is the reference group</span></span>
+<span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a><span class="fu">contrasts</span>(reading<span class="sc">$</span>group.f)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   1  3
+A  1  0
+B -1 -1
+C  0  1</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a>mymodel7 <span class="ot">&lt;-</span> <span class="fu">lm</span>(reading <span class="sc">~</span> group.f, <span class="at">data=</span>reading) </span>
+<span id="cb63-2"><a href="#cb63-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mymodel7)<span class="sc">$</span>coefficients</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>             Estimate Std. Error   t value     Pr(&gt;|t|)
+(Intercept) 42.733333   1.243651 34.361207 2.350226e-13
+group.f1    -5.533333   1.758787 -3.146107 8.435697e-03
+group.f3     3.066667   1.758787  1.743626 1.067619e-01</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(mymodel7)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>(Intercept)    group.f1    group.f3 
+  42.733333   -5.533333    3.066667 </code></pre>
+</div>
+</div>
+<p>Use the function <code>anova()</code> to get the traditional ANOVA table.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb67"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(mymodel4)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Analysis of Variance Table
+
+Response: reading
+          Df Sum Sq Mean Sq F value  Pr(&gt;F)  
+group.f    2 230.53  115.27  4.9684 0.02679 *
+Residuals 12 278.40   23.20                  
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+<p>Note that the coding scheme does not affect the ANOVA statistics.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb69"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(mymodel5); <span class="fu">anova</span>(mymodel6); <span class="fu">anova</span>(mymodel7)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="factorial-analysis-of-variance-factorial-anova" class="level2" data-number="7.6">
+<h2 data-number="7.6" class="anchored" data-anchor-id="factorial-analysis-of-variance-factorial-anova"><span class="header-section-number">7.6</span> Factorial Analysis of Variance (Factorial ANOVA)</h2>
+<p>Factorial ANOVA is used when you have two or more categorical independent variables.</p>
+<p><strong>For exmaple:</strong></p>
+<ul>
+<li>Is the treatment effect (3 treatments) different for females than for males?
+<ul>
+<li>[2 (gender) x 3 (treatment) factorial design]</li>
+</ul></li>
+<li>Is teaching method (4 methods) more effective for high- than for low-ability students?
+<ul>
+<li>[2 (ability level) x 4 (teaching method) factorial design]</li>
+</ul></li>
+<li>Is the gender difference on some variable (e.g., math achievement) greater for certain nationalities (American vs.&nbsp;Indonesian) than for others?
+<ul>
+<li>[2 (gender) x 2 (nationality) factorial design</li>
+</ul></li>
+</ul>
+<p>You can use this design without treatment variables. For example, your design could consist of demographic variables only (age by gender; age by ethnicity).</p>
+<p>Factorial Design is a good thing (for 3 reasons).</p>
+<ol type="1">
+<li><p>A two-way ANOVA allows us to examine the joint or interactive effect of the two independent variables on the dependent variable.</p></li>
+<li><p>Factorial designs can lead to more powerful tests by reducing error (within cell) variance. If performance on the dependent variable is related to the individual difference characteristic (the blocking variable; e.g., gender, ethnicity, age), then the reduction can be substantial.</p></li>
+<li><p>Economy of participants. We only need half the participants for a two-way ANOVA as would be needed for two one-way ANOVAs with the same number of levels for each factor.</p></li>
+</ol>
+<p><strong>A two-way ANOVA allows us to examine the joint or interactive effect of the two independent variables on the dependent variable.</strong></p>
+<p><strong>Interaction Definitions</strong></p>
+<ul>
+<li><p>An interaction is present when the effects of one independent variable on performance change at different levels of the second independent variable.</p></li>
+<li><p>An interaction is present when the pattern of differences associated with an independent variable changes at different levels of the other independent variable.</p></li>
+<li><p>An interaction is present when the simple effects of one independent variable are not the same at all levels of the second independent variable.</p></li>
+<li><p>An interaction is present when the main effect of one independent variable is not representative of the simple effects of that variable.</p></li>
+<li><p>An interaction is present when the differences between the cell means representing the effect of factor A at one level of factor B do not equal the corresponding differences at another level of factor B.</p></li>
+<li><p>An interaction is present when the effects of one of the independent variables depend on the levels of the other independent variable.</p></li>
+<li><p>An interaction is present when one of the effects of one independent variable is not constant (not the same) at all levels of the other independent variable.</p></li>
+</ul>
+<p><em>Example 1</em>: The degree of superiority changes, but one subgroup always does better than another.</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>                   T1       T2       T3     mean
+High Ability 85.00000 80.00000 76.00000 80.33333
+Low Ability  60.00000 63.00000 68.00000 63.66667
+mean         72.50000 71.50000 72.00000 72.00000</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
+ℹ Please use `linewidth` instead.</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="07-anova_files/figure-html/unnamed-chunk-24-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><em>Example 2</em>: The superiority reverses; one treatment is best with one group, but another treatment is better for a different group.</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>         Contract for Grade Teacher Controlled   mean
+Internal             50.520             38.010 44.265
+External             36.330             46.220 41.275
+mean                 43.425             42.115 42.770</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="07-anova_files/figure-html/unnamed-chunk-26-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>Factorial designs can lead to more powerful tests by reducing error (within cell) variance. If performance on the dependent variable is related to the individual difference characteristic (the blocking variable; e.g., gender, ethnicity, age), then the reduction can be substantial.</strong></p>
+<p><strong>Treatment Only</strong> (variances are inside parentheses)</p>
+<div class="cell">
+<div class="cell-output-display">
+<table class="lightable-classic caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">T1</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">T2</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left; border-left: 1px solid; border-right: 1px solid;">18, 19, 21, 20, 22, 11, 12, 11, 13, 14 (18.77)</td>
+<td style="text-align: left; border-left: 1px solid; border-right: 1px solid;">17, 16, 16, 18, 15, 9, 9, 11, 8, 7 (17.6)</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><strong>Treatment X Gender</strong> (variances are inside parentheses)</p>
+<div class="cell">
+<div class="cell-output-display">
+<table class="lightable-classic caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th"></th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">$T_1$</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">$T_2$</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left; border-left: 1px solid; border-right: 1px solid;">Males</td>
+<td style="text-align: left; border-left: 1px solid; border-right: 1px solid;">18, 19, 21, 20, 22 (2.5)</td>
+<td style="text-align: left;">17, 16, 16, 18, 15 (1.3)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; border-left: 1px solid; border-right: 1px solid;">Females</td>
+<td style="text-align: left; border-left: 1px solid; border-right: 1px solid;">11, 12, 11, 13, 14 (1.7)</td>
+<td style="text-align: left;">9, 9, 11, 8, 7 (2.2)</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><strong>Economy of participants. We only need half the participants for a two-way ANOVA as would be needed for two one-way ANOVAs with the same number of levels for each factor.</strong></p>
+<div class="cell">
+<div class="cell-output-display">
+<table class="lightable-classic caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">Drug X</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Drug Y</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">DrugZ</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left; border-left: 1px solid; border-right: 1px solid;">$n = 30$</td>
+<td style="text-align: left; border-left: 1px solid; border-right: 1px solid;">$n = 30$</td>
+<td style="text-align: left; border-left: 1px solid; border-right: 1px solid;">$n=30$</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="cell-output-display">
+<table class="lightable-classic caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th"></th>
+<th style="text-align: left;" data-quarto-table-cell-role="th"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left; border-left: 1px solid; border-right: 1px solid;">Biofeedback</td>
+<td style="text-align: left; border-left: 1px solid; border-right: 1px solid;">$n=45$</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; border-left: 1px solid; border-right: 1px solid;">Control</td>
+<td style="text-align: left; border-left: 1px solid; border-right: 1px solid;">$n = 45$</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<table class="lightable-classic caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th"></th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">DrugX</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Drug Y</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Drug Z</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Total</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Biofeedback</td>
+<td style="text-align: left;">$n=15$</td>
+<td style="text-align: left;">$n=15$</td>
+<td style="text-align: left;">$n=15$</td>
+<td style="text-align: left;">$n=45$</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; border-bottom: 1px solid;">Control</td>
+<td style="text-align: left; border-bottom: 1px solid;">$n=15$</td>
+<td style="text-align: left; border-bottom: 1px solid;">$n=15$</td>
+<td style="text-align: left; border-bottom: 1px solid;">$n=15$</td>
+<td style="text-align: left; border-bottom: 1px solid;">$n=45$</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Total</td>
+<td style="text-align: left;">$n=30$</td>
+<td style="text-align: left;">$n=30$</td>
+<td style="text-align: left;">$n=30$</td>
+<td style="text-align: left;"></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<section id="numerical-calcuations-for-two-way-anova" class="level3" data-number="7.6.1">
+<h3 data-number="7.6.1" class="anchored" data-anchor-id="numerical-calcuations-for-two-way-anova"><span class="header-section-number">7.6.1</span> Numerical calcuations for two-way ANOVA</h3>
+<p>We had between and within variation in the one-way design. In the two-way design, we will have four sources of variation:</p>
+<ol type="1">
+<li>Variation due to Factor A (1 independent variable)</li>
+<li>Variation due to Factor B (1 independent variable)</li>
+<li>Variation due to the interactive effect of A and B (interaction between two independent variables)</li>
+<li>Within cell (error) variance</li>
+</ol>
+<p><strong>Earlier Example:</strong> Reading achievement of 15 children for three experimental training conditions (A = control, B = non-parental training, C = parental training)</p>
+<p>Let’s call the treatment Factor A.</p>
+<p>We also want to consider the Gender Factor (Factor B).</p>
+<p>The mean of each cell and the marginal means look like:</p>
+<div class="cell">
+<div class="cell-output-display">
+<table class="lightable-classic caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+</colgroup>
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th" style="text-align: center; empty-cells: hide;"></th>
+<th colspan="3" data-quarto-table-cell-role="th" style="text-align: center; padding-bottom: 0; padding-left: 3px; padding-right: 3px;"><div style="border-bottom: 1px solid #111111; margin-bottom: -1px; ">
+Factor A
+</div></th>
+<th data-quarto-table-cell-role="th" style="text-align: center; empty-cells: hide;"></th>
+</tr>
+<tr class="even">
+<th style="text-align: center;" data-quarto-table-cell-role="th"></th>
+<th style="text-align: center;" data-quarto-table-cell-role="th">Control</th>
+<th style="text-align: center;" data-quarto-table-cell-role="th">Non-parental training</th>
+<th style="text-align: center;" data-quarto-table-cell-role="th">Parental training</th>
+<th style="text-align: center;" data-quarto-table-cell-role="th"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">Boys</td>
+<td style="text-align: center; border-left: 1px solid; border-right: 1px solid;">$\mu _{11}$</td>
+<td style="text-align: center; border-left: 1px solid; border-right: 1px solid;">$\mu _{12}$</td>
+<td style="text-align: center; border-left: 1px solid; border-right: 1px solid;">$\mu _{13}$</td>
+<td style="text-align: center; border-left: 1px solid; border-right: 1px solid;">$\mu _{1.}$</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Girls</td>
+<td style="text-align: center; border-left: 1px solid; border-right: 1px solid;">$\mu _{21}$</td>
+<td style="text-align: center; border-left: 1px solid; border-right: 1px solid;">$\mu _{22}$</td>
+<td style="text-align: center; border-left: 1px solid; border-right: 1px solid;">$\mu _{23}$</td>
+<td style="text-align: center; border-left: 1px solid; border-right: 1px solid;">$\mu _{2.}$</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"></td>
+<td style="text-align: center; border-left: 1px solid; border-right: 1px solid;">$\mu _{.1}$</td>
+<td style="text-align: center; border-left: 1px solid; border-right: 1px solid;">$\mu _{.2}$</td>
+<td style="text-align: center; border-left: 1px solid; border-right: 1px solid;">$\mu _{.3}$</td>
+<td style="text-align: center; border-left: 1px solid; border-right: 1px solid;">$\mu _{..}$</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><strong>Two-Way ANOVA</strong> allows <strong>two factors</strong> to be included in the same model (J X K groups). A 3 X 2 ANOVA means there are three levels of Factor A and two levels of Factor B.</p>
+<p>In a two-way ANOVA, there are two main effects (the effect of one factor that is averaged across the levels of all other factors) and an interaction effect:</p>
+<ul>
+<li><p>Main Effect for A: <span class="math inline">\({{H}_{0}}:{{\mu }_{.1}}={{\mu }_{.2}}=\cdots ={{\mu }_{.J}}\)</span> (population column means are equal, where J = number of levels for Factor A). Is there a significant difference between training groups, holding gender constant?</p></li>
+<li><p>Main Effect for B: <span class="math inline">\({{H}_{0}}:{{\mu }_{1.}}={{\mu }_{2.}}=\cdots ={{\mu }_{K.}}\)</span> (population row means are equal, where K = number of levels for Factor B). Is there a significant gender difference, holding training conditions constant?</p></li>
+<li><p>Interaction Effect (Factor A X Factor B): ): <span class="math inline">\({{H}_{0}}:{{\varphi }_{ij}}=0\)</span> for each <em>i</em> and <em>j</em>, where <span class="math inline">\({{\varphi }_{ij}}\)</span> represents the cell interaction effect (the part of the cell mean that cannot be accounted for by the overall effect/grand mean and by main effects A and B). Are the differences between boys and girls different across different training conditions? Alternatively, are training effects different for boys and girls?</p></li>
+</ul>
+</section>
+<section id="partitioning-the-total-sum-of-squares" class="level3" data-number="7.6.2">
+<h3 data-number="7.6.2" class="anchored" data-anchor-id="partitioning-the-total-sum-of-squares"><span class="header-section-number">7.6.2</span> Partitioning the total sum of squares</h3>
+<p><span class="math display">\[{y_{ijk}} = \mu  + {\alpha _j} + {\beta _k} + {(\alpha \beta )_{jk}} + {\varepsilon _{ijk}}\]</span> where - <span class="math inline">\(\mu  = {\Sigma _j}{\Sigma _k}{\mu _{jk}}/JK\)</span> is the grand mean</p>
+<ul>
+<li><p><span class="math inline">\({\alpha _j} = {\mu _{.j}} - \mu\)</span> is the effect of the <em>j</em>th group of Factor A. The marginal mean <span class="math inline">\(mu _{.j}\)</span> is defined as <span class="math inline">\({\mu _{.j}} = {\Sigma _k}{\mu _{jk}}/K\)</span> where <em>K</em> is the number of levels of Factor B.</p></li>
+<li><p><span class="math inline">\({\beta _k} = {\mu _{k.}} - \mu\)</span> is the effect of the <em>k</em>th gorup of Factor B. The marignal mean <span class="math inline">\(mu _{k.}\)</span> is defined as <span class="math inline">\({\mu _{k.}} = {\Sigma _j}{\mu _{jk}}/J\)</span> where <em>J</em> is the number of levels of Factor A.</p></li>
+<li><p><span class="math inline">\({(\alpha \beta )_{jk}} = {\mu _{jk}} - (\mu  + {\alpha _j} + {\beta _k})\)</span> is the interaction effect, where <span class="math inline">\(\mu _{jk}\)</span> is the cell mean. An interaction effect is teh extent to which each cell mean differs from the additive pattern of the main effects.</p></li>
+<li><p><span class="math inline">\({\varepsilon _{ijk}}\)</span> is the error term which is assumed to be normally distributed (i.e., <span class="math inline">\({\varepsilon _{ijk}} \sim N(0,\sigma _\varepsilon ^2)\)</span>)</p></li>
+</ul>
+<p><span class="math display">\[{y_{ijk}} = \mu  + {\alpha _j} + {\beta _k} + {(\alpha \beta )_{jk}} + {\varepsilon _{ijk}}\]</span></p>
+<p><span class="math display">\[SS{Q_y} = SS{Q_A} + SS{Q_B} + SS{Q_{AB}} + SS{Q_E}\]</span></p>
+<div class="cell">
+<div class="cell-output-display">
+<table class="lightable-classic caption-top table table-sm table-striped small">
+<caption>ANOVA Table for Two-Way ANOVA</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">Source of Variaton</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Sum of Squares</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Degrees of Freedom</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Mean Squares</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">$F$ Statistic</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left; border-left: 1px solid; border-right: 1px solid;">Factor A</td>
+<td style="text-align: left; border-left: 1px solid; border-right: 1px solid;">$SSQ_A = {nK}\sum\limits_{j = 1}^J {{({\mu _j} - \mu)}^2}$</td>
+<td style="text-align: left; border-left: 1px solid; border-right: 1px solid;">$J-1$</td>
+<td style="text-align: left; border-left: 1px solid; border-right: 1px solid;">$MS _A = {{SSQ_A} \over {J - 1}}$</td>
+<td style="text-align: left; border-left: 1px solid; border-right: 1px solid;">$F = {{MS _A} \over {MS _E}}$</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; border-left: 1px solid; border-right: 1px solid;">Factor B</td>
+<td style="text-align: left; border-left: 1px solid; border-right: 1px solid;">$SSQ_B = {nJ}\sum\limits_{k = 1}^K {{({\mu _k} - \mu)}^2}$</td>
+<td style="text-align: left; border-left: 1px solid; border-right: 1px solid;">$K-1$</td>
+<td style="text-align: left; border-left: 1px solid; border-right: 1px solid;">$MS _B = {{SSQ _B} \over {K-1}}$</td>
+<td style="text-align: left; border-left: 1px solid; border-right: 1px solid;">$F = {{MS _B} \over {MS_E}}$</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; border-left: 1px solid; border-right: 1px solid;">Interaction (A $\times$ B</td>
+<td style="text-align: left; border-left: 1px solid; border-right: 1px solid;">$SSQ_{AB} = n\sum\limits_{j}^J {\sum\limits_{k}^K {{({\mu _{jk}} - {\mu _j} - {\mu _k} + {\mu})}^2}}$</td>
+<td style="text-align: left; border-left: 1px solid; border-right: 1px solid;">$(J-1)(K-1)$</td>
+<td style="text-align: left; border-left: 1px solid; border-right: 1px solid;">$MS _{AB} = {{SSQ _{AB}} \over {(J-1)(K-1)}}$</td>
+<td style="text-align: left; border-left: 1px solid; border-right: 1px solid;">$F = {{MS _{AB}} \over {MS_E}}$</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; border-left: 1px solid; border-right: 1px solid;">Error</td>
+<td style="text-align: left; border-left: 1px solid; border-right: 1px solid;">$SSQ_E = \sum\limits_{i}^{n} {\sum\limits_{j}^J {\sum\limits_{k}^K {{({\mu _{ijk}} - {\mu _jk})}^2}}}$</td>
+<td style="text-align: left; border-left: 1px solid; border-right: 1px solid;">$JK(n-1)$</td>
+<td style="text-align: left; border-left: 1px solid; border-right: 1px solid;">$MS _B = {{SSQ _E} \over {JK(n-1)}}$</td>
+<td style="text-align: left; border-left: 1px solid; border-right: 1px solid;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; border-left: 1px solid; border-right: 1px solid;">Total</td>
+<td style="text-align: left; border-left: 1px solid; border-right: 1px solid;">$SSQ_y = \sum\limits_{i}^{n} {\sum\limits_{j}^J {\sum\limits_{k}^K {{({\mu _{ijk}} - {\mu})}^2}}}$</td>
+<td style="text-align: left; border-left: 1px solid; border-right: 1px solid;">$nJK-1$</td>
+<td style="text-align: left; border-left: 1px solid; border-right: 1px solid;"></td>
+<td style="text-align: left; border-left: 1px solid; border-right: 1px solid;"></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>Note that <span class="math display">\[R^2 = {{SSQ_A + SSQ_B + SSQ_AB} \over {SSQ_y}}\]</span></p>
+</section>
+<section id="empirical-example---two-way-anova" class="level3" data-number="7.6.3">
+<h3 data-number="7.6.3" class="anchored" data-anchor-id="empirical-example---two-way-anova"><span class="header-section-number">7.6.3</span> Empirical example - Two-way ANOVA</h3>
+<div class="cell">
+<div class="cell-output-display">
+<table class="lightable-classic caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th"></th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Condition A</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Condition B</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Condition C</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: right;">40</td>
+<td style="text-align: right;">48</td>
+<td style="text-align: right;">44</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Boys</td>
+<td style="text-align: right;">33</td>
+<td style="text-align: right;">43</td>
+<td style="text-align: right;">46</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: right;">34</td>
+<td style="text-align: right;">51</td>
+<td style="text-align: right;">42</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; border-bottom: 1px solid;"></td>
+<td style="text-align: right; border-bottom: 1px solid;">44</td>
+<td style="text-align: right; border-bottom: 1px solid;">38</td>
+<td style="text-align: right; border-bottom: 1px solid;">43</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: right;">42</td>
+<td style="text-align: right;">43</td>
+<td style="text-align: right;">43</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Girls</td>
+<td style="text-align: right;">35</td>
+<td style="text-align: right;">66</td>
+<td style="text-align: right;">41</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: right;">41</td>
+<td style="text-align: right;">57</td>
+<td style="text-align: right;">39</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: right;">37</td>
+<td style="text-align: right;">36</td>
+<td style="text-align: right;">45</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb73"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">import</span>(<span class="st">"data/reading2.txt"</span>)</span>
+<span id="cb73-2"><a href="#cb73-2" aria-hidden="true" tabindex="-1"></a>dat<span class="sc">$</span>training <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(dat<span class="sc">$</span>training)</span>
+<span id="cb73-3"><a href="#cb73-3" aria-hidden="true" tabindex="-1"></a>dat<span class="sc">$</span>gender <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(dat<span class="sc">$</span>gender)</span>
+<span id="cb73-4"><a href="#cb73-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(dat)             </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  reading training gender
+1      40        A    boy
+2      33        A    boy
+3      34        A    boy
+4      44        A    boy
+5      48        B    boy
+6      43        B    boy</code></pre>
+</div>
+</div>
+<p><strong>Means of main effects</strong></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb75"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a><span class="fu">aggregate</span>(reading <span class="sc">~</span> training, <span class="at">data =</span> dat, mean, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb75-2"><a href="#cb75-2" aria-hidden="true" tabindex="-1"></a><span class="fu">aggregate</span>(reading <span class="sc">~</span> gender, <span class="at">data =</span> dat, mean, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  training reading
+1        A  38.250
+2        B  47.750
+3        C  42.875
+  gender  reading
+1    boy 42.16667
+2   girl 43.75000</code></pre>
+</div>
+</div>
+<p><strong>Means of interaction effects</strong></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb77"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a href="#cb77-1" aria-hidden="true" tabindex="-1"></a><span class="fu">aggregate</span>(reading <span class="sc">~</span> training <span class="sc">+</span> gender, <span class="at">data =</span> dat, mean, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  training gender reading
+1        A    boy   37.75
+2        B    boy   45.00
+3        C    boy   43.75
+4        A   girl   38.75
+5        B   girl   50.50
+6        C   girl   42.00</code></pre>
+</div>
+</div>
+<p><strong>Two-Way ANOVA Model</strong></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb79"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb79-1"><a href="#cb79-1" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">aov</span>(reading <span class="sc">~</span> training <span class="sc">*</span> gender, <span class="at">data =</span> dat)</span>
+<span id="cb79-2"><a href="#cb79-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                Df Sum Sq Mean Sq F value Pr(&gt;F)  
+training         2  361.1  180.54   4.118 0.0337 *
+gender           1   15.0   15.04   0.343 0.5653  
+training:gender  2   53.6   26.79   0.611 0.5537  
+Residuals       18  789.2   43.85                 
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb81"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb81-1"><a href="#cb81-1" aria-hidden="true" tabindex="-1"></a>M <span class="ot">&lt;-</span> <span class="fu">tapply</span>(dat<span class="sc">$</span>reading, <span class="fu">list</span>(dat<span class="sc">$</span>gender, dat<span class="sc">$</span>training), mean)</span>
+<span id="cb81-2"><a href="#cb81-2" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb81-3"><a href="#cb81-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">treatment=</span><span class="fu">factor</span>(<span class="fu">c</span>(<span class="st">"A"</span>, <span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"B"</span>, <span class="st">"C"</span>, <span class="st">"C"</span>)),</span>
+<span id="cb81-4"><a href="#cb81-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">gender=</span><span class="fu">factor</span>(<span class="fu">c</span>(<span class="st">"boy"</span>, <span class="st">"girl"</span>,<span class="st">"boy"</span>, <span class="st">"girl"</span>,<span class="st">"boy"</span>, <span class="st">"girl"</span>)),</span>
+<span id="cb81-5"><a href="#cb81-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">score=</span><span class="fu">as.vector</span>(M)</span>
+<span id="cb81-6"><a href="#cb81-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb81-7"><a href="#cb81-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb81-8"><a href="#cb81-8" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span>df, <span class="fu">aes</span>(<span class="at">x=</span>treatment, <span class="at">y=</span>score, <span class="at">group =</span> gender, <span class="at">color=</span>gender)) <span class="sc">+</span> </span>
+<span id="cb81-9"><a href="#cb81-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb81-10"><a href="#cb81-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Achievement by Treatment and Gender"</span>) <span class="sc">+</span> </span>
+<span id="cb81-11"><a href="#cb81-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Treatment Group"</span>) <span class="sc">+</span></span>
+<span id="cb81-12"><a href="#cb81-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Achievement"</span>) <span class="sc">+</span></span>
+<span id="cb81-13"><a href="#cb81-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">linetype =</span> gender), <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span> </span>
+<span id="cb81-14"><a href="#cb81-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.title=</span><span class="fu">element_blank</span>())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="07-anova_files/figure-html/unnamed-chunk-38-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb82"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb82-1"><a href="#cb82-1" aria-hidden="true" tabindex="-1"></a>dat<span class="sc">$</span>int <span class="ot">&lt;-</span> <span class="fu">interaction</span>(dat<span class="sc">$</span>training, dat<span class="sc">$</span>gender)</span>
+<span id="cb82-2"><a href="#cb82-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dat, <span class="fu">aes</span>(<span class="at">y=</span>reading, <span class="at">x=</span>int, <span class="at">color=</span>gender)) <span class="sc">+</span> </span>
+<span id="cb82-3"><a href="#cb82-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="07-anova_files/figure-html/unnamed-chunk-39-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>Interpret model results.</strong></p>
+<p>When interpreting results of models with interaction terms, use <em>Type III</em> Sums of Squares.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb83"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb83-1"><a href="#cb83-1" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">aov</span>(reading <span class="sc">~</span> training <span class="sc">*</span> gender, <span class="at">data =</span> dat)</span>
+<span id="cb83-2"><a href="#cb83-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model)</span>
+<span id="cb83-3"><a href="#cb83-3" aria-hidden="true" tabindex="-1"></a><span class="co"># anova(model)</span></span>
+<span id="cb83-4"><a href="#cb83-4" aria-hidden="true" tabindex="-1"></a><span class="fu">Anova</span>(model, <span class="at">type =</span> <span class="st">"III"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                Df Sum Sq Mean Sq F value Pr(&gt;F)  
+training         2  361.1  180.54   4.118 0.0337 *
+gender           1   15.0   15.04   0.343 0.5653  
+training:gender  2   53.6   26.79   0.611 0.5537  
+Residuals       18  789.2   43.85                 
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+Anova Table (Type III tests)
+
+Response: reading
+                Sum Sq Df  F value    Pr(&gt;F)    
+(Intercept)     5700.3  1 130.0025 1.144e-09 ***
+training         120.2  2   1.3703    0.2793    
+gender             2.0  1   0.0456    0.8333    
+training:gender   53.6  2   0.6110    0.5537    
+Residuals        789.2 18                       
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+<ul>
+<li><p>Main effect of training: <em>F(2,18)</em> = 1.37, <em>p</em> = 0.28. We fail to reject the null hypothesis that there are no differences among the training groups.That is, there are no statistically significant differences among the training groups in reading.</p></li>
+<li><p>Main effect of gender: <em>F(1, 18)</em> = 0.05, <em>p</em> = .83. We fail to reject the null hypothesis that boys and girls have the same reading scores. That is, there is no statistically significant gender difference in reading.</p></li>
+<li><p>Interaction effect: <em>F(2, 18)</em> = 0.61, <em>p</em> = 0.55. We fail to reject the null hypothesis that there is no interaction between training and gender. That is, there is no statistically significant interaction between training and gender.</p></li>
+</ul>
+</section>
+<section id="assumptions-for-factorial-anova-see-sec-anova-assumptions" class="level3" data-number="7.6.4">
+<h3 data-number="7.6.4" class="anchored" data-anchor-id="assumptions-for-factorial-anova-see-sec-anova-assumptions"><span class="header-section-number">7.6.4</span> Assumptions for factorial ANOVA (see <a href="#sec-anova-assumptions" class="quarto-xref"><span>Section 7.4</span></a>)</h3>
+<p><strong>Use <code>leveneTest</code> to test variance homogeneity. </strong></p>
+<p><em>Levene’s test</em></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb85"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb85-1"><a href="#cb85-1" aria-hidden="true" tabindex="-1"></a><span class="fu">leveneTest</span>(reading <span class="sc">~</span> training <span class="sc">*</span> gender, <span class="at">data =</span> dat)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Levene's Test for Homogeneity of Variance (center = median)
+      Df F value   Pr(&gt;F)    
+group  5   8.554 0.000272 ***
+      18                     
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+<p>What to do when the homogeneity of variance assumption is violated?</p>
+<ul>
+<li><p>Run an ANOVA that does not assume equal variances, such as the Kruskal-Wallis test.</p>
+<ul>
+<li>The Kruskal-Wallis test is a nonparametric test that is used with an independent groups design employing k samples. It is used as a substitute for the parametric one-way ANOVA when the assumptions of that test are seriously violated. The Kruskal-Wallis test does not assume normality, nor homogeneity of variance, as does the parametric ANOVA, and requires only ordinal scaling of the dependent variable (ranked data for the dependent variable). It is used when violations of normality and/or homogeneity of variance are extreme, or when interval or ratio scaling are not met by the data.</li>
+</ul></li>
+<li><p>Use a more stringent alpha level (e.g., .01, .001)</p></li>
+<li><p>Conduct a variance stabilizing transformation (e.g., square root or natural log) to the dependent variable</p></li>
+</ul>
+</section>
+<section id="contrasts-using-the-multcomp-package" class="level3" data-number="7.6.5">
+<h3 data-number="7.6.5" class="anchored" data-anchor-id="contrasts-using-the-multcomp-package"><span class="header-section-number">7.6.5</span> Contrasts using the <code>multcomp</code> package</h3>
+<p>One-Way ANOVA using pairwise contrasts (so-called Tukey contrasts)</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb87"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb87-1"><a href="#cb87-1" aria-hidden="true" tabindex="-1"></a><span class="co">#library(multcomp)</span></span>
+<span id="cb87-2"><a href="#cb87-2" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">aov</span>(reading <span class="sc">~</span> <span class="sc">-</span><span class="dv">1</span> <span class="sc">+</span> training, <span class="at">data =</span> dat) <span class="co"># no intercept to obtain cell means</span></span>
+<span id="cb87-3"><a href="#cb87-3" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(model)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>trainingA trainingB trainingC 
+   38.250    47.750    42.875 </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb89"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb89-1"><a href="#cb89-1" aria-hidden="true" tabindex="-1"></a><span class="co"># TukeyHSD(model)</span></span>
+<span id="cb89-2"><a href="#cb89-2" aria-hidden="true" tabindex="-1"></a>out <span class="ot">&lt;-</span> <span class="fu">glht</span>(model, <span class="at">linfct=</span><span class="fu">mcp</span>(<span class="at">training=</span><span class="st">"Tukey"</span>)) <span class="co"># mean contrasts; mcp - multiple comparison procedures</span></span>
+<span id="cb89-3"><a href="#cb89-3" aria-hidden="true" tabindex="-1"></a>out</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+     General Linear Hypotheses
+
+Multiple Comparisons of Means: Tukey Contrasts
+
+
+Linear Hypotheses:
+           Estimate
+B - A == 0    9.500
+C - A == 0    4.625
+C - B == 0   -4.875</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb91"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb91-1"><a href="#cb91-1" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(out)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+     Simultaneous Confidence Intervals
+
+Multiple Comparisons of Means: Tukey Contrasts
+
+
+Fit: aov(formula = reading ~ -1 + training, data = dat)
+
+Quantile = 2.5206
+95% family-wise confidence level
+ 
+
+Linear Hypotheses:
+           Estimate lwr      upr     
+B - A == 0   9.5000   1.4447  17.5553
+C - A == 0   4.6250  -3.4303  12.6803
+C - B == 0  -4.8750 -12.9303   3.1803</code></pre>
+</div>
+</div>
+<p>One-Way ANOVA using user-defined contrasts.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb93"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb93-1"><a href="#cb93-1" aria-hidden="true" tabindex="-1"></a>K <span class="ot">&lt;-</span> <span class="fu">rbind</span>(<span class="fu">c</span>(<span class="dv">1</span>,<span class="sc">-</span><span class="dv">1</span><span class="sc">/</span><span class="dv">2</span>, <span class="sc">-</span><span class="dv">1</span><span class="sc">/</span><span class="dv">2</span>), <span class="co"># control vs. mean of the two treatment groups</span></span>
+<span id="cb93-2"><a href="#cb93-2" aria-hidden="true" tabindex="-1"></a>           <span class="fu">c</span>(<span class="dv">0</span>, <span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>))     <span class="co"># compares the two treatment groups</span></span>
+<span id="cb93-3"><a href="#cb93-3" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(K) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"control vs treatments"</span>, <span class="st">"treatment 1 vs treatment 2"</span>)</span>
+<span id="cb93-4"><a href="#cb93-4" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(K) <span class="ot">&lt;-</span> <span class="fu">names</span>(<span class="fu">coef</span>(model))</span>
+<span id="cb93-5"><a href="#cb93-5" aria-hidden="true" tabindex="-1"></a><span class="co"># K</span></span>
+<span id="cb93-6"><a href="#cb93-6" aria-hidden="true" tabindex="-1"></a>out <span class="ot">&lt;-</span> <span class="fu">glht</span>(model, <span class="at">linfct =</span> K)</span>
+<span id="cb93-7"><a href="#cb93-7" aria-hidden="true" tabindex="-1"></a>out</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+     General Linear Hypotheses
+
+Linear Hypotheses:
+                                Estimate
+control vs treatments == 0        -7.063
+treatment 1 vs treatment 2 == 0   -4.875</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb95"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb95-1"><a href="#cb95-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(out)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+     Simultaneous Tests for General Linear Hypotheses
+
+Fit: aov(formula = reading ~ -1 + training, data = dat)
+
+Linear Hypotheses:
+                                Estimate Std. Error t value Pr(&gt;|t|)  
+control vs treatments == 0        -7.063      2.768  -2.552   0.0364 *
+treatment 1 vs treatment 2 == 0   -4.875      3.196  -1.525   0.2601  
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+(Adjusted p values reported -- single-step method)</code></pre>
+</div>
+</div>
+<p><strong>Two-Way ANOVA (main effects only)</strong></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb97"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb97-1"><a href="#cb97-1" aria-hidden="true" tabindex="-1"></a>model2 <span class="ot">&lt;-</span> <span class="fu">aov</span>(reading <span class="sc">~</span> gender <span class="sc">+</span> training, <span class="at">data =</span> dat)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<table class="lightable-classic caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: center;" data-quarto-table-cell-role="th"></th>
+<th style="text-align: center;" data-quarto-table-cell-role="th">Male</th>
+<th style="text-align: center;" data-quarto-table-cell-role="th">Condition B</th>
+<th style="text-align: center;" data-quarto-table-cell-role="th">Condition C</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">B - A</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">C - A</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">C - B</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">-1</td>
+<td style="text-align: center;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">male - female</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre><code>model2 &lt;- aov(reading ~ gender + training, data = dat)</code></pre>
+<p>First, extract the appropriate contrast matrices for both factors.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb99"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb99-1"><a href="#cb99-1" aria-hidden="true" tabindex="-1"></a>K1 <span class="ot">&lt;-</span> <span class="fu">glht</span>(model2, <span class="at">linfct=</span> <span class="fu">mcp</span>(<span class="at">training =</span> <span class="st">"Tukey"</span>))<span class="sc">$</span>linfct</span>
+<span id="cb99-2"><a href="#cb99-2" aria-hidden="true" tabindex="-1"></a>K2 <span class="ot">&lt;-</span> <span class="fu">glht</span>(model2, <span class="at">linfct=</span> <span class="fu">mcp</span>(<span class="at">gender =</span> <span class="st">"Tukey"</span>))<span class="sc">$</span>linfct</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Then, compare levels of each factor simultaneously.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb100"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb100-1"><a href="#cb100-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">glht</span>(model2, <span class="at">linfct=</span><span class="fu">rbind</span>(K1, K2)))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+     Simultaneous Tests for General Linear Hypotheses
+
+Fit: aov(formula = reading ~ gender + training, data = dat)
+
+Linear Hypotheses:
+                Estimate Std. Error t value Pr(&gt;|t|)  
+B - A == 0         9.500      3.246   2.927   0.0294 *
+C - A == 0         4.625      3.246   1.425   0.4506  
+C - B == 0        -4.875      3.246  -1.502   0.4065  
+girl - boy == 0    1.583      2.650   0.597   0.9185  
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+(Adjusted p values reported -- single-step method)</code></pre>
+</div>
+</div>
+<p><strong>Two-Way ANOVA (with interaction effect)</strong></p>
+<ul>
+<li><p>We may compare the levels of one factor (e.g., training effects)at each level of the other factor (gender).</p></li>
+<li><p>The contrast matrix is now a block-diagonal matrix.</p></li>
+</ul>
+<div class="cell">
+<div class="cell-output-display">
+<table class="lightable-classic caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th"></th>
+<th style="text-align: left;" data-quarto-table-cell-role="th"></th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">A</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">B</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">C</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">A</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">B</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">C</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;">B - A</td>
+<td style="text-align: right;">-1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Female</td>
+<td style="text-align: left;">C - A</td>
+<td style="text-align: right;">-1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; border-bottom: 1px solid;"></td>
+<td style="text-align: left; border-bottom: 1px solid;">C - B</td>
+<td style="text-align: right; border-bottom: 1px solid;">0</td>
+<td style="text-align: right; border-bottom: 1px solid;">-1</td>
+<td style="text-align: right; border-bottom: 1px solid;">1</td>
+<td style="text-align: right; border-bottom: 1px solid;">0</td>
+<td style="text-align: right; border-bottom: 1px solid;">0</td>
+<td style="text-align: right; border-bottom: 1px solid;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;">B - A</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">-1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Male</td>
+<td style="text-align: left;">C - A</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">-1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;">C - B</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">-1</td>
+<td style="text-align: right;">1</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<ul>
+<li>Step 1: Define the contrast matrix:</li>
+</ul>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb102"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb102-1"><a href="#cb102-1" aria-hidden="true" tabindex="-1"></a>K <span class="ot">&lt;-</span> <span class="fu">rbind</span>(<span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span> ,<span class="dv">0</span>),</span>
+<span id="cb102-2"><a href="#cb102-2" aria-hidden="true" tabindex="-1"></a>           <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span> , <span class="dv">0</span>),</span>
+<span id="cb102-3"><a href="#cb102-3" aria-hidden="true" tabindex="-1"></a>           <span class="fu">c</span>(<span class="dv">0</span>, <span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span> , <span class="dv">0</span>),</span>
+<span id="cb102-4"><a href="#cb102-4" aria-hidden="true" tabindex="-1"></a>           <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>),</span>
+<span id="cb102-5"><a href="#cb102-5" aria-hidden="true" tabindex="-1"></a>           <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="sc">-</span><span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>),</span>
+<span id="cb102-6"><a href="#cb102-6" aria-hidden="true" tabindex="-1"></a>           <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>))</span>
+<span id="cb102-7"><a href="#cb102-7" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(K) <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"C"</span>),<span class="dv">2</span>)</span>
+<span id="cb102-8"><a href="#cb102-8" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(K) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"boy:B-A"</span>, <span class="st">"boy:C-A"</span>, <span class="st">"boy:C-B"</span>, <span class="st">"girl:B-A"</span>, <span class="st">"girl:C-A"</span>, <span class="st">"girl:C-B"</span>)</span>
+<span id="cb102-9"><a href="#cb102-9" aria-hidden="true" tabindex="-1"></a>K</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>          A  B C  A  B C
+boy:B-A  -1  1 0  0  0 0
+boy:C-A  -1  0 1  0  0 0
+boy:C-B   0 -1 1  0  0 0
+girl:B-A  0  0 0 -1  1 0
+girl:C-A  0  0 0 -1  0 1
+girl:C-B  0  0 0  0 -1 1</code></pre>
+</div>
+</div>
+<ul>
+<li>Step 2: Estimate auxiliary cell-means model (i.e., model without intercept)</li>
+</ul>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb104"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb104-1"><a href="#cb104-1" aria-hidden="true" tabindex="-1"></a>dat<span class="sc">$</span>gender.train <span class="ot">&lt;-</span> <span class="fu">interaction</span>(dat<span class="sc">$</span>training, dat<span class="sc">$</span>gender)</span>
+<span id="cb104-2"><a href="#cb104-2" aria-hidden="true" tabindex="-1"></a><span class="co"># head(dat)</span></span>
+<span id="cb104-3"><a href="#cb104-3" aria-hidden="true" tabindex="-1"></a>model3 <span class="ot">&lt;-</span> <span class="fu">aov</span>(reading <span class="sc">~</span> <span class="sc">-</span><span class="dv">1</span> <span class="sc">+</span> gender.train, <span class="at">data =</span> dat)</span>
+<span id="cb104-4"><a href="#cb104-4" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(model3)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> gender.trainA.boy  gender.trainB.boy  gender.trainC.boy gender.trainA.girl 
+             37.75              45.00              43.75              38.75 
+gender.trainB.girl gender.trainC.girl 
+             50.50              42.00 </code></pre>
+</div>
+</div>
+<ul>
+<li>Step 3: Compute contrasts</li>
+</ul>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb106"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb106-1"><a href="#cb106-1" aria-hidden="true" tabindex="-1"></a>out <span class="ot">&lt;-</span> <span class="fu">glht</span>(model3, <span class="at">linfct =</span> K)</span>
+<span id="cb106-2"><a href="#cb106-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(out)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+     Simultaneous Tests for General Linear Hypotheses
+
+Fit: aov(formula = reading ~ -1 + gender.train, data = dat)
+
+Linear Hypotheses:
+              Estimate Std. Error t value Pr(&gt;|t|)
+boy:B-A == 0     7.250      4.682   1.548    0.486
+boy:C-A == 0     6.000      4.682   1.281    0.653
+boy:C-B == 0    -1.250      4.682  -0.267    0.998
+girl:B-A == 0   11.750      4.682   2.509    0.103
+girl:C-A == 0    3.250      4.682   0.694    0.943
+girl:C-B == 0   -8.500      4.682  -1.815    0.338
+(Adjusted p values reported -- single-step method)</code></pre>
+</div>
+</div>
+<ul>
+<li>Step 4: Visualization</li>
+</ul>
+<p><em>use <code>plot()</code> function</em></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb108"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb108-1"><a href="#cb108-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(out)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="07-anova_files/figure-html/unnamed-chunk-53-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><em>use <code>ggplot()</code> function</em></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb109"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb109-1"><a href="#cb109-1" aria-hidden="true" tabindex="-1"></a>ggstatsplot<span class="sc">::</span><span class="fu">ggcoefstats</span>(out) <span class="sc">+</span> </span>
+<span id="cb109-2"><a href="#cb109-2" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Linear Function"</span>, <span class="at">y=</span><span class="cn">NULL</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Something went wrong with computing standard errors and confidence
+  intervals for predictions.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in nobs.default(object, use.fallback = use.fallback): no 'nobs' method
+is available</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="07-anova_files/figure-html/unnamed-chunk-54-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="factorial-anova-as-multiple-regression" class="level2" data-number="7.7">
+<h2 data-number="7.7" class="anchored" data-anchor-id="factorial-anova-as-multiple-regression"><span class="header-section-number">7.7</span> Factorial ANOVA as Multiple Regression</h2>
+<p>The regression model for the 3 X 2 design can be written as:</p>
+<p><span class="math display">\[\begin{array}{l}
+\hat Y = a + {b_1}boy + {b_2}condB + {b_3}condC + \\
+             {b_4}boy*condB + {b_5}boy*CondC
+\end{array}\]</span></p>
+<p>Where <span class="math inline">\({b_1}\)</span>, <span class="math inline">\({b_2}\)</span>, and <span class="math inline">\({b_3}\)</span>, are the main effects and <span class="math inline">\({b_4}\)</span>, and <span class="math inline">\({b_5}\)</span> are the interaction effects.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb112"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb112-1"><a href="#cb112-1" aria-hidden="true" tabindex="-1"></a>lm1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(reading<span class="sc">~</span> gender, <span class="at">data =</span> dat)</span>
+<span id="cb112-2"><a href="#cb112-2" aria-hidden="true" tabindex="-1"></a>lm2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(reading <span class="sc">~</span> gender <span class="sc">+</span> training, <span class="at">data =</span> dat)</span>
+<span id="cb112-3"><a href="#cb112-3" aria-hidden="true" tabindex="-1"></a>lm3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(reading <span class="sc">~</span> gender <span class="sc">*</span> training, <span class="at">data =</span> dat)</span>
+<span id="cb112-4"><a href="#cb112-4" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(lm1)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Analysis of Variance Table
+
+Response: reading
+          Df  Sum Sq Mean Sq F value Pr(&gt;F)
+gender     1   15.04  15.042  0.2749 0.6053
+Residuals 22 1203.92  54.723               </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb114"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb114-1"><a href="#cb114-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(lm2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Analysis of Variance Table
+
+Response: reading
+          Df Sum Sq Mean Sq F value  Pr(&gt;F)  
+gender     1  15.04  15.042  0.3569 0.55692  
+training   2 361.08 180.542  4.2842 0.02828 *
+Residuals 20 842.83  42.142                  
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb116"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb116-1"><a href="#cb116-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(lm3)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Analysis of Variance Table
+
+Response: reading
+                Df Sum Sq Mean Sq F value  Pr(&gt;F)  
+gender           1  15.04  15.042  0.3430 0.56535  
+training         2 361.08 180.542  4.1175 0.03369 *
+gender:training  2  53.58  26.792  0.6110 0.55368  
+Residuals       18 789.25  43.847                  
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+</section>
+<section id="a-blog-on-anova-in-r" class="level2" data-number="7.8">
+<h2 data-number="7.8" class="anchored" data-anchor-id="a-blog-on-anova-in-r"><span class="header-section-number">7.8</span> A Blog on ANOVA in R</h2>
+<p><a href="https://www.statsandr.com/blog/anova-in-r/">ANOVA in R</a></p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./06-binary-logistic-regression.html" class="pagination-link" aria-label="Binary Logistic Regression">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Binary Logistic Regression</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./08-ancova.html" class="pagination-link" aria-label="Analysis of Covariance">
+        <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Analysis of Covariance</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

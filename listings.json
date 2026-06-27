@@ -1,14 +1,9 @@
 [
   {
-    "listing": "/posts/index.html",
-    "items": [
-      "/posts/welcome/index.html"
-    ]
-  },
-  {
     "listing": "/projects/index.html",
     "items": [
-      "/projects/sample-project/index.html"
+      "/projects/latinx-workers/index.html",
+      "/projects/flipped-math-study/index.html"
     ]
   }
 ]

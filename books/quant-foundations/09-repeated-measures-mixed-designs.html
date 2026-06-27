@@ -1,0 +1,1647 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.38">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="description" content="Class notes and R syntax for ESC_PS 8850 Quantitative Foundations in Educational Research at the University of Missouri.">
+
+<title>9&nbsp; Repeated Measures ANOVA and Mixed Designs – Quantitative Foundations in Educational Research</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./10-power-analysis.html" rel="next">
+<link href="./08-ancova.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-5ccb035bea26c1e21f80f44cf7c27909.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="site_libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./09-repeated-measures-mixed-designs.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Repeated Measures ANOVA and Mixed Designs</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Quantitative Foundations in Educational Research</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/ze-wang/quant-foundations" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01-intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction to R and RStudio</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02-stats-review.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Review of Basic Statistics</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03-correlation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Correlation</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./04-simple-regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Simple Linear Regression</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./05-multiple-regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Multiple Regression Analysis</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./06-binary-logistic-regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Binary Logistic Regression</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./07-anova.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Analysis of Variance</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./08-ancova.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Analysis of Covariance</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./09-repeated-measures-mixed-designs.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Repeated Measures ANOVA and Mixed Designs</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./10-power-analysis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Power Analysis</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./11-references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#repeated-measures-anova" id="toc-repeated-measures-anova" class="nav-link active" data-scroll-target="#repeated-measures-anova"><span class="header-section-number">9.1</span> Repeated-Measures ANOVA</a>
+  <ul class="collapse">
+  <li><a href="#advantages-of-repeated-measures-design" id="toc-advantages-of-repeated-measures-design" class="nav-link" data-scroll-target="#advantages-of-repeated-measures-design"><span class="header-section-number">9.1.1</span> Advantages of repeated-measures design</a></li>
+  <li><a href="#disadvantages-of-repeated-measures-design" id="toc-disadvantages-of-repeated-measures-design" class="nav-link" data-scroll-target="#disadvantages-of-repeated-measures-design"><span class="header-section-number">9.1.2</span> Disadvantages of repeated-measures design</a></li>
+  <li><a href="#variance-partitioning-in-one-way-repeated-measures-design" id="toc-variance-partitioning-in-one-way-repeated-measures-design" class="nav-link" data-scroll-target="#variance-partitioning-in-one-way-repeated-measures-design"><span class="header-section-number">9.1.3</span> Variance partitioning in one-way repeated measures design</a></li>
+  <li><a href="#assumptions-in-repeated-measures-analysis" id="toc-assumptions-in-repeated-measures-analysis" class="nav-link" data-scroll-target="#assumptions-in-repeated-measures-analysis"><span class="header-section-number">9.1.4</span> Assumptions in repeated measures analysis</a></li>
+  <li><a href="#alternative-specification-of-the-variance-covariance-matrix" id="toc-alternative-specification-of-the-variance-covariance-matrix" class="nav-link" data-scroll-target="#alternative-specification-of-the-variance-covariance-matrix"><span class="header-section-number">9.1.5</span> Alternative Specification of the Variance-Covariance Matrix</a></li>
+  <li><a href="#empirical-example" id="toc-empirical-example" class="nav-link" data-scroll-target="#empirical-example"><span class="header-section-number">9.1.6</span> Empirical example</a></li>
+  </ul></li>
+  <li><a href="#mixed-designs" id="toc-mixed-designs" class="nav-link" data-scroll-target="#mixed-designs"><span class="header-section-number">9.2</span> Mixed Designs</a>
+  <ul class="collapse">
+  <li><a href="#one-between-and-one-within-factor-design" id="toc-one-between-and-one-within-factor-design" class="nav-link" data-scroll-target="#one-between-and-one-within-factor-design"><span class="header-section-number">9.2.1</span> One between and one within factor design</a></li>
+  <li><a href="#a-few-online-resources" id="toc-a-few-online-resources" class="nav-link" data-scroll-target="#a-few-online-resources"><span class="header-section-number">9.2.2</span> A few online resources</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Repeated Measures ANOVA and Mixed Designs</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rio); <span class="fu">library</span>(ggplot2); <span class="fu">library</span>(QuantPsyc); <span class="fu">library</span>(psych); <span class="fu">library</span>(car); <span class="fu">library</span>(reshape); <span class="fu">library</span>(nlme); <span class="fu">library</span>(ez)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required package: boot</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required package: dplyr</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'dplyr'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:stats':
+
+    filter, lag</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:base':
+
+    intersect, setdiff, setequal, union</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required package: purrr</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required package: MASS</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'MASS'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following object is masked from 'package:dplyr':
+
+    select</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'QuantPsyc'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following object is masked from 'package:base':
+
+    norm</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'psych'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following object is masked from 'package:boot':
+
+    logit</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:ggplot2':
+
+    %+%, alpha</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required package: carData</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'car'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following object is masked from 'package:psych':
+
+    logit</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following object is masked from 'package:purrr':
+
+    some</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following object is masked from 'package:dplyr':
+
+    recode</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following object is masked from 'package:boot':
+
+    logit</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'reshape'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following object is masked from 'package:dplyr':
+
+    rename</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'nlme'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following object is masked from 'package:dplyr':
+
+    collapse</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Registered S3 method overwritten by 'lme4':
+  method           from
+  na.action.merMod car </code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stderr">
+<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ forcats   1.0.1     ✔ stringr   1.6.0
+✔ lubridate 1.9.5     ✔ tibble    3.3.1
+✔ readr     2.2.0     ✔ tidyr     1.3.2
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ psych::%+%()       masks ggplot2::%+%()
+✖ psych::alpha()     masks ggplot2::alpha()
+✖ nlme::collapse()   masks dplyr::collapse()
+✖ tidyr::expand()    masks reshape::expand()
+✖ dplyr::filter()    masks stats::filter()
+✖ dplyr::lag()       masks stats::lag()
+✖ car::recode()      masks dplyr::recode()
+✖ reshape::rename()  masks dplyr::rename()
+✖ MASS::select()     masks dplyr::select()
+✖ car::some()        masks purrr::some()
+✖ lubridate::stamp() masks reshape::stamp()
+ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors
+
+Attaching package: 'kableExtra'
+
+
+The following object is masked from 'package:dplyr':
+
+    group_rows
+
+
+
+Attaching package: 'reshape2'
+
+
+The following object is masked from 'package:tidyr':
+
+    smiths
+
+
+The following objects are masked from 'package:reshape':
+
+    colsplit, melt, recast</code></pre>
+</div>
+</div>
+<section id="repeated-measures-anova" class="level2" data-number="9.1">
+<h2 data-number="9.1" class="anchored" data-anchor-id="repeated-measures-anova"><span class="header-section-number">9.1</span> Repeated-Measures ANOVA</h2>
+<p>Previous ANOVA designs discussed in class have measured participants at 1 time.</p>
+<p>In <em>repeated-measures</em> designs (also called within-subjects designs), participants are measured at different times (2 or more times) either using the same dependent variable measures or different dependent variable measures.</p>
+<p><em>RECALL</em>: <strong>t Test for Dependent Samples</strong>: used when every participant is exposed to both levels of the independent variable or if two groups of participants are formed in such a way that some relationship exists between the two groups (e.g.&nbsp;participants in group A are matched on intelligence with participants in group B).</p>
+<p><strong>Examples:</strong> a. Pretest – Treatment/Intervention – Posttest b. Two groups of matched or paired participants are compared on some dependent variable c.&nbsp;We are comparing naturally occurring correlated pairs, such as twins, husband and wife, parent and child, etc.</p>
+<p>While ANOVA (with more than 2 groups) is the generalization of the <em>t</em> test for independent samples (2 groups), <em>repeated-measures ANOVA</em> (when participants are measured more than twice) is the generalization of the <em>t</em> test for dependent (correlated) samples.</p>
+<p><strong>Examples:</strong></p>
+<ol type="a">
+<li>trends/change across time:</li>
+</ol>
+<div class="cell">
+<div class="cell-output-display">
+<table class="lightable-classic caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th"></th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Vocab. Grade 8</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Vocab. Grade 9</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Vocab. Grade 10</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Vocab. Grade 11</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Participant 1</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Participant 2</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">...</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Participant n</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<ol start="2" type="a">
+<li>same participants under different treatments:</li>
+</ol>
+<div class="cell">
+<div class="cell-output-display">
+<table class="lightable-classic caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th"></th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Treatment 1</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Treatment 2</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Treatment 3</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Treatment 4</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Participant 1</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Participant 2</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">...</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Participant n</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<ol start="3" type="a">
+<li>same participants are given a series of tests or subtests:</li>
+</ol>
+<div class="cell">
+<div class="cell-output-display">
+<table class="lightable-classic caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th"></th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Information</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Vocabulary</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Digit Span</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Block Design</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Participant 1</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Participant 2</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">...</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Participant n</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<ol start="4" type="a">
+<li>combination with one-way ANOVA design (one between and one within-subjects variable):</li>
+</ol>
+<div class="cell">
+<div class="cell-output-display">
+<table class="lightable-classic caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th"></th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Posttest</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">6 Weeks</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">12 Weeks</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Teaching Method 1</td>
+<td style="text-align: right;">66</td>
+<td style="text-align: right;">64</td>
+<td style="text-align: right;">63</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Teaching Method 2</td>
+<td style="text-align: right;">69</td>
+<td style="text-align: right;">65</td>
+<td style="text-align: right;">59</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Teaching Method 3</td>
+<td style="text-align: right;">62</td>
+<td style="text-align: right;">56</td>
+<td style="text-align: right;">52</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>If the above example was simply a one-way ANOVA using teaching method as the independent variable and the posttest as the dependent variable, we would see that participants do better with teaching method 2. However, if we were interested in the effects of these three teaching methods over time (6 and 12 weeks later), we would see that there is a decline for students with teaching methods 2 and 3 and that participants with teaching method 1 do the best across time. This is an example of a method (between) by time (within) interaction.</p>
+<p>A <em>between</em> variable is a grouping/classification variable (e.g., gender, race, social class, age group, method, mental illness).</p>
+<p>A <em>within</em> variable is one on which the participants have been measured repeatedly (e.g., time, treatment).</p>
+<p>One between and two within design:</p>
+<div class="cell">
+<div class="cell-output-display">
+<table class="lightable-classic caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+</colgroup>
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th" style="text-align: left; empty-cells: hide;"></th>
+<th data-quarto-table-cell-role="th" style="text-align: left; empty-cells: hide;"></th>
+<th colspan="2" data-quarto-table-cell-role="th" style="text-align: center; padding-bottom: 0; padding-left: 3px; padding-right: 3px;"><div style="border-bottom: 1px solid #111111; margin-bottom: -1px; ">
+Situation 1
+</div></th>
+<th colspan="2" data-quarto-table-cell-role="th" style="text-align: center; padding-bottom: 0; padding-left: 3px; padding-right: 3px;"><div style="border-bottom: 1px solid #111111; margin-bottom: -1px; ">
+Situation 2
+</div></th>
+</tr>
+<tr class="even">
+<th style="text-align: left;" data-quarto-table-cell-role="th"></th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Time</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Morning</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Afternoon</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Morning</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Afternoon</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Age</td>
+<td style="text-align: left;">3 years old</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;">4 years old</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;">5 years old</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>You can think of the above example as a three-way ANOVA, however, the analysis we conduct is different due to correlations among the participants’ scores which must be taken into account.</p>
+<section id="advantages-of-repeated-measures-design" class="level3" data-number="9.1.1">
+<h3 data-number="9.1.1" class="anchored" data-anchor-id="advantages-of-repeated-measures-design"><span class="header-section-number">9.1.1</span> Advantages of repeated-measures design</h3>
+<ol type="1">
+<li><p>Variability among participants due to individual differences is removed from the error term. We block on each participant.</p>
+<ul>
+<li><p>Blocking is a method of handling concomitant variables that is relatively common in some research areas. Participants are first sorted into groups or blocks that are relatively homogeneous as far as scores on the concomitant variable are concerned, and then treatments are randomly assigned within each block. The method involves treating the concomitant variable explicitly as a factor having certain discrete levels in the analysis (e.g., age categories may be created when examining motor skills of elderly participants).</p></li>
+<li><p>Repeated measures designs are the ultimate block design because a single person is in each block:</p></li>
+</ul></li>
+<li><p>Economy of participants. That is, fewer participants are required for the study.</p></li>
+<li><p>Suited to address specific research questions: learning, growth, development, etc.</p></li>
+</ol>
+</section>
+<section id="disadvantages-of-repeated-measures-design" class="level3" data-number="9.1.2">
+<h3 data-number="9.1.2" class="anchored" data-anchor-id="disadvantages-of-repeated-measures-design"><span class="header-section-number">9.1.2</span> Disadvantages of repeated-measures design</h3>
+<ol type="1">
+<li>Fatigue may occur when participants are repeatedly measured.<br>
+</li>
+<li>Order effects may occur when administering treatments. Counterbalancing the order of treatments is an effective method of minimizing order effects. Counterbalance = all possible orders of treatments are administered:<br>
+</li>
+</ol>
+<ul>
+<li><p>3 Treatments = 3! = 3 * 2 * 1 = 6 possible orders:</p>
+<ul>
+<li>1, 2, 3</li>
+<li>1, 3, 2</li>
+<li>2, 1, 3</li>
+<li>2, 3, 1</li>
+<li>3, 1, 2</li>
+<li>3, 2, 1</li>
+</ul></li>
+</ul>
+<ol start="3" type="1">
+<li><p>Carryover effects refer to the impact of a previous trial (condition) on a participant’s performance on subsequent trials. Allowing an adequate amount of time to pass between treatments will minimize possible effects.</p></li>
+<li><p>Risk of attrition due to multiple measurement occasions</p></li>
+</ol>
+</section>
+<section id="variance-partitioning-in-one-way-repeated-measures-design" class="level3" data-number="9.1.3">
+<h3 data-number="9.1.3" class="anchored" data-anchor-id="variance-partitioning-in-one-way-repeated-measures-design"><span class="header-section-number">9.1.3</span> Variance partitioning in one-way repeated measures design</h3>
+<div class="cell">
+<div class="cell-output-display">
+<table class="lightable-classic caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">Participant</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Treatment 1</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Treatment 2</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Treatment 3</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Row Mean</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">1</td>
+<td style="text-align: right;">30.0</td>
+<td style="text-align: right;">28.0</td>
+<td style="text-align: right;">34</td>
+<td style="text-align: right;">30.67</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2</td>
+<td style="text-align: right;">14.0</td>
+<td style="text-align: right;">18.0</td>
+<td style="text-align: right;">22</td>
+<td style="text-align: right;">18.00</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">3</td>
+<td style="text-align: right;">24.0</td>
+<td style="text-align: right;">20.0</td>
+<td style="text-align: right;">30</td>
+<td style="text-align: right;">24.67</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">4</td>
+<td style="text-align: right;">38.0</td>
+<td style="text-align: right;">34.0</td>
+<td style="text-align: right;">44</td>
+<td style="text-align: right;">38.67</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">5</td>
+<td style="text-align: right;">26.0</td>
+<td style="text-align: right;">28.0</td>
+<td style="text-align: right;">30</td>
+<td style="text-align: right;">28.00</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Column Mean</td>
+<td style="text-align: right;">26.4</td>
+<td style="text-align: right;">25.6</td>
+<td style="text-align: right;">32</td>
+<td style="text-align: right;">28.00</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>Completely Randomized Design (One-Way ANOVA):</p>
+<p><em>Sums of Squares:</em> <span class="math inline">\(S{{S}_{b}}=\sum\limits_{i=1}^{k}{{{n}_{i}}{{({{{\bar{x}}}_{i}}-\bar{x})}^{2}}}\)</span> <span class="math inline">\(= 5\left[ {{{\left( {26.4-28} \right)}^2} + {\rm{ }}{{\left( {25.6-28} \right)}^2} + {\rm{ }}{{\left( {32-28} \right)}^2}} \right]{\rm{ }} = {\rm{ }}121.60\)</span></p>
+<p><span class="math inline">\(S{{S}_{w}}=\sum\limits_{1}{{{({{x}_{i1}}-{{{\bar{x}}}_{1}})}^{2}}+\sum\limits_{2}{{{({{x}_{i2}}-{{{\bar{x}}}_{2}})}^{2}}+\cdots +\sum\limits_{k}{{{({{x}_{ik}}-{{{\bar{x}}}_{k}})}^{2}}}}}\)</span> <span class="math inline">\(= {(30 - 26.4)^2} + {(14 - 26.4)^2} + ... + {(26 - 26.4)^2}\)</span> <span class="math inline">\(+ {(28 - 25.6)^2} + {(18 - 25.6)^2} + ... + {(28 - 25.6)^2}\)</span> <span class="math inline">\(+ {(34 - 32)^2} + {(22 - 32)^2} + ... + {(30 - 32)^2}\)</span> <span class="math inline">\(=734.4\)</span></p>
+<p><em>Mean Square Between</em>: <span class="math inline">\(M{{S}_{b}}=S{{S}_{b}}/(k-1)= 121.6/2 = 60.80\)</span></p>
+<p><em>Mean Square Within</em>: <span class="math inline">\(M{{S}_{w}}=S{{S}_{w}}/(N-k) = 734.4/12 = 61.20\)</span></p>
+<p><em>F ratio</em>: 60.80/61.20 = .99, which is not significant.</p>
+<p><strong>Univariate Repeated Measures Analysis (we block on participants)</strong>:</p>
+<p>Error variance is split into two parts in repeated measures designs:</p>
+<p><span class="math inline">\(S{S_w} = S{S_{bl}} + S{S_{res}}\)</span> where <span class="math inline">\(S{S_{bl}}\)</span> is the sum of squares for block and <span class="math inline">\(S{S_{res}}\)</span> is the sum of squares for residuals.</p>
+<p><span class="math inline">\(S{{S}_{bl}}=k\sum{{{({{{\bar{x}}}_{i}}-\bar{x})}^{2}}}\)</span>, where <em>k</em> is the number of repeated measures, <span class="math inline">\({{\bar{x}}_{i}}\)</span> is the mean for person <em>i</em>, and <span class="math inline">\(\bar{x}\)</span> is the grand mean.</p>
+<p><span class="math inline">\(S{{S}_{bl}} = 3[(30.67 – 28)^2 + (18 – 28)^2 + … + (28 – 28)^2] = 696.02\)</span></p>
+<p>The error term for the repeated measures analysis is calculated by:</p>
+<p><span class="math inline">\(S{S_{res}} = S{S_w} - S{S_{bl}}\)</span></p>
+<p><span class="math inline">\(S{S_{res}} = 734.4 – 696.02 = 38.38\)</span></p>
+<p>This removes the variability due to individual differences (696.02) from the error term. What is left is within subject variability across treatments.</p>
+<p><em>Mean Square Residual</em>: <span class="math inline">\(M{{S}_{res}}=S{{S}_{res}}/(n-1)(k-1) = 38.38/4(2) = 4.80\)</span></p>
+<p><em>F ratio</em>: <span class="math inline">\(\frac{{M{S_b}}}{{M{S_{res}}}} = \frac{{60.80}}{{4.80}} = 12.67\)</span></p>
+<p>The critical <em>F</em> value with (<em>k</em> – 1) = 2 and (<em>n</em> – 1)(<em>k</em> – 1) = 4(2) = 8 degrees of freedom is 4.46 at alpha = .05. Our obtained <em>F</em> value is greater than the critical value. Thus, there is a significant effect of treatment, <em>F</em>(2, 8) = 12.67, <em>p</em> &lt; .05.</p>
+<p><span class="math display">\[{y_{ij}} = \mu  + {\pi _i} + {\tau _j}  + {\varepsilon _{ij}}\]</span> - <span class="math inline">\({y_{ij}}\)</span> the score of subject <em>i</em> for measurement occasion <em>j</em></p>
+<ul>
+<li><p><span class="math inline">\(\mu\)</span> is the grand mean</p></li>
+<li><p><span class="math inline">\(\pi _i\)</span> captures individual differences which is assumed to be constant over time and normally distributed: <span class="math inline">\({\pi _i} \sim N(0,\sigma _\pi ^2)\)</span>. This is the between-subjects variance.</p></li>
+<li><p><span class="math inline">\({\tau _j}\)</span> reflects the time effect which is assumed to be equal for all subjects.</p></li>
+<li><p><span class="math inline">\({\varepsilon _{ij}}\)</span> is the error component which is assumed to be normally distributed (i.e., <span class="math inline">\({\varepsilon _{ij}} \sim N(0,\sigma _\varepsilon ^2)\)</span>). This the within-subjects variance.</p></li>
+</ul>
+<p><strong>Repeated-Measures ANOVA Table</strong>:</p>
+<div class="cell">
+<div class="cell-output-display">
+<table class="lightable-classic caption-top table table-sm table-striped small">
+<caption>Repeated-Measures ANOVA Table</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">Source of Variaton</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Sum of Squares</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Degrees of Freedom</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Mean Squares</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">$F$ Statistic</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left; border-left: 1px solid; border-right: 1px solid;">Subjects</td>
+<td style="text-align: left; border-left: 1px solid; border-right: 1px solid;">$SSQ_s = K\sum\limits_{i = 1}^n {{({\mu _i} - \mu)}^2}$</td>
+<td style="text-align: left; border-left: 1px solid; border-right: 1px solid;">$n-1$</td>
+<td style="text-align: left; border-left: 1px solid; border-right: 1px solid;">$MS _S = {{SSQ_S} \over {n - 1}}$</td>
+<td style="text-align: left; border-left: 1px solid; border-right: 1px solid;">$F = {{MS _S} \over {MS _E}}$</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; border-left: 1px solid; border-right: 1px solid;">Time</td>
+<td style="text-align: left; border-left: 1px solid; border-right: 1px solid;">$SSQ_T = n\sum\limits_{j = 1}^K {{({\mu _j} - \mu)}^2}$</td>
+<td style="text-align: left; border-left: 1px solid; border-right: 1px solid;">$K-1$</td>
+<td style="text-align: left; border-left: 1px solid; border-right: 1px solid;">$MS _T = {{SSQ _T} \over {K-1}}$</td>
+<td style="text-align: left; border-left: 1px solid; border-right: 1px solid;">$F = {{MS _T} \over {MS_E}}$</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; border-left: 1px solid; border-right: 1px solid;">Error</td>
+<td style="text-align: left; border-left: 1px solid; border-right: 1px solid;">$SSQ_E = \sum\limits_{i = 1}^n {\sum\limits_{j = 1}^K {{({y _{ij}} - {\mu _i} - {\mu _j} + {\mu})}^2}}$</td>
+<td style="text-align: left; border-left: 1px solid; border-right: 1px solid;">$(n-1)(K-1)$</td>
+<td style="text-align: left; border-left: 1px solid; border-right: 1px solid;">$MS _E = {{SSQ _E} \over {(n-1)(K-1)}}$</td>
+<td style="text-align: left; border-left: 1px solid; border-right: 1px solid;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left; border-left: 1px solid; border-right: 1px solid;">Total</td>
+<td style="text-align: left; border-left: 1px solid; border-right: 1px solid;">$SSQ_y = \sum\limits_{i = 1}^n {\sum\limits_{j = 1}^K {{({y _{ij}} - {\mu})}^2}}$</td>
+<td style="text-align: left; border-left: 1px solid; border-right: 1px solid;">$nK-1$</td>
+<td style="text-align: left; border-left: 1px solid; border-right: 1px solid;"></td>
+<td style="text-align: left; border-left: 1px solid; border-right: 1px solid;"></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="assumptions-in-repeated-measures-analysis" class="level3" data-number="9.1.4">
+<h3 data-number="9.1.4" class="anchored" data-anchor-id="assumptions-in-repeated-measures-analysis"><span class="header-section-number">9.1.4</span> Assumptions in repeated measures analysis</h3>
+<ul>
+<li><p>Multivariate normality (inspect the distribution of scores within each trial). Fairly robust against non-normality. Can use more stringent alpha level.</p></li>
+<li><p>Independence of the observations (consider study circumstances to identify any possible violations). Can impact Type I error rate. Use a more stringent alpha level or alternative analyses (e.g., HLM).</p></li>
+<li><p>Sphericity</p>
+<ul>
+<li>Sphericity requires that the variances of the differences for all pairs of repeated measures are equal</li>
+</ul></li>
+</ul>
+<p><strong>Mauchly’s Test of Sphericity</strong></p>
+<ul>
+<li><p>Sphericity requires that the variances of the differences for all pairs of repeated measures are equal. A significant result indicates that the sphericity assumption is violated.</p></li>
+<li><p>When sphericity is not met, the <em>F</em> ratio/test in the univariate approach is positively biased (falsely rejecting the null too often). That is, alpha is set at .05, but we are rejecting the null falsely 8-10% of the time.</p></li>
+<li><p>When sphericity is not met, Epsilon can be used to adjust degrees of freedom for the <em>F</em> test. Epsilon is a measure that indicates the extent to which the covariance matrix deviates from sphericity. When sphericity is met, Epsilon ( <span class="math inline">\(\varepsilon\)</span>) = 1.</p>
+<ul>
+<li><p>Greenhouse-Geisser <span class="math inline">\(\varepsilon\)</span>. It can be quite conservative. This is recommended when the Greenhouse-Geisser Epsilon &lt; .70.</p></li>
+<li><p>The Huynh-Feldt <span class="math inline">\(\varepsilon\)</span> is less conservative. This is recommended when the Greenhouse-Geisser Epsilon &gt; .70.</p></li>
+</ul></li>
+<li><p>Another option when sphericity is not met is to use the results from the Multivariate procedure when reporting/interpreting the overall test of mean differences in the primary analysis (omnibus <em>F</em> test). The multivariate procedure (Multivariate Analysis of Variance: MANOVA) compares groups on the dependent variables simultaneously.</p></li>
+</ul>
+<p><strong>Compound Symmetry Assumption</strong></p>
+<ul>
+<li><p>The variance/covariance matrix is assumed to have a compound symmetry structure.</p>
+<ul>
+<li><p>The diagonal of the variance-covariance matrix contains constant variances <span class="math inline">\(\sigma _\pi ^2 + \sigma _\varepsilon ^2\)</span> (i.e., variances are assumed to be homogeneous across time).</p></li>
+<li><p>The off-diagonal elements contain constant covariances<span class="math inline">\(\sigma _\pi ^2\)</span> (i.e., covariancesare assumed to be homogeneous across time).</p></li>
+</ul></li>
+</ul>
+<p>$${_{yi}} = $$</p>
+<ul>
+<li>The less restrictive assumption of <em>sphericity</em> states that the variance of the differences between each pair of groups (e.g., <span class="math inline">\({y_{i1}} - {y_{i2}}\)</span>, <span class="math inline">\({y_{i1}} - {y_{i2}}\)</span>, <span class="math inline">\({y_{i2}} - {y_{i3}}\)</span>) is constant.</li>
+</ul>
+</section>
+<section id="alternative-specification-of-the-variance-covariance-matrix" class="level3" data-number="9.1.5">
+<h3 data-number="9.1.5" class="anchored" data-anchor-id="alternative-specification-of-the-variance-covariance-matrix"><span class="header-section-number">9.1.5</span> Alternative Specification of the Variance-Covariance Matrix</h3>
+<p><strong>Unstructured variance-covariance matrix</strong>:All variances and covariances are assumed to be unique.</p>
+<p>$${_{yi}} = $$</p>
+<p><strong>Autoregressive structure</strong>: More proximate observations are more correlated than more distant measures (i.e., the correlation steadily decreases with increasing distance between observations).</p>
+<p>$${_{yi}} = $$</p>
+<p>Alternative model specifications can be tested using the (nested) likelihood ratio test. The test statistic is defined as –2 times the log of the likelihood ratio which follows a <span class="math inline">\({\chi ^2}\)</span> distribution (degrees of freedom = difference in the number of parameters in the two covariance structures). The model with a significantly smaller log-likelihood is preferred.</p>
+</section>
+<section id="empirical-example" class="level3" data-number="9.1.6">
+<h3 data-number="9.1.6" class="anchored" data-anchor-id="empirical-example"><span class="header-section-number">9.1.6</span> Empirical example</h3>
+<div class="cell">
+<div class="cell-output-display">
+<table class="lightable-classic caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: right;" data-quarto-table-cell-role="th">Participant</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Treatment 1</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Treatment 2</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Treatment 3</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">30</td>
+<td style="text-align: right;">28</td>
+<td style="text-align: right;">34</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">14</td>
+<td style="text-align: right;">18</td>
+<td style="text-align: right;">22</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">24</td>
+<td style="text-align: right;">20</td>
+<td style="text-align: right;">30</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">38</td>
+<td style="text-align: right;">34</td>
+<td style="text-align: right;">44</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">26</td>
+<td style="text-align: right;">28</td>
+<td style="text-align: right;">30</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>subj <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>T1 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">30</span>, <span class="dv">14</span>, <span class="dv">24</span>, <span class="dv">38</span>, <span class="dv">26</span>)</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>T2 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">28</span>, <span class="dv">18</span>, <span class="dv">20</span>, <span class="dv">34</span>, <span class="dv">28</span>)</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>T3 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">34</span>, <span class="dv">22</span>, <span class="dv">30</span>, <span class="dv">44</span>, <span class="dv">30</span>)</span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(subj, T1, T2, T3)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p><strong>Convert data from the wide format to the long format</strong></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># library(reshape)</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>dat.long <span class="ot">&lt;-</span> <span class="fu">reshape</span>(dat, <span class="at">idvar =</span> <span class="st">"subj"</span>, <span class="at">v.names =</span> <span class="st">"score"</span>, <span class="at">varying =</span>  <span class="fu">c</span>(<span class="st">"T1"</span>, <span class="st">"T2"</span>, <span class="st">"T3"</span>), <span class="at">timevar =</span> <span class="st">"treatment"</span>, <span class="at">direction =</span> <span class="st">"long"</span>)</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>dat.long<span class="sc">$</span>treatment <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(dat.long<span class="sc">$</span>treatment)</span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>dat.long</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    subj treatment score
+1.1    1         1    30
+2.1    2         1    14
+3.1    3         1    24
+4.1    4         1    38
+5.1    5         1    26
+1.2    1         2    28
+2.2    2         2    18
+3.2    3         2    20
+4.2    4         2    34
+5.2    5         2    28
+1.3    1         3    34
+2.3    2         3    22
+3.3    3         3    30
+4.3    4         3    44
+5.3    5         3    30</code></pre>
+</div>
+</div>
+<p><strong>Plot the Data</strong></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dat.long, <span class="fu">aes</span>(<span class="at">x=</span>treatment, <span class="at">y=</span>score, <span class="at">group=</span>subj))<span class="sc">+</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">geom_line</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="09-repeated-measures-mixed-designs_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>Method 1</strong>: Univariate approach using <code>aov()</code></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>model1 <span class="ot">&lt;-</span> <span class="fu">aov</span>(score <span class="sc">~</span> treatment <span class="sc">+</span> <span class="fu">Error</span>(subj<span class="sc">/</span>treatment), <span class="at">data =</span> dat.long)</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model1)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Error: subj
+          Df Sum Sq Mean Sq F value Pr(&gt;F)
+Residuals  1  70.53   70.53               
+
+Error: subj:treatment
+          Df Sum Sq Mean Sq
+treatment  2  95.18   47.59
+
+Error: Within
+          Df Sum Sq Mean Sq F value Pr(&gt;F)
+treatment  2   26.7   13.35   0.181  0.837
+Residuals  9  663.6   73.73               </code></pre>
+</div>
+</div>
+<p><strong>Method 2</strong>: Univariate approach using <code>lme()</code> (multilevel model)</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co">#library(nlme)</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>model2 <span class="ot">&lt;-</span> <span class="fu">lme</span>(score <span class="sc">~</span> treatment, <span class="at">random =</span> <span class="sc">~</span><span class="dv">1</span><span class="sc">|</span>subj<span class="sc">/</span>treatment, <span class="at">method =</span> <span class="st">"ML"</span>, <span class="at">data =</span> dat.long) <span class="co">#&lt;&lt;</span></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Linear mixed-effects model fit by maximum likelihood
+  Data: dat.long 
+       AIC      BIC    logLik
+  92.70244 96.95074 -40.35122
+
+Random effects:
+ Formula: ~1 | subj
+        (Intercept)
+StdDev:    6.717142
+
+ Formula: ~1 | treatment %in% subj
+        (Intercept) Residual
+StdDev:    1.626497 1.092936
+
+Fixed effects:  score ~ treatment 
+            Value Std.Error DF   t-value p-value
+(Intercept)  26.4  3.498571  8  7.545938  0.0001
+treatment2   -0.8  1.385641  8 -0.577350  0.5796
+treatment3    5.6  1.385641  8  4.041452  0.0037
+ Correlation: 
+           (Intr) trtmn2
+treatment2 -0.198       
+treatment3 -0.198  0.500
+
+Standardized Within-Group Residuals:
+        Min          Q1         Med          Q3         Max 
+-0.76160042 -0.36509711 -0.05496085  0.35135689  0.68308491 
+
+Number of Observations: 15
+Number of Groups: 
+               subj treatment %in% subj 
+                  5                  15 </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(model2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>            numDF denDF  F-value p-value
+(Intercept)     1     8 67.58621  &lt;.0001
+treatment       2     8 12.66667  0.0033</code></pre>
+</div>
+</div>
+<p><strong>Method 3</strong>: Use the <code>lm</code> function.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>model3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(score <span class="sc">~</span> treatment <span class="sc">+</span> <span class="fu">factor</span>(subj), <span class="at">data =</span> dat.long)</span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model3)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = score ~ treatment + factor(subj), data = dat.long)
+
+Residuals:
+   Min     1Q Median     3Q    Max 
+-2.400 -1.333  0.000  1.133  2.400 
+
+Coefficients:
+              Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)     29.067      1.497  19.421 5.13e-08 ***
+treatment2      -0.800      1.386  -0.577 0.579584    
+treatment3       5.600      1.386   4.041 0.003728 ** 
+factor(subj)2  -12.667      1.789  -7.081 0.000104 ***
+factor(subj)3   -6.000      1.789  -3.354 0.010019 *  
+factor(subj)4    8.000      1.789   4.472 0.002077 ** 
+factor(subj)5   -2.667      1.789  -1.491 0.174373    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 2.191 on 8 degrees of freedom
+Multiple R-squared:  0.9551,    Adjusted R-squared:  0.9215 
+F-statistic: 28.39 on 6 and 8 DF,  p-value: 5.647e-05</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(model3)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Analysis of Variance Table
+
+Response: score
+             Df Sum Sq Mean Sq F value    Pr(&gt;F)    
+treatment     2  121.6    60.8  12.667  0.003318 ** 
+factor(subj)  4  696.0   174.0  36.250 3.581e-05 ***
+Residuals     8   38.4     4.8                      
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+<p><strong>Method 4</strong>: Us the <code>ezANOVA</code> function from the <code>ez</code> package</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="co"># library(ez)</span></span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>model4 <span class="ot">&lt;-</span> <span class="fu">ezANOVA</span>(<span class="at">data =</span> dat.long, <span class="at">dv =</span> .(score), <span class="at">wid =</span> .(subj), <span class="at">within =</span> .(treatment), <span class="at">detailed =</span> <span class="cn">TRUE</span>, <span class="at">type =</span> <span class="dv">3</span>) <span class="co">#&lt;&lt;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Converting "subj" to factor for ANOVA.</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>model4</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$ANOVA
+       Effect DFn DFd     SSn   SSd        F           p p&lt;.05       ges
+1 (Intercept)   1   4 11760.0 696.0 67.58621 0.001193346     * 0.9412217
+2   treatment   2   8   121.6  38.4 12.66667 0.003317760     * 0.1420561
+
+$`Mauchly's Test for Sphericity`
+     Effect         W        p p&lt;.05
+2 treatment 0.4976852 0.351101      
+
+$`Sphericity Corrections`
+     Effect       GGe      p[GG] p[GG]&lt;.05       HFe       p[HF] p[HF]&lt;.05
+2 treatment 0.6656394 0.01218473         * 0.8724018 0.005427211         *</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="mixed-designs" class="level2" data-number="9.2">
+<h2 data-number="9.2" class="anchored" data-anchor-id="mixed-designs"><span class="header-section-number">9.2</span> Mixed Designs</h2>
+<section id="one-between-and-one-within-factor-design" class="level3" data-number="9.2.1">
+<h3 data-number="9.2.1" class="anchored" data-anchor-id="one-between-and-one-within-factor-design"><span class="header-section-number">9.2.1</span> One between and one within factor design</h3>
+<ul>
+<li><p>The one between and one within factor design is used to identify interactions and main effects in experimental designs with two independent variables. The design has two categorical factors – one between-subjects factor and one within-subjects factor – and a continuous dependent measure.</p></li>
+<li><p>The primary advantages in using this repeated measures design is that it allows you to assess the impact of a treatment across time, or examine the performance of the same sets of participants under different treatments, and that such designs tend to be more powerful than designs having only between-subjects factors.</p></li>
+</ul>
+<p><strong>Assumptions</strong></p>
+<ul>
+<li><p>Multivariate normality (inspect the distribution of scores in each cell)</p></li>
+<li><p>Independence of observations (consider the sampling design and study circumstances to identify any possible violations)</p></li>
+<li><p>Sphericity (assume that this is violated and use an adjusted F test, such as the Greenhouse-Geisser, or use the multivariate test results for the overall tests in the primary analysis)</p></li>
+<li><p>Between-groups equality of variance (use Levene’s test; examine standard deviations for each group)</p></li>
+</ul>
+<p><strong>Example</strong>: The effects of therapy (family therapy group versus control group) on weight gain across time (beginning weight, weight at 12 weeks, and weight at 24 weeks) for teen girls with anorexia.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>mydata <span class="ot">&lt;-</span> <span class="fu">import</span>(<span class="st">"data/2_group_repeated_measures.sav"</span>)</span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(mydata)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  weight1 weight2 weight3 group
+1    83.8    95.2   107.1     1
+2    83.3    94.3   109.2     1
+3    86.0    91.5   110.0     1
+4    82.5    91.9   106.5     1
+5    86.7   100.3   104.2     1
+6    79.6    82.5   100.2     1</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>mydata<span class="sc">$</span>group <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(mydata<span class="sc">$</span>group)</span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>mydata.long <span class="ot">&lt;-</span> <span class="fu">reshape</span>(mydata, <span class="at">idvar =</span> <span class="st">"id"</span>, <span class="at">v.names =</span> <span class="st">"weight"</span>, <span class="at">varying =</span>  <span class="fu">c</span>(<span class="st">"weight1"</span>, <span class="st">"weight2"</span>, <span class="st">"weight3"</span>), <span class="at">direction =</span> <span class="st">"long"</span>)</span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a>mydata.long<span class="sc">$</span>time <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(mydata.long<span class="sc">$</span>time)</span>
+<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ezANOVA</span>(<span class="at">data =</span> mydata.long, <span class="at">dv =</span> .(weight), <span class="at">wid =</span> .(id), <span class="at">between =</span> .(group), <span class="at">within =</span> .(time), <span class="at">type =</span> <span class="dv">3</span>, <span class="at">detailed =</span>  <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Converting "id" to factor for ANOVA.</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$ANOVA
+       Effect DFn DFd        SSn       SSd           F            p p&lt;.05
+1 (Intercept)   1  38 958797.141 2996.4503 12159.15077 3.067707e-49     *
+2       group   1  38   3111.008 2996.4503    39.45279 2.343883e-07     *
+3        time   2  76   2293.617  524.7147   166.10444 1.808772e-28     *
+4  group:time   2  76   2379.349  524.7147   172.31317 5.792294e-29     *
+        ges
+1 0.9963410
+2 0.4690783
+3 0.3944459
+4 0.4032443
+
+$`Mauchly's Test for Sphericity`
+      Effect        W         p p&lt;.05
+3       time 0.984454 0.7483688      
+4 group:time 0.984454 0.7483688      
+
+$`Sphericity Corrections`
+      Effect      GGe        p[GG] p[GG]&lt;.05      HFe        p[HF] p[HF]&lt;.05
+3       time 0.984692 4.521768e-28         * 1.038089 1.808772e-28         *
+4 group:time 0.984692 1.473336e-28         * 1.038089 5.792294e-29         *</code></pre>
+</div>
+</div>
+<p><strong>Within-Subjects Analysis</strong>:<br>
+- Is the average weight for all 40 subjects different at the 3 points in time? This captures the main effect of time. (This table reports the results of the traditional repeated-measures ANOVA.)</p>
+<ul>
+<li>Is the difference in means between the therapy and control groups the same or different across time? (If this contrast varies across time, there is an interaction between time and group.) This question is of primary interest in this study as we expect the two groups to have similar weight at time 1, but different average weight at times 2 and 3 (due to the therapy).</li>
+</ul>
+<p><strong>Between-Subjects Analysis</strong>: Is there an overall weight difference between the family therapy and control group in the population (averaging across the three time points)? (There is a 10-point difference in the sample favoring the family therapy group.) This question is not of primary interest because the overall treatment effects will be diluted, as we expect no between-group difference at time 1, due to random assignment.</p>
+</section>
+<section id="a-few-online-resources" class="level3" data-number="9.2.2">
+<h3 data-number="9.2.2" class="anchored" data-anchor-id="a-few-online-resources"><span class="header-section-number">9.2.2</span> A few online resources</h3>
+<p>A <a href="https://www.r-bloggers.com/2021/04/repeated-measures-of-anova-in-r-complete-tutorial/">blog</a> on repeated-measures ANOVA in R <a href="https://gkhajduk.github.io/2017-03-09-mixed-models/">Introduction to linear mixed models</a> by Gabriela K Hajduk</p>
+<p>For <strong>mixed models</strong>, the <code>lmer()</code> function from the <code>lme4</code> package is the recommended method. - <a href="https://arbor-analytics.com/post/mixed-models-a-primer" class="uri">https://arbor-analytics.com/post/mixed-models-a-primer</a></p>
+<ul>
+<li><p><a href="https://m-clark.github.io/mixed-models-with-R/" class="uri">https://m-clark.github.io/mixed-models-with-R/</a></p></li>
+<li><p><a href="https://pagepiccinini.com/r-course/lesson-6-part-1-linear-mixed-effects-models/" class="uri">https://pagepiccinini.com/r-course/lesson-6-part-1-linear-mixed-effects-models/</a></p></li>
+<li><p>Book <a href="https://bookdown.org/roback/bookdown-BeyondMLR/">Beyond Multiple Linear Regression</a> by Paul Roback and Julie Legler</p></li>
+</ul>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./08-ancova.html" class="pagination-link" aria-label="Analysis of Covariance">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Analysis of Covariance</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./10-power-analysis.html" class="pagination-link" aria-label="Power Analysis">
+        <span class="nav-page-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Power Analysis</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

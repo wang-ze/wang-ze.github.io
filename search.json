@@ -1,5 +1,40 @@
 [
   {
+    "objectID": "projects/latinx-workers/index.html",
+    "href": "projects/latinx-workers/index.html",
+    "title": "Latinx Workers",
+    "section": "",
+    "text": "NSF-funded collaborative research project: Should I Stay or Should I Go? Understanding the Retention of Latinx in Engineering Jobs. Designed and applied quantitative methods (survey design, multilevel modeling) to understand factors driving career persistence and attrition among Latinx engineers.\nAward: NSF 2000607, $1,546,428 (2020–2025). PIs: Lisa Y. Flores (University of Missouri), Rachel L. Navarro (University of North Dakota). Role: Key Personnel.\nProject site →"
+  },
+  {
+    "objectID": "projects/flipped-math-study/index.html",
+    "href": "projects/flipped-math-study/index.html",
+    "title": "Flipped Mathematics Study",
+    "section": "",
+    "text": "NSF-funded research investigating how flipped-classroom instruction affects students’ learning of mathematics across diverse classroom settings.\nAward: NSF DRL-1721025, $539,011 (2017–2021). PIs: Zandra de Araujo, Samuel J. Otten, Ze Wang, James Tarr.\nProject site →"
+  },
+  {
+    "objectID": "books/index.html",
+    "href": "books/index.html",
+    "title": "Books",
+    "section": "",
+    "text": "Two open-access books I’ve written for graduate-level quantitative methods courses."
+  },
+  {
+    "objectID": "books/index.html#quantitative-foundations-in-educational-research",
+    "href": "books/index.html#quantitative-foundations-in-educational-research",
+    "title": "Books",
+    "section": "Quantitative Foundations in Educational Research",
+    "text": "Quantitative Foundations in Educational Research\nA self-contained introduction to applied statistics for educational and social-science research: descriptive statistics, probability, sampling, inference, regression, and ANOVA. Developed for ESC_PS 8850, the master’s-level methods course I taught at the University of Missouri. Lecture slides → · Previous site →"
+  },
+  {
+    "objectID": "books/index.html#structural-equation-modeling-using-r-and-mplus",
+    "href": "books/index.html#structural-equation-modeling-using-r-and-mplus",
+    "title": "Books",
+    "section": "Structural Equation Modeling Using R and Mplus",
+    "text": "Structural Equation Modeling Using R and Mplus\nA practical introduction to structural equation modeling with worked examples in both R (lavaan) and Mplus. Covers measurement models, path analysis, latent variable models, model fit, and multi-group / multilevel extensions. Built around ESC_PS 9710, a doctoral course I taught at the University of Missouri. Lecture slides → · Previous site →"
+  },
+  {
     "objectID": "index.html",
     "href": "index.html",
     "title": "Ze Wang",
@@ -28,52 +63,17 @@
     "text": "AWS certifications\n\nAWS Certified AI Practitioner (Early Adopter, Aug 2024)\nAWS Certified Machine Learning Engineer (Early Adopter, Sep 2024)\nAWS Certified Machine Learning – Specialty (Oct 2024)\nAWS Certified Solutions Architect – Associate (Aug 2025)"
   },
   {
-    "objectID": "projects/sample-project/index.html",
-    "href": "projects/sample-project/index.html",
-    "title": "Sample Project",
-    "section": "",
-    "text": "This is a placeholder so the projects listing has something to render. Replace this directory with a real project write-up, or delete it.\nSuggested structure for a real entry:\n\nOne paragraph framing the problem and why it mattered.\nWhat you did: methods, data, decisions.\nOutcome / impact, in terms a non-specialist stakeholder can read.\n(Optional) Code snippet, plot, or link to a public artifact."
-  },
-  {
-    "objectID": "posts/index.html",
-    "href": "posts/index.html",
-    "title": "Blog",
-    "section": "",
-    "text": "Welcome\n\n\n\nmeta\n\n\n\nA new home for writing and projects.\n\n\n\n\n\nMay 18, 2026\n\n\nZe Wang\n\n\n\n\n\nNo matching items"
-  },
-  {
-    "objectID": "posts/welcome/index.html",
-    "href": "posts/welcome/index.html",
-    "title": "Welcome",
-    "section": "",
-    "text": "This is the new home for my writing and projects. The old site (a Hugo + blogdown academic page from my University of Missouri years) is preserved separately; this site is built on Quarto and reflects where I work now — as a Research Scientist at AWS.\nExpect posts on causal inference, psychometrics in industry, machine learning at AWS scale, and the occasional GenAI experiment."
-  },
-  {
-    "objectID": "books/index.html",
-    "href": "books/index.html",
-    "title": "Books",
-    "section": "",
-    "text": "Two open-access books I’ve written for graduate-level quantitative methods courses."
-  },
-  {
-    "objectID": "books/index.html#quantitative-foundations-in-educational-research",
-    "href": "books/index.html#quantitative-foundations-in-educational-research",
-    "title": "Books",
-    "section": "Quantitative Foundations in Educational Research",
-    "text": "Quantitative Foundations in Educational Research\nA self-contained introduction to applied statistics for educational and social-science research: descriptive statistics, probability, sampling, inference, regression, and ANOVA. Originally written to support a master’s-level methods course.\nMigration in progress — the book is being ported from its original R Bookdown source into a native Quarto book. In the meantime it remains available at the previous site."
-  },
-  {
-    "objectID": "books/index.html#structural-equation-modeling-using-r-and-mplus",
-    "href": "books/index.html#structural-equation-modeling-using-r-and-mplus",
-    "title": "Books",
-    "section": "Structural Equation Modeling Using R and Mplus",
-    "text": "Structural Equation Modeling Using R and Mplus\nA practical introduction to structural equation modeling with worked examples in both R (lavaan) and Mplus. Covers measurement models, path analysis, latent variable models, model fit, and multi-group / multilevel extensions.\nMigration in progress — the book is being ported from its original R Bookdown source into a native Quarto book. In the meantime it remains available at the previous site."
+    "objectID": "index.html#selected-publications",
+    "href": "index.html#selected-publications",
+    "title": "Ze Wang",
+    "section": "Selected publications",
+    "text": "Selected publications\n\nWang, Z. (2022). A comparison of three approaches to covariate effects on latent factors. Large-scale Assessments in Education, 10(26).\nWang, Z. (2020). When large-scale assessments meet data science: The big-fish-little-pond effect in fourth- and eighth-grade mathematics across nations. Frontiers in Psychology, 11.\nWang, Z., & Bergin, D. (2017). Perceived relative standing and the big-fish-little-pond effect in 59 countries and regions: Analysis of TIMSS 2011 data. Learning and Individual Differences, 57, 141–156.\nWang, Z. (2015). Examining big-fish-little-pond-effects across 49 countries: a multilevel latent variable modelling approach. Educational Psychology, 35(2), 228–251.\nWang, Z., Bergin, C., & Bergin, D. A. (2014). Measuring engagement in fourth to twelfth grade classrooms: The Classroom Engagement Inventory. School Psychology Quarterly, 29(4), 517–535. (350+ citations)\nWang, Z., & Su, I. (2013). Longitudinal factor structure of general self-concept and locus of control among high school students. Journal of Psychoeducational Assessment, 31(6), 554–565.\n\n Download my CV"
   },
   {
     "objectID": "projects/index.html",
     "href": "projects/index.html",
     "title": "Projects",
     "section": "",
-    "text": "Sample Project\n\n\nPlaceholder card. Replace with a real project write-up.\n\n\n\nMay 18, 2026\n\n\n\n\n\n\nNo matching items"
+    "text": "Latinx Workers\n\n\nNSF-funded study on the retention of Latinx workers in engineering jobs.\n\n\n\nAug 1, 2020\n\n\n\n\n\n\n\n\n\n\n\nFlipped Mathematics Study\n\n\nNSF-funded study examining relationships between flipped instruction and students’ learning of mathematics.\n\n\n\nAug 1, 2017\n\n\n\n\n\n\nNo matching items"
   }
 ]
