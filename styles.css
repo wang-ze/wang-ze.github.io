@@ -1,0 +1,11 @@
+/* Site-wide style overrides on top of the chosen Bootswatch theme.
+   Keep this file small — most styling comes from the theme. */
+
+.quarto-about-trestles .about-entity .about-link {
+  font-weight: 500;
+}
+
+/* Slightly tighter listing cards on the projects page. */
+.quarto-listing .quarto-grid-item {
+  padding: 1rem;
+}

@@ -1,0 +1,79 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Ze Wang",
+    "section": "",
+    "text": "I am a Research Scientist at Amazon Web Services, based in Ashburn, VA. I lead end-to-end analytical and machine learning initiatives that shape product decisions, automate data pipelines, and improve operational efficiency, and I serve as the certification psychometrician for multiple AWS certification exams. My work bridges deep statistical expertise — causal inference, structural equation modeling, Bayesian methods, item response theory — with scalable Python, R, SQL, and AWS infrastructure.\nBefore AWS, I was a tenured Associate Professor of Statistics, Measurement, and Evaluation in Education at the University of Missouri (2008–2022). My academic research focused on statistical modeling using large-scale assessment data, measurement, scale development, and program evaluation. I co-developed the Classroom Engagement Inventory and authored 50+ peer-reviewed papers, three books, and six book chapters."
+  },
+  {
+    "objectID": "index.html#what-i-work-on",
+    "href": "index.html#what-i-work-on",
+    "title": "Ze Wang",
+    "section": "What I work on",
+    "text": "What I work on\n\nCausal inference and experimental design. Designing observational and quasi-experimental studies for product and operational decisions.\nPsychometrics and measurement. Item response theory, structural equation modeling, scale development, standard setting.\nMachine learning at AWS scale. Predictive modeling of operational metrics; balancing performance with interpretability for business stakeholders.\nGenerative AI applications. Internal AWS GenAI projects; review of GenAI research proposals."
+  },
+  {
+    "objectID": "index.html#education",
+    "href": "index.html#education",
+    "title": "Ze Wang",
+    "section": "Education",
+    "text": "Education\n\nPhD, Educational Psychology (Statistics & Measurement) — University of Missouri\nMA, Statistics — University of Missouri\nBE, Electronic & Information Engineering; BS, English & Science — University of Science and Technology of China"
+  },
+  {
+    "objectID": "index.html#aws-certifications",
+    "href": "index.html#aws-certifications",
+    "title": "Ze Wang",
+    "section": "AWS certifications",
+    "text": "AWS certifications\n\nAWS Certified AI Practitioner (Early Adopter, Aug 2024)\nAWS Certified Machine Learning Engineer (Early Adopter, Sep 2024)\nAWS Certified Machine Learning – Specialty (Oct 2024)\nAWS Certified Solutions Architect – Associate (Aug 2025)"
+  },
+  {
+    "objectID": "projects/sample-project/index.html",
+    "href": "projects/sample-project/index.html",
+    "title": "Sample Project",
+    "section": "",
+    "text": "This is a placeholder so the projects listing has something to render. Replace this directory with a real project write-up, or delete it.\nSuggested structure for a real entry:\n\nOne paragraph framing the problem and why it mattered.\nWhat you did: methods, data, decisions.\nOutcome / impact, in terms a non-specialist stakeholder can read.\n(Optional) Code snippet, plot, or link to a public artifact."
+  },
+  {
+    "objectID": "posts/index.html",
+    "href": "posts/index.html",
+    "title": "Blog",
+    "section": "",
+    "text": "Welcome\n\n\n\nmeta\n\n\n\nA new home for writing and projects.\n\n\n\n\n\nMay 18, 2026\n\n\nZe Wang\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "posts/welcome/index.html",
+    "href": "posts/welcome/index.html",
+    "title": "Welcome",
+    "section": "",
+    "text": "This is the new home for my writing and projects. The old site (a Hugo + blogdown academic page from my University of Missouri years) is preserved separately; this site is built on Quarto and reflects where I work now — as a Research Scientist at AWS.\nExpect posts on causal inference, psychometrics in industry, machine learning at AWS scale, and the occasional GenAI experiment."
+  },
+  {
+    "objectID": "books/index.html",
+    "href": "books/index.html",
+    "title": "Books",
+    "section": "",
+    "text": "Two open-access books I’ve written for graduate-level quantitative methods courses."
+  },
+  {
+    "objectID": "books/index.html#quantitative-foundations-in-educational-research",
+    "href": "books/index.html#quantitative-foundations-in-educational-research",
+    "title": "Books",
+    "section": "Quantitative Foundations in Educational Research",
+    "text": "Quantitative Foundations in Educational Research\nA self-contained introduction to applied statistics for educational and social-science research: descriptive statistics, probability, sampling, inference, regression, and ANOVA. Originally written to support a master’s-level methods course.\nMigration in progress — the book is being ported from its original R Bookdown source into a native Quarto book. In the meantime it remains available at the previous site."
+  },
+  {
+    "objectID": "books/index.html#structural-equation-modeling-using-r-and-mplus",
+    "href": "books/index.html#structural-equation-modeling-using-r-and-mplus",
+    "title": "Books",
+    "section": "Structural Equation Modeling Using R and Mplus",
+    "text": "Structural Equation Modeling Using R and Mplus\nA practical introduction to structural equation modeling with worked examples in both R (lavaan) and Mplus. Covers measurement models, path analysis, latent variable models, model fit, and multi-group / multilevel extensions.\nMigration in progress — the book is being ported from its original R Bookdown source into a native Quarto book. In the meantime it remains available at the previous site."
+  },
+  {
+    "objectID": "projects/index.html",
+    "href": "projects/index.html",
+    "title": "Projects",
+    "section": "",
+    "text": "Sample Project\n\n\nPlaceholder card. Replace with a real project write-up.\n\n\n\nMay 18, 2026\n\n\n\n\n\n\nNo matching items"
+  }
+]
