@@ -643,14 +643,6 @@ Variances:
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(semTools)</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">reliability</span>(onef.fit.fixvar<span class="fl">.2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in reliability(onef.fit.fixvar.2): 
-The reliability() function was deprecated in 2022 and will cease to be included in future versions of semTools. See help('semTools-deprecated) for details.
-
-It is replaced by the compRelSEM() function, which can estimate alpha and model-based reliability in an even wider variety of models and data types, with greater control in specifying the desired type of reliability coefficient (i.e., more explicitly choosing assumptions). 
-
-The average variance extracted should never have been included because it is not a reliability coefficient. It is now available from the AVE() function.</code></pre>
-</div>
 <div class="cell-output cell-output-stdout">
 <pre><code>              F1
 alpha  0.8125000
@@ -662,8 +654,8 @@ avevar 0.5213312</code></pre>
 </div>
 <p>When raw data are available, the <code>ci.reliability()</code> function from the <code>MBESS</code> package can be used to get bootstrapped CI.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(MBESS)</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ci.reliability</span>(<span class="at">data=</span>rawdata, <span class="at">type=</span><span class="st">"omega"</span>, <span class="at">interval.type=</span><span class="st">"perc"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(MBESS)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ci.reliability</span>(<span class="at">data=</span>rawdata, <span class="at">type=</span><span class="st">"omega"</span>, <span class="at">interval.type=</span><span class="st">"perc"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 </section>
@@ -672,21 +664,21 @@ avevar 0.5213312</code></pre>
 <section id="an-exmaple" class="level3" data-number="4.2.1">
 <h3 data-number="4.2.1" class="anchored" data-anchor-id="an-exmaple"><span class="header-section-number">4.2.1</span> An exmaple</h3>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>AVRS2F <span class="ot">&lt;-</span> <span class="st">'</span></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="st">64.000 </span></span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="st">37.120 64.000</span></span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="st">35.200 32.640 64.000</span></span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="st">28.800 32.640 33.280 64.000</span></span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="st">33.280 31.360 36.480 32.640 64.000</span></span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="st">34.560 30.080 47.360 39.040 42.240 64.000</span></span>
-<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a><span class="st">21.120 4.480 16.640 17.280 27.520 28.160 64.000'</span></span>
-<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>twof.cov <span class="ot">&lt;-</span> <span class="fu">getCov</span>(AVRS2F, <span class="at">names =</span> <span class="fu">c</span>(<span class="st">"PATTERN"</span>, <span class="st">"COPYING"</span>, <span class="st">"MATRICES"</span>, <span class="st">"PAPERCUT"</span>, <span class="st">"QUANT"</span>, <span class="st">"NUMBSER"</span>, <span class="st">"EQUATION"</span>))</span>
-<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>twof.model <span class="ot">&lt;-</span> <span class="st">'</span></span>
-<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a><span class="st">    ABSVIS =~ PATTERN + COPYING + MATRICES + PAPERCUT</span></span>
-<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a><span class="st">    QUANTITA =~ QUANT + NUMBSER + EQUATION</span></span>
-<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a><span class="st">    ABSVIS ~~ QUANTITA'</span></span>
-<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>twof.fit <span class="ot">&lt;-</span> <span class="fu">cfa</span> (twof.model, <span class="at">sample.cov =</span> twof.cov, <span class="at">sample.nobs =</span> <span class="dv">313</span>, <span class="at">std.lv =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(twof.fit, <span class="at">fit.measures =</span> <span class="cn">TRUE</span>, <span class="at">standardized =</span> <span class="cn">TRUE</span>, <span class="at">rsquare =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>AVRS2F <span class="ot">&lt;-</span> <span class="st">'</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="st">64.000 </span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="st">37.120 64.000</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="st">35.200 32.640 64.000</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="st">28.800 32.640 33.280 64.000</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="st">33.280 31.360 36.480 32.640 64.000</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="st">34.560 30.080 47.360 39.040 42.240 64.000</span></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a><span class="st">21.120 4.480 16.640 17.280 27.520 28.160 64.000'</span></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>twof.cov <span class="ot">&lt;-</span> <span class="fu">getCov</span>(AVRS2F, <span class="at">names =</span> <span class="fu">c</span>(<span class="st">"PATTERN"</span>, <span class="st">"COPYING"</span>, <span class="st">"MATRICES"</span>, <span class="st">"PAPERCUT"</span>, <span class="st">"QUANT"</span>, <span class="st">"NUMBSER"</span>, <span class="st">"EQUATION"</span>))</span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>twof.model <span class="ot">&lt;-</span> <span class="st">'</span></span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a><span class="st">    ABSVIS =~ PATTERN + COPYING + MATRICES + PAPERCUT</span></span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a><span class="st">    QUANTITA =~ QUANT + NUMBSER + EQUATION</span></span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a><span class="st">    ABSVIS ~~ QUANTITA'</span></span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>twof.fit <span class="ot">&lt;-</span> <span class="fu">cfa</span> (twof.model, <span class="at">sample.cov =</span> twof.cov, <span class="at">sample.nobs =</span> <span class="dv">313</span>, <span class="at">std.lv =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(twof.fit, <span class="at">fit.measures =</span> <span class="cn">TRUE</span>, <span class="at">standardized =</span> <span class="cn">TRUE</span>, <span class="at">rsquare =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>lavaan 0.6-21 ended normally after 23 iterations
 
@@ -782,7 +774,7 @@ R-Square:
 </div>
 <p>Obtain model-implied (fitted) covariance matrix and mean vector</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fitted</span>(twof.fit)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fitted</span>(twof.fit)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>$cov
          PATTER COPYIN MATRIC PAPERC  QUANT NUMBSE EQUATI
@@ -797,7 +789,7 @@ EQUATION 19.054 17.747 22.438 19.047 22.222 26.279 63.796</code></pre>
 </div>
 <p>Obtain unstandardized residuals of a fitted model</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">resid</span>(twof.fit)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">resid</span>(twof.fit)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>$type
 [1] "raw"
@@ -815,7 +807,7 @@ EQUATION   1.998 -13.281  -5.851  -1.822   5.210   1.791   0.000</code></pre>
 </div>
 <p>Obtain standardized residuals of a fitted model</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">resid</span>(twof.fit, <span class="at">type=</span><span class="st">"standardized"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">resid</span>(twof.fit, <span class="at">type=</span><span class="st">"standardized"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>$type
 [1] "standardized"
@@ -841,7 +833,7 @@ EQUATION  1.918000e+00 -8.237232e+09</code></pre>
 </div>
 <p>Request a list of model matrices counting free parameters in the model</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">inspect</span>(twof.fit)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">inspect</span>(twof.fit)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>$lambda
          ABSVIS QUANTI
@@ -871,7 +863,7 @@ QUANTITA      8      0</code></pre>
 </div>
 <p>Plot the path diagram</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>semPlot<span class="sc">::</span><span class="fu">semPaths</span>(twof.fit)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>semPlot<span class="sc">::</span><span class="fu">semPaths</span>(twof.fit)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -884,37 +876,37 @@ QUANTITA      8      0</code></pre>
 <section id="model-comparison-example---two-factor-cfa-model-across-time" class="level3" data-number="4.2.2">
 <h3 data-number="4.2.2" class="anchored" data-anchor-id="model-comparison-example---two-factor-cfa-model-across-time"><span class="header-section-number">4.2.2</span> Model comparison example - two-factor CFA model across time</h3>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>WERHLE <span class="ot">&lt;-</span> <span class="st">'</span></span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="st">.903</span></span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="st">1.522 7.126</span></span>
-<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="st">.508 1.577 .933</span></span>
-<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a><span class="st">.387 1.081 .527 1.117</span></span>
-<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a><span class="st">1.036 3.499 1.363 1.715 6.065</span></span>
-<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a><span class="st">.441 1.404 .674 .649 1.742 .974'</span></span>
-<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>twof.acrosstime.cov <span class="ot">&lt;-</span> <span class="fu">getCov</span>(WERHLE, <span class="at">names =</span> <span class="fu">c</span>(<span class="st">"CHANGE1"</span>, <span class="st">"INFLUEN1"</span>, <span class="st">"SUGGEST1"</span>, <span class="st">"CHANGE2"</span>, <span class="st">"INFLUEN2"</span>, <span class="st">"SUGGEST2"</span>))</span>
-<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>twof.acrosstime.model1 <span class="ot">&lt;-</span> <span class="st">'</span></span>
-<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a><span class="st">    CONTROL1 =~ CHANGE1 + INFLUEN1 + SUGGEST1</span></span>
-<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a><span class="st">    CONTROL2 =~ CHANGE2 + INFLUEN2 + SUGGEST2'</span></span>
-<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a>twof.acrosstime.model2 <span class="ot">&lt;-</span> <span class="st">'</span></span>
-<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a><span class="st">    CONTROL1 =~ CHANGE1 + INFLUEN1 + SUGGEST1</span></span>
-<span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a><span class="st">    CONTROL2 =~ CHANGE2 + INFLUEN2 + SUGGEST2</span></span>
-<span id="cb27-15"><a href="#cb27-15" aria-hidden="true" tabindex="-1"></a><span class="st">    CHANGE1 ~~ CHANGE2</span></span>
-<span id="cb27-16"><a href="#cb27-16" aria-hidden="true" tabindex="-1"></a><span class="st">    INFLUEN1 ~~ INFLUEN2</span></span>
-<span id="cb27-17"><a href="#cb27-17" aria-hidden="true" tabindex="-1"></a><span class="st">    SUGGEST1 ~~ SUGGEST2'</span></span>
-<span id="cb27-18"><a href="#cb27-18" aria-hidden="true" tabindex="-1"></a>twof.acrosstime.model3 <span class="ot">&lt;-</span> <span class="st">'</span></span>
-<span id="cb27-19"><a href="#cb27-19" aria-hidden="true" tabindex="-1"></a><span class="st">    CONTROL1 =~ a*CHANGE1 + b*INFLUEN1 + c*SUGGEST1</span></span>
-<span id="cb27-20"><a href="#cb27-20" aria-hidden="true" tabindex="-1"></a><span class="st">    CONTROL2 =~ a*CHANGE2 + b*INFLUEN2 + c*SUGGEST2'</span></span>
-<span id="cb27-21"><a href="#cb27-21" aria-hidden="true" tabindex="-1"></a>twof.acrosstime.model4 <span class="ot">&lt;-</span> <span class="st">'</span></span>
-<span id="cb27-22"><a href="#cb27-22" aria-hidden="true" tabindex="-1"></a><span class="st">    CONTROL1 =~ a*CHANGE1 + b*INFLUEN1 + c*SUGGEST1</span></span>
-<span id="cb27-23"><a href="#cb27-23" aria-hidden="true" tabindex="-1"></a><span class="st">    CONTROL2 =~ a*CHANGE2 + b*INFLUEN2 + c*SUGGEST2</span></span>
-<span id="cb27-24"><a href="#cb27-24" aria-hidden="true" tabindex="-1"></a><span class="st">    CHANGE1 ~~ CHANGE2</span></span>
-<span id="cb27-25"><a href="#cb27-25" aria-hidden="true" tabindex="-1"></a><span class="st">    INFLUEN1 ~~ INFLUEN2</span></span>
-<span id="cb27-26"><a href="#cb27-26" aria-hidden="true" tabindex="-1"></a><span class="st">    SUGGEST1 ~~ SUGGEST2'</span>   </span>
-<span id="cb27-27"><a href="#cb27-27" aria-hidden="true" tabindex="-1"></a>twof.acrosstime.fit1 <span class="ot">&lt;-</span> <span class="fu">cfa</span>(twof.acrosstime.model1, <span class="at">sample.cov =</span> twof.acrosstime.cov, <span class="at">sample.nobs =</span> <span class="dv">119</span>, <span class="at">std.lv =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb27-28"><a href="#cb27-28" aria-hidden="true" tabindex="-1"></a>twof.acrosstime.fit2 <span class="ot">&lt;-</span> <span class="fu">cfa</span>(twof.acrosstime.model2, <span class="at">sample.cov =</span> twof.acrosstime.cov, <span class="at">sample.nobs =</span> <span class="dv">119</span>, <span class="at">std.lv =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb27-29"><a href="#cb27-29" aria-hidden="true" tabindex="-1"></a>twof.acrosstime.fit3 <span class="ot">&lt;-</span> <span class="fu">cfa</span>(twof.acrosstime.model3, <span class="at">sample.cov =</span> twof.acrosstime.cov, <span class="at">sample.nobs =</span> <span class="dv">119</span>, <span class="at">std.lv =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb27-30"><a href="#cb27-30" aria-hidden="true" tabindex="-1"></a>twof.acrosstime.fit4 <span class="ot">&lt;-</span> <span class="fu">cfa</span>(twof.acrosstime.model4, <span class="at">sample.cov =</span> twof.acrosstime.cov, <span class="at">sample.nobs =</span> <span class="dv">119</span>, <span class="at">std.lv =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb27-31"><a href="#cb27-31" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(twof.acrosstime.fit1, <span class="at">fit.measures =</span> <span class="cn">TRUE</span>, <span class="at">standardized =</span> <span class="cn">TRUE</span>, <span class="at">rsquare =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>WERHLE <span class="ot">&lt;-</span> <span class="st">'</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="st">.903</span></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="st">1.522 7.126</span></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="st">.508 1.577 .933</span></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a><span class="st">.387 1.081 .527 1.117</span></span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a><span class="st">1.036 3.499 1.363 1.715 6.065</span></span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a><span class="st">.441 1.404 .674 .649 1.742 .974'</span></span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>twof.acrosstime.cov <span class="ot">&lt;-</span> <span class="fu">getCov</span>(WERHLE, <span class="at">names =</span> <span class="fu">c</span>(<span class="st">"CHANGE1"</span>, <span class="st">"INFLUEN1"</span>, <span class="st">"SUGGEST1"</span>, <span class="st">"CHANGE2"</span>, <span class="st">"INFLUEN2"</span>, <span class="st">"SUGGEST2"</span>))</span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>twof.acrosstime.model1 <span class="ot">&lt;-</span> <span class="st">'</span></span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a><span class="st">    CONTROL1 =~ CHANGE1 + INFLUEN1 + SUGGEST1</span></span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a><span class="st">    CONTROL2 =~ CHANGE2 + INFLUEN2 + SUGGEST2'</span></span>
+<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a>twof.acrosstime.model2 <span class="ot">&lt;-</span> <span class="st">'</span></span>
+<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a><span class="st">    CONTROL1 =~ CHANGE1 + INFLUEN1 + SUGGEST1</span></span>
+<span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a><span class="st">    CONTROL2 =~ CHANGE2 + INFLUEN2 + SUGGEST2</span></span>
+<span id="cb26-15"><a href="#cb26-15" aria-hidden="true" tabindex="-1"></a><span class="st">    CHANGE1 ~~ CHANGE2</span></span>
+<span id="cb26-16"><a href="#cb26-16" aria-hidden="true" tabindex="-1"></a><span class="st">    INFLUEN1 ~~ INFLUEN2</span></span>
+<span id="cb26-17"><a href="#cb26-17" aria-hidden="true" tabindex="-1"></a><span class="st">    SUGGEST1 ~~ SUGGEST2'</span></span>
+<span id="cb26-18"><a href="#cb26-18" aria-hidden="true" tabindex="-1"></a>twof.acrosstime.model3 <span class="ot">&lt;-</span> <span class="st">'</span></span>
+<span id="cb26-19"><a href="#cb26-19" aria-hidden="true" tabindex="-1"></a><span class="st">    CONTROL1 =~ a*CHANGE1 + b*INFLUEN1 + c*SUGGEST1</span></span>
+<span id="cb26-20"><a href="#cb26-20" aria-hidden="true" tabindex="-1"></a><span class="st">    CONTROL2 =~ a*CHANGE2 + b*INFLUEN2 + c*SUGGEST2'</span></span>
+<span id="cb26-21"><a href="#cb26-21" aria-hidden="true" tabindex="-1"></a>twof.acrosstime.model4 <span class="ot">&lt;-</span> <span class="st">'</span></span>
+<span id="cb26-22"><a href="#cb26-22" aria-hidden="true" tabindex="-1"></a><span class="st">    CONTROL1 =~ a*CHANGE1 + b*INFLUEN1 + c*SUGGEST1</span></span>
+<span id="cb26-23"><a href="#cb26-23" aria-hidden="true" tabindex="-1"></a><span class="st">    CONTROL2 =~ a*CHANGE2 + b*INFLUEN2 + c*SUGGEST2</span></span>
+<span id="cb26-24"><a href="#cb26-24" aria-hidden="true" tabindex="-1"></a><span class="st">    CHANGE1 ~~ CHANGE2</span></span>
+<span id="cb26-25"><a href="#cb26-25" aria-hidden="true" tabindex="-1"></a><span class="st">    INFLUEN1 ~~ INFLUEN2</span></span>
+<span id="cb26-26"><a href="#cb26-26" aria-hidden="true" tabindex="-1"></a><span class="st">    SUGGEST1 ~~ SUGGEST2'</span>   </span>
+<span id="cb26-27"><a href="#cb26-27" aria-hidden="true" tabindex="-1"></a>twof.acrosstime.fit1 <span class="ot">&lt;-</span> <span class="fu">cfa</span>(twof.acrosstime.model1, <span class="at">sample.cov =</span> twof.acrosstime.cov, <span class="at">sample.nobs =</span> <span class="dv">119</span>, <span class="at">std.lv =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb26-28"><a href="#cb26-28" aria-hidden="true" tabindex="-1"></a>twof.acrosstime.fit2 <span class="ot">&lt;-</span> <span class="fu">cfa</span>(twof.acrosstime.model2, <span class="at">sample.cov =</span> twof.acrosstime.cov, <span class="at">sample.nobs =</span> <span class="dv">119</span>, <span class="at">std.lv =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb26-29"><a href="#cb26-29" aria-hidden="true" tabindex="-1"></a>twof.acrosstime.fit3 <span class="ot">&lt;-</span> <span class="fu">cfa</span>(twof.acrosstime.model3, <span class="at">sample.cov =</span> twof.acrosstime.cov, <span class="at">sample.nobs =</span> <span class="dv">119</span>, <span class="at">std.lv =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb26-30"><a href="#cb26-30" aria-hidden="true" tabindex="-1"></a>twof.acrosstime.fit4 <span class="ot">&lt;-</span> <span class="fu">cfa</span>(twof.acrosstime.model4, <span class="at">sample.cov =</span> twof.acrosstime.cov, <span class="at">sample.nobs =</span> <span class="dv">119</span>, <span class="at">std.lv =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb26-31"><a href="#cb26-31" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(twof.acrosstime.fit1, <span class="at">fit.measures =</span> <span class="cn">TRUE</span>, <span class="at">standardized =</span> <span class="cn">TRUE</span>, <span class="at">rsquare =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>lavaan 0.6-21 ended normally after 20 iterations
 
@@ -1004,7 +996,7 @@ R-Square:
     INFLUEN2          0.691
     SUGGEST2          0.767</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(twof.acrosstime.fit2, <span class="at">fit.measures =</span> <span class="cn">TRUE</span>, <span class="at">standardized =</span> <span class="cn">TRUE</span>, <span class="at">rsquare =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(twof.acrosstime.fit2, <span class="at">fit.measures =</span> <span class="cn">TRUE</span>, <span class="at">standardized =</span> <span class="cn">TRUE</span>, <span class="at">rsquare =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>lavaan 0.6-21 ended normally after 26 iterations
 
@@ -1100,7 +1092,7 @@ R-Square:
     INFLUEN2          0.738
     SUGGEST2          0.696</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(twof.acrosstime.fit3, <span class="at">fit.measures =</span> <span class="cn">TRUE</span>, <span class="at">standardized =</span> <span class="cn">TRUE</span>, <span class="at">rsquare =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(twof.acrosstime.fit3, <span class="at">fit.measures =</span> <span class="cn">TRUE</span>, <span class="at">standardized =</span> <span class="cn">TRUE</span>, <span class="at">rsquare =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>lavaan 0.6-21 ended normally after 17 iterations
 
@@ -1191,7 +1183,7 @@ R-Square:
     INFLUEN2          0.687
     SUGGEST2          0.756</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(twof.acrosstime.fit4, <span class="at">fit.measures =</span> <span class="cn">TRUE</span>, <span class="at">standardized =</span> <span class="cn">TRUE</span>, <span class="at">rsquare =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(twof.acrosstime.fit4, <span class="at">fit.measures =</span> <span class="cn">TRUE</span>, <span class="at">standardized =</span> <span class="cn">TRUE</span>, <span class="at">rsquare =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>lavaan 0.6-21 ended normally after 24 iterations
 
@@ -1291,7 +1283,7 @@ R-Square:
 </div>
 <p>Use the <code>anova()</code> function or the <code>lavTestLRT()</code> function from <code>lavaan</code> to compare nested models</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(twof.acrosstime.fit1, twof.acrosstime.fit2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(twof.acrosstime.fit1, twof.acrosstime.fit2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Chi-Squared Difference Test
@@ -1305,7 +1297,7 @@ twof.acrosstime.fit1    0.01229 *
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lavTestLRT</span>(twof.acrosstime.fit1, twof.acrosstime.fit2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lavTestLRT</span>(twof.acrosstime.fit1, twof.acrosstime.fit2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Chi-Squared Difference Test
@@ -1322,7 +1314,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
 <p>Plot the path diagram</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>semPlot<span class="sc">::</span><span class="fu">semPaths</span>(twof.acrosstime.fit2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>semPlot<span class="sc">::</span><span class="fu">semPaths</span>(twof.acrosstime.fit2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1482,16 +1474,16 @@ OUTPUT:  SAMPSTAT STANDARDIZED RESIDUAL;</code></pre>
 <h4 data-number="4.5.1.1" class="anchored" data-anchor-id="r"><span class="header-section-number">4.5.1.1</span> R</h4>
 <p>Modification indices can be requested by adding the argument <code>modindices = TRUE</code> in the <code>summary()</code> call, or by calling the function <code>modindices()</code> directly. The <code>modindices()</code> function returns a data frame which you can sort or filter to extract what you want.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>AIRQUALITY <span class="ot">&lt;-</span> <span class="st">'</span></span>
-<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a><span class="st">    .331</span></span>
-<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a><span class="st">    .431 1.160</span></span>
-<span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a><span class="st">    .406 .847 .898</span></span>
-<span id="cb49-5"><a href="#cb49-5" aria-hidden="true" tabindex="-1"></a><span class="st">    .216 .272 .312 .268'</span></span>
-<span id="cb49-6"><a href="#cb49-6" aria-hidden="true" tabindex="-1"></a>cfa.lm.cov <span class="ot">&lt;-</span> <span class="fu">getCov</span>(AIRQUALITY, <span class="at">names =</span> <span class="fu">c</span>(<span class="st">"OVERALL"</span>, <span class="st">"CLARITY"</span>, <span class="st">"COLOR"</span>, <span class="st">"ODOR"</span>))</span>
-<span id="cb49-7"><a href="#cb49-7" aria-hidden="true" tabindex="-1"></a>cfa.lm.model <span class="ot">&lt;-</span> <span class="st">'</span></span>
-<span id="cb49-8"><a href="#cb49-8" aria-hidden="true" tabindex="-1"></a><span class="st">    QUALITY =~ OVERALL + CLARITY + COLOR + ODOR'</span></span>
-<span id="cb49-9"><a href="#cb49-9" aria-hidden="true" tabindex="-1"></a>cfa.lm.fit <span class="ot">&lt;-</span> <span class="fu">cfa</span>(cfa.lm.model, <span class="at">sample.cov =</span> cfa.lm.cov, <span class="at">sample.nobs =</span> <span class="dv">57</span>, <span class="at">std.lv =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb49-10"><a href="#cb49-10" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(cfa.lm.fit, <span class="at">fit.measures =</span> <span class="cn">TRUE</span>, <span class="at">standardized =</span> <span class="cn">TRUE</span>, <span class="at">rsquare =</span> <span class="cn">TRUE</span>, <span class="at">modindices =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>AIRQUALITY <span class="ot">&lt;-</span> <span class="st">'</span></span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a><span class="st">    .331</span></span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a><span class="st">    .431 1.160</span></span>
+<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a><span class="st">    .406 .847 .898</span></span>
+<span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a><span class="st">    .216 .272 .312 .268'</span></span>
+<span id="cb48-6"><a href="#cb48-6" aria-hidden="true" tabindex="-1"></a>cfa.lm.cov <span class="ot">&lt;-</span> <span class="fu">getCov</span>(AIRQUALITY, <span class="at">names =</span> <span class="fu">c</span>(<span class="st">"OVERALL"</span>, <span class="st">"CLARITY"</span>, <span class="st">"COLOR"</span>, <span class="st">"ODOR"</span>))</span>
+<span id="cb48-7"><a href="#cb48-7" aria-hidden="true" tabindex="-1"></a>cfa.lm.model <span class="ot">&lt;-</span> <span class="st">'</span></span>
+<span id="cb48-8"><a href="#cb48-8" aria-hidden="true" tabindex="-1"></a><span class="st">    QUALITY =~ OVERALL + CLARITY + COLOR + ODOR'</span></span>
+<span id="cb48-9"><a href="#cb48-9" aria-hidden="true" tabindex="-1"></a>cfa.lm.fit <span class="ot">&lt;-</span> <span class="fu">cfa</span>(cfa.lm.model, <span class="at">sample.cov =</span> cfa.lm.cov, <span class="at">sample.nobs =</span> <span class="dv">57</span>, <span class="at">std.lv =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb48-10"><a href="#cb48-10" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(cfa.lm.fit, <span class="at">fit.measures =</span> <span class="cn">TRUE</span>, <span class="at">standardized =</span> <span class="cn">TRUE</span>, <span class="at">rsquare =</span> <span class="cn">TRUE</span>, <span class="at">modindices =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>lavaan 0.6-21 ended normally after 23 iterations
 
@@ -1581,7 +1573,7 @@ Modification Indices:
 </div>
 <p>Alternatively, use the <code>modindices()</code> function. Modification indices are printed out for each nonfree (or nonredundant) parameter. The modification indices are supplemented by the expected parameter change (EPC) values (column epc). The last three columns contain the standardized EPC values (sepc.lv: only standardizing the latent variables; sepc.all: standardizing all variables; sepc.nox: standardizing all but exogenous observed variables).</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="fu">modindices</span>(cfa.lm.fit)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="fu">modindices</span>(cfa.lm.fit)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>       lhs op     rhs     mi    epc sepc.lv sepc.all sepc.nox
 10 OVERALL ~~ CLARITY  0.196 -0.019  -0.019   -0.108   -0.108
@@ -1594,11 +1586,11 @@ Modification Indices:
 </div>
 <p>Add a path based on modification indices and <em>theoretical justification</em>. Add one path at a time.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a>cfa.lm.model.add.covariance <span class="ot">&lt;-</span> <span class="st">'</span></span>
-<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a><span class="st">    QUALITY =~ OVERALL + CLARITY + COLOR + ODOR</span></span>
-<span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a><span class="st">    CLARITY ~~ COLOR'</span> <span class="co">#covariance between residuals added</span></span>
-<span id="cb53-4"><a href="#cb53-4" aria-hidden="true" tabindex="-1"></a>cfa.lm.add.covariance.fit <span class="ot">&lt;-</span> <span class="fu">cfa</span>(cfa.lm.model.add.covariance, <span class="at">sample.cov =</span> cfa.lm.cov, <span class="at">sample.nobs =</span> <span class="dv">57</span>, <span class="at">std.lv =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb53-5"><a href="#cb53-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(cfa.lm.add.covariance.fit, <span class="at">fit.measures =</span> <span class="cn">TRUE</span>, <span class="at">standardized =</span> <span class="cn">TRUE</span>, <span class="at">rsquare =</span> <span class="cn">TRUE</span>, <span class="at">modindices =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>cfa.lm.model.add.covariance <span class="ot">&lt;-</span> <span class="st">'</span></span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a><span class="st">    QUALITY =~ OVERALL + CLARITY + COLOR + ODOR</span></span>
+<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a><span class="st">    CLARITY ~~ COLOR'</span> <span class="co">#covariance between residuals added</span></span>
+<span id="cb52-4"><a href="#cb52-4" aria-hidden="true" tabindex="-1"></a>cfa.lm.add.covariance.fit <span class="ot">&lt;-</span> <span class="fu">cfa</span>(cfa.lm.model.add.covariance, <span class="at">sample.cov =</span> cfa.lm.cov, <span class="at">sample.nobs =</span> <span class="dv">57</span>, <span class="at">std.lv =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb52-5"><a href="#cb52-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(cfa.lm.add.covariance.fit, <span class="at">fit.measures =</span> <span class="cn">TRUE</span>, <span class="at">standardized =</span> <span class="cn">TRUE</span>, <span class="at">rsquare =</span> <span class="cn">TRUE</span>, <span class="at">modindices =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>lavaan 0.6-21 ended normally after 22 iterations
 
@@ -1717,27 +1709,27 @@ OUTPUT:  STANDARDIZED(STDYX) MODINDICES(3.84);</code></pre>
 <h4 data-number="4.5.2.1" class="anchored" data-anchor-id="r-1"><span class="header-section-number">4.5.2.1</span> R</h4>
 <p>Drop statistical nonsignificant paths one at a time.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a>POLDEM <span class="ot">&lt;-</span> <span class="st">'</span></span>
-<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a><span class="st">6.880</span></span>
-<span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a><span class="st">6.253 15.579</span></span>
-<span id="cb57-4"><a href="#cb57-4" aria-hidden="true" tabindex="-1"></a><span class="st">5.844 5.840 10.765</span></span>
-<span id="cb57-5"><a href="#cb57-5" aria-hidden="true" tabindex="-1"></a><span class="st">6.088 9.504 6.692 11.216</span></span>
-<span id="cb57-6"><a href="#cb57-6" aria-hidden="true" tabindex="-1"></a><span class="st">5.065 5.600 4.938 5.706 6.828</span></span>
-<span id="cb57-7"><a href="#cb57-7" aria-hidden="true" tabindex="-1"></a><span class="st">5.751 9.386 4.726 7.444 4.980 11.377</span></span>
-<span id="cb57-8"><a href="#cb57-8" aria-hidden="true" tabindex="-1"></a><span class="st">5.809 7.535 7.008 7.483 5.822 6.750 10.798</span></span>
-<span id="cb57-9"><a href="#cb57-9" aria-hidden="true" tabindex="-1"></a><span class="st">5.670 7.764 5.645 8.012 5.344 8.244 7.594 10.537'</span></span>
-<span id="cb57-10"><a href="#cb57-10" aria-hidden="true" tabindex="-1"></a>cfa.wald.cov <span class="ot">&lt;-</span> <span class="fu">getCov</span>(POLDEM, <span class="at">names =</span> <span class="fu">paste</span>(<span class="st">"Y"</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">8</span>, <span class="at">sep=</span><span class="st">""</span>))</span>
-<span id="cb57-11"><a href="#cb57-11" aria-hidden="true" tabindex="-1"></a>cfa.wald.model <span class="ot">&lt;-</span> <span class="st">'</span></span>
-<span id="cb57-12"><a href="#cb57-12" aria-hidden="true" tabindex="-1"></a><span class="st">    F1 =~ a*Y1 + b*Y2 + c*Y3 + d*Y4</span></span>
-<span id="cb57-13"><a href="#cb57-13" aria-hidden="true" tabindex="-1"></a><span class="st">    F2 =~ a*Y5 + b*Y6 + c*Y7 + d*Y8</span></span>
-<span id="cb57-14"><a href="#cb57-14" aria-hidden="true" tabindex="-1"></a><span class="st">    Y1 ~~ Y5</span></span>
-<span id="cb57-15"><a href="#cb57-15" aria-hidden="true" tabindex="-1"></a><span class="st">    Y2 ~~ Y6</span></span>
-<span id="cb57-16"><a href="#cb57-16" aria-hidden="true" tabindex="-1"></a><span class="st">    Y3 ~~ Y7</span></span>
-<span id="cb57-17"><a href="#cb57-17" aria-hidden="true" tabindex="-1"></a><span class="st">    Y4 ~~ Y8</span></span>
-<span id="cb57-18"><a href="#cb57-18" aria-hidden="true" tabindex="-1"></a><span class="st">    Y2 ~~ Y4</span></span>
-<span id="cb57-19"><a href="#cb57-19" aria-hidden="true" tabindex="-1"></a><span class="st">    Y6 ~~ Y8'</span></span>
-<span id="cb57-20"><a href="#cb57-20" aria-hidden="true" tabindex="-1"></a>cfa.wald.fit <span class="ot">&lt;-</span> <span class="fu">cfa</span>(cfa.wald.model, <span class="at">sample.cov =</span> cfa.wald.cov, <span class="at">sample.nobs =</span> <span class="dv">102</span>, <span class="at">std.lv =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb57-21"><a href="#cb57-21" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(cfa.wald.fit, <span class="at">fit.measures =</span> <span class="cn">TRUE</span>, <span class="at">standardized =</span> <span class="cn">TRUE</span>, <span class="at">rsquare =</span> <span class="cn">TRUE</span>, <span class="at">modindices =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>POLDEM <span class="ot">&lt;-</span> <span class="st">'</span></span>
+<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a><span class="st">6.880</span></span>
+<span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a><span class="st">6.253 15.579</span></span>
+<span id="cb56-4"><a href="#cb56-4" aria-hidden="true" tabindex="-1"></a><span class="st">5.844 5.840 10.765</span></span>
+<span id="cb56-5"><a href="#cb56-5" aria-hidden="true" tabindex="-1"></a><span class="st">6.088 9.504 6.692 11.216</span></span>
+<span id="cb56-6"><a href="#cb56-6" aria-hidden="true" tabindex="-1"></a><span class="st">5.065 5.600 4.938 5.706 6.828</span></span>
+<span id="cb56-7"><a href="#cb56-7" aria-hidden="true" tabindex="-1"></a><span class="st">5.751 9.386 4.726 7.444 4.980 11.377</span></span>
+<span id="cb56-8"><a href="#cb56-8" aria-hidden="true" tabindex="-1"></a><span class="st">5.809 7.535 7.008 7.483 5.822 6.750 10.798</span></span>
+<span id="cb56-9"><a href="#cb56-9" aria-hidden="true" tabindex="-1"></a><span class="st">5.670 7.764 5.645 8.012 5.344 8.244 7.594 10.537'</span></span>
+<span id="cb56-10"><a href="#cb56-10" aria-hidden="true" tabindex="-1"></a>cfa.wald.cov <span class="ot">&lt;-</span> <span class="fu">getCov</span>(POLDEM, <span class="at">names =</span> <span class="fu">paste</span>(<span class="st">"Y"</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">8</span>, <span class="at">sep=</span><span class="st">""</span>))</span>
+<span id="cb56-11"><a href="#cb56-11" aria-hidden="true" tabindex="-1"></a>cfa.wald.model <span class="ot">&lt;-</span> <span class="st">'</span></span>
+<span id="cb56-12"><a href="#cb56-12" aria-hidden="true" tabindex="-1"></a><span class="st">    F1 =~ a*Y1 + b*Y2 + c*Y3 + d*Y4</span></span>
+<span id="cb56-13"><a href="#cb56-13" aria-hidden="true" tabindex="-1"></a><span class="st">    F2 =~ a*Y5 + b*Y6 + c*Y7 + d*Y8</span></span>
+<span id="cb56-14"><a href="#cb56-14" aria-hidden="true" tabindex="-1"></a><span class="st">    Y1 ~~ Y5</span></span>
+<span id="cb56-15"><a href="#cb56-15" aria-hidden="true" tabindex="-1"></a><span class="st">    Y2 ~~ Y6</span></span>
+<span id="cb56-16"><a href="#cb56-16" aria-hidden="true" tabindex="-1"></a><span class="st">    Y3 ~~ Y7</span></span>
+<span id="cb56-17"><a href="#cb56-17" aria-hidden="true" tabindex="-1"></a><span class="st">    Y4 ~~ Y8</span></span>
+<span id="cb56-18"><a href="#cb56-18" aria-hidden="true" tabindex="-1"></a><span class="st">    Y2 ~~ Y4</span></span>
+<span id="cb56-19"><a href="#cb56-19" aria-hidden="true" tabindex="-1"></a><span class="st">    Y6 ~~ Y8'</span></span>
+<span id="cb56-20"><a href="#cb56-20" aria-hidden="true" tabindex="-1"></a>cfa.wald.fit <span class="ot">&lt;-</span> <span class="fu">cfa</span>(cfa.wald.model, <span class="at">sample.cov =</span> cfa.wald.cov, <span class="at">sample.nobs =</span> <span class="dv">102</span>, <span class="at">std.lv =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb56-21"><a href="#cb56-21" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(cfa.wald.fit, <span class="at">fit.measures =</span> <span class="cn">TRUE</span>, <span class="at">standardized =</span> <span class="cn">TRUE</span>, <span class="at">rsquare =</span> <span class="cn">TRUE</span>, <span class="at">modindices =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: lavaan-&gt;modificationIndices():  
    the modindices() function ignores equality constraints; use lavTestScore() 
@@ -1920,57 +1912,57 @@ OUTPUT:   SAMPSTAT STANDARDIZED(STDYX);</code></pre>
 <section id="r-2" class="level4" data-number="4.5.3.1">
 <h4 data-number="4.5.3.1" class="anchored" data-anchor-id="r-2"><span class="header-section-number">4.5.3.1</span> R</h4>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a>SC.corr <span class="ot">&lt;-</span> <span class="st">'</span></span>
-<span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a><span class="st">1.00                                                            </span></span>
-<span id="cb61-3"><a href="#cb61-3" aria-hidden="true" tabindex="-1"></a><span class="st">0.31 1.00                                                       </span></span>
-<span id="cb61-4"><a href="#cb61-4" aria-hidden="true" tabindex="-1"></a><span class="st">0.52 0.45 1.00                                                  </span></span>
-<span id="cb61-5"><a href="#cb61-5" aria-hidden="true" tabindex="-1"></a><span class="st">0.54 0.46 0.70 1.00                                             </span></span>
-<span id="cb61-6"><a href="#cb61-6" aria-hidden="true" tabindex="-1"></a><span class="st">0.15 0.33 0.22 0.21 1.00                                            </span></span>
-<span id="cb61-7"><a href="#cb61-7" aria-hidden="true" tabindex="-1"></a><span class="st">0.14 0.28 0.21 0.13 0.72 1.00                                       </span></span>
-<span id="cb61-8"><a href="#cb61-8" aria-hidden="true" tabindex="-1"></a><span class="st">0.16 0.32 0.35 0.31 0.59 0.56 1.00                                  </span></span>
-<span id="cb61-9"><a href="#cb61-9" aria-hidden="true" tabindex="-1"></a><span class="st">0.23 0.29 0.43 0.36 0.55 0.51 0.65 1.00                             </span></span>
-<span id="cb61-10"><a href="#cb61-10" aria-hidden="true" tabindex="-1"></a><span class="st">0.24 0.13 0.24 0.23 0.25 0.24 0.24 0.30 1.00                            </span></span>
-<span id="cb61-11"><a href="#cb61-11" aria-hidden="true" tabindex="-1"></a><span class="st">0.19 0.26 0.22 0.18 0.34 0.37 0.36 0.32 0.38 1.00                       </span></span>
-<span id="cb61-12"><a href="#cb61-12" aria-hidden="true" tabindex="-1"></a><span class="st">0.16 0.24 0.36 0.30 0.33 0.29 0.44 0.51 0.47 0.50 1.00                  </span></span>
-<span id="cb61-13"><a href="#cb61-13" aria-hidden="true" tabindex="-1"></a><span class="st">0.16 0.21 0.35 0.24 0.31 0.33 0.41 0.39 0.47 0.47 0.55 1.00             </span></span>
-<span id="cb61-14"><a href="#cb61-14" aria-hidden="true" tabindex="-1"></a><span class="st">0.08 0.18 0.09 0.12 0.19 0.24 0.08 0.21 0.21 0.19 0.19 0.20 1.00            </span></span>
-<span id="cb61-15"><a href="#cb61-15" aria-hidden="true" tabindex="-1"></a><span class="st">0.01 -0.01 0.03 0.02 0.10 0.13 0.03 0.05 0.26 0.17 0.23 0.26 0.33 1.00      </span></span>
-<span id="cb61-16"><a href="#cb61-16" aria-hidden="true" tabindex="-1"></a><span class="st">0.06 0.19 0.22 0.22 0.23 0.24 0.20 0.26 0.16 0.23 0.38 0.24 0.42 0.40 1.00  </span></span>
-<span id="cb61-17"><a href="#cb61-17" aria-hidden="true" tabindex="-1"></a><span class="st">0.04 0.17 0.10 0.07 0.26 0.24 0.12 0.26 0.16 0.22 0.32 0.17 0.42 0.42 0.65 1.00'</span></span>
-<span id="cb61-18"><a href="#cb61-18" aria-hidden="true" tabindex="-1"></a>SC.SDs <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">1.84</span>, <span class="fl">1.94</span>, <span class="fl">2.07</span>, <span class="fl">1.82</span>, <span class="fl">2.34</span>, <span class="fl">2.61</span>, <span class="fl">2.48</span>, <span class="fl">2.34</span>, <span class="fl">1.71</span>, <span class="fl">1.93</span>, <span class="fl">2.18</span>, <span class="fl">1.94</span>, <span class="fl">1.31</span>, <span class="fl">1.57</span>, <span class="fl">1.77</span>, <span class="fl">1.47</span>)</span>
-<span id="cb61-19"><a href="#cb61-19" aria-hidden="true" tabindex="-1"></a>SC.cov <span class="ot">&lt;-</span> <span class="fu">getCov</span>(SC.corr, <span class="at">sds =</span> SC.SDs, <span class="at">names =</span> <span class="fu">paste</span>(<span class="st">"Y"</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">16</span>, <span class="at">sep=</span><span class="st">""</span>))</span>
-<span id="cb61-20"><a href="#cb61-20" aria-hidden="true" tabindex="-1"></a>HOCFA<span class="fl">.1</span>storder.model <span class="ot">&lt;-</span> </span>
-<span id="cb61-21"><a href="#cb61-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">paste0</span>(<span class="st">'F1 =~ '</span>, <span class="fu">paste0</span>(<span class="st">'Y'</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>, <span class="at">collapse=</span><span class="st">' + '</span>), <span class="st">' </span><span class="sc">\n</span><span class="st">'</span>,</span>
-<span id="cb61-22"><a href="#cb61-22" aria-hidden="true" tabindex="-1"></a>         <span class="st">' F2 =~ '</span>, <span class="fu">paste0</span>(<span class="st">'Y'</span>, <span class="dv">5</span><span class="sc">:</span><span class="dv">8</span>, <span class="at">collapse=</span><span class="st">' + '</span>), <span class="st">' </span><span class="sc">\n</span><span class="st">'</span>,</span>
-<span id="cb61-23"><a href="#cb61-23" aria-hidden="true" tabindex="-1"></a>         <span class="st">' F3 =~ '</span>, <span class="fu">paste0</span>(<span class="st">'Y'</span>, <span class="dv">9</span><span class="sc">:</span><span class="dv">12</span>, <span class="at">collapse=</span><span class="st">' + '</span>), <span class="st">' </span><span class="sc">\n</span><span class="st">'</span>,</span>
-<span id="cb61-24"><a href="#cb61-24" aria-hidden="true" tabindex="-1"></a>         <span class="st">' F4 =~ '</span>, <span class="fu">paste0</span>(<span class="st">'Y'</span>, <span class="dv">13</span><span class="sc">:</span><span class="dv">16</span>, <span class="at">collapse=</span><span class="st">' + '</span>))</span>
-<span id="cb61-25"><a href="#cb61-25" aria-hidden="true" tabindex="-1"></a>HOCFA<span class="fl">.2</span>ndorder.model <span class="ot">&lt;-</span> </span>
-<span id="cb61-26"><a href="#cb61-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">paste0</span>(<span class="st">'F1 =~ '</span>, <span class="fu">paste0</span>(<span class="st">'Y'</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>, <span class="at">collapse=</span><span class="st">' + '</span>), <span class="st">' </span><span class="sc">\n</span><span class="st">'</span>,</span>
-<span id="cb61-27"><a href="#cb61-27" aria-hidden="true" tabindex="-1"></a>         <span class="st">' F2 =~ '</span>, <span class="fu">paste0</span>(<span class="st">'Y'</span>, <span class="dv">5</span><span class="sc">:</span><span class="dv">8</span>, <span class="at">collapse=</span><span class="st">' + '</span>), <span class="st">' </span><span class="sc">\n</span><span class="st">'</span>,</span>
-<span id="cb61-28"><a href="#cb61-28" aria-hidden="true" tabindex="-1"></a>         <span class="st">' F3 =~ '</span>, <span class="fu">paste0</span>(<span class="st">'Y'</span>, <span class="dv">9</span><span class="sc">:</span><span class="dv">12</span>, <span class="at">collapse=</span><span class="st">' + '</span>), <span class="st">' </span><span class="sc">\n</span><span class="st">'</span>,</span>
-<span id="cb61-29"><a href="#cb61-29" aria-hidden="true" tabindex="-1"></a>         <span class="st">' F4 =~ '</span>, <span class="fu">paste0</span>(<span class="st">'Y'</span>, <span class="dv">13</span><span class="sc">:</span><span class="dv">16</span>, <span class="at">collapse=</span><span class="st">' + '</span>), <span class="st">' </span><span class="sc">\n</span><span class="st">'</span>,</span>
-<span id="cb61-30"><a href="#cb61-30" aria-hidden="true" tabindex="-1"></a>         <span class="st">' F5 =~ NA*F1 + F2 + F3 + F4  </span></span>
-<span id="cb61-31"><a href="#cb61-31" aria-hidden="true" tabindex="-1"></a><span class="st">      F5 ~~ 1*F5'</span>)</span>
-<span id="cb61-32"><a href="#cb61-32" aria-hidden="true" tabindex="-1"></a>HOCFA.bifactor.model <span class="ot">&lt;-</span> </span>
-<span id="cb61-33"><a href="#cb61-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">paste0</span>(<span class="st">'F1 =~ '</span>, <span class="fu">paste0</span>(<span class="st">'Y'</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>, <span class="at">collapse=</span><span class="st">' + '</span>), <span class="st">' </span><span class="sc">\n</span><span class="st">'</span>,</span>
-<span id="cb61-34"><a href="#cb61-34" aria-hidden="true" tabindex="-1"></a>         <span class="st">' F2 =~ '</span>, <span class="fu">paste0</span>(<span class="st">'Y'</span>, <span class="dv">5</span><span class="sc">:</span><span class="dv">8</span>, <span class="at">collapse=</span><span class="st">' + '</span>), <span class="st">' </span><span class="sc">\n</span><span class="st">'</span>,</span>
-<span id="cb61-35"><a href="#cb61-35" aria-hidden="true" tabindex="-1"></a>         <span class="st">' F3 =~ '</span>, <span class="fu">paste0</span>(<span class="st">'Y'</span>, <span class="dv">9</span><span class="sc">:</span><span class="dv">12</span>, <span class="at">collapse=</span><span class="st">' + '</span>), <span class="st">' </span><span class="sc">\n</span><span class="st">'</span>,</span>
-<span id="cb61-36"><a href="#cb61-36" aria-hidden="true" tabindex="-1"></a>         <span class="st">' F4 =~ '</span>, <span class="fu">paste0</span>(<span class="st">'Y'</span>, <span class="dv">13</span><span class="sc">:</span><span class="dv">16</span>, <span class="at">collapse=</span><span class="st">' + '</span>), <span class="st">' </span><span class="sc">\n</span><span class="st">'</span>,</span>
-<span id="cb61-37"><a href="#cb61-37" aria-hidden="true" tabindex="-1"></a>         <span class="st">' F5 =~ '</span>, <span class="fu">paste0</span>(<span class="st">'Y'</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">16</span>, <span class="at">collapse=</span><span class="st">' + '</span>), <span class="st">' </span><span class="sc">\n</span><span class="st">'</span>,</span>
-<span id="cb61-38"><a href="#cb61-38" aria-hidden="true" tabindex="-1"></a>         <span class="st">' F1 ~~ 0*F2</span></span>
-<span id="cb61-39"><a href="#cb61-39" aria-hidden="true" tabindex="-1"></a><span class="st">     F1 ~~ 0*F3</span></span>
-<span id="cb61-40"><a href="#cb61-40" aria-hidden="true" tabindex="-1"></a><span class="st">     F1 ~~ 0*F4</span></span>
-<span id="cb61-41"><a href="#cb61-41" aria-hidden="true" tabindex="-1"></a><span class="st">     F1 ~~ 0*F5</span></span>
-<span id="cb61-42"><a href="#cb61-42" aria-hidden="true" tabindex="-1"></a><span class="st">     F2 ~~ 0*F3</span></span>
-<span id="cb61-43"><a href="#cb61-43" aria-hidden="true" tabindex="-1"></a><span class="st">     F2 ~~ 0*F4</span></span>
-<span id="cb61-44"><a href="#cb61-44" aria-hidden="true" tabindex="-1"></a><span class="st">     F2 ~~ 0*F5</span></span>
-<span id="cb61-45"><a href="#cb61-45" aria-hidden="true" tabindex="-1"></a><span class="st">     F3 ~~ 0*F4</span></span>
-<span id="cb61-46"><a href="#cb61-46" aria-hidden="true" tabindex="-1"></a><span class="st">     F3 ~~ 0*F5</span></span>
-<span id="cb61-47"><a href="#cb61-47" aria-hidden="true" tabindex="-1"></a><span class="st">     F4 ~~ 0*F5'</span>)</span>
-<span id="cb61-48"><a href="#cb61-48" aria-hidden="true" tabindex="-1"></a>HOCFA<span class="fl">.1</span>storder.fit <span class="ot">&lt;-</span> <span class="fu">cfa</span>(HOCFA<span class="fl">.1</span>storder.model, <span class="at">sample.cov =</span> SC.cov, <span class="at">sample.nobs =</span> <span class="dv">251</span>, <span class="at">std.lv =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb61-49"><a href="#cb61-49" aria-hidden="true" tabindex="-1"></a>HOCFA<span class="fl">.2</span>ndorder.fit <span class="ot">&lt;-</span> <span class="fu">cfa</span>(HOCFA<span class="fl">.2</span>ndorder.model, <span class="at">sample.cov =</span> SC.cov, <span class="at">sample.nobs =</span> <span class="dv">251</span>, <span class="at">std.lv =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb61-50"><a href="#cb61-50" aria-hidden="true" tabindex="-1"></a>HOCFA.bifactor.fit <span class="ot">&lt;-</span> <span class="fu">cfa</span>(HOCFA.bifactor.model, <span class="at">sample.cov =</span> SC.cov, <span class="at">sample.nobs =</span> <span class="dv">251</span>, <span class="at">std.lv =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb61-51"><a href="#cb61-51" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(HOCFA<span class="fl">.1</span>storder.fit, <span class="at">fit.measures =</span> <span class="cn">TRUE</span>, <span class="at">standardized =</span> <span class="cn">TRUE</span>, <span class="at">rsquare =</span> <span class="cn">TRUE</span>)    </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a>SC.corr <span class="ot">&lt;-</span> <span class="st">'</span></span>
+<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a><span class="st">1.00                                                            </span></span>
+<span id="cb60-3"><a href="#cb60-3" aria-hidden="true" tabindex="-1"></a><span class="st">0.31 1.00                                                       </span></span>
+<span id="cb60-4"><a href="#cb60-4" aria-hidden="true" tabindex="-1"></a><span class="st">0.52 0.45 1.00                                                  </span></span>
+<span id="cb60-5"><a href="#cb60-5" aria-hidden="true" tabindex="-1"></a><span class="st">0.54 0.46 0.70 1.00                                             </span></span>
+<span id="cb60-6"><a href="#cb60-6" aria-hidden="true" tabindex="-1"></a><span class="st">0.15 0.33 0.22 0.21 1.00                                            </span></span>
+<span id="cb60-7"><a href="#cb60-7" aria-hidden="true" tabindex="-1"></a><span class="st">0.14 0.28 0.21 0.13 0.72 1.00                                       </span></span>
+<span id="cb60-8"><a href="#cb60-8" aria-hidden="true" tabindex="-1"></a><span class="st">0.16 0.32 0.35 0.31 0.59 0.56 1.00                                  </span></span>
+<span id="cb60-9"><a href="#cb60-9" aria-hidden="true" tabindex="-1"></a><span class="st">0.23 0.29 0.43 0.36 0.55 0.51 0.65 1.00                             </span></span>
+<span id="cb60-10"><a href="#cb60-10" aria-hidden="true" tabindex="-1"></a><span class="st">0.24 0.13 0.24 0.23 0.25 0.24 0.24 0.30 1.00                            </span></span>
+<span id="cb60-11"><a href="#cb60-11" aria-hidden="true" tabindex="-1"></a><span class="st">0.19 0.26 0.22 0.18 0.34 0.37 0.36 0.32 0.38 1.00                       </span></span>
+<span id="cb60-12"><a href="#cb60-12" aria-hidden="true" tabindex="-1"></a><span class="st">0.16 0.24 0.36 0.30 0.33 0.29 0.44 0.51 0.47 0.50 1.00                  </span></span>
+<span id="cb60-13"><a href="#cb60-13" aria-hidden="true" tabindex="-1"></a><span class="st">0.16 0.21 0.35 0.24 0.31 0.33 0.41 0.39 0.47 0.47 0.55 1.00             </span></span>
+<span id="cb60-14"><a href="#cb60-14" aria-hidden="true" tabindex="-1"></a><span class="st">0.08 0.18 0.09 0.12 0.19 0.24 0.08 0.21 0.21 0.19 0.19 0.20 1.00            </span></span>
+<span id="cb60-15"><a href="#cb60-15" aria-hidden="true" tabindex="-1"></a><span class="st">0.01 -0.01 0.03 0.02 0.10 0.13 0.03 0.05 0.26 0.17 0.23 0.26 0.33 1.00      </span></span>
+<span id="cb60-16"><a href="#cb60-16" aria-hidden="true" tabindex="-1"></a><span class="st">0.06 0.19 0.22 0.22 0.23 0.24 0.20 0.26 0.16 0.23 0.38 0.24 0.42 0.40 1.00  </span></span>
+<span id="cb60-17"><a href="#cb60-17" aria-hidden="true" tabindex="-1"></a><span class="st">0.04 0.17 0.10 0.07 0.26 0.24 0.12 0.26 0.16 0.22 0.32 0.17 0.42 0.42 0.65 1.00'</span></span>
+<span id="cb60-18"><a href="#cb60-18" aria-hidden="true" tabindex="-1"></a>SC.SDs <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">1.84</span>, <span class="fl">1.94</span>, <span class="fl">2.07</span>, <span class="fl">1.82</span>, <span class="fl">2.34</span>, <span class="fl">2.61</span>, <span class="fl">2.48</span>, <span class="fl">2.34</span>, <span class="fl">1.71</span>, <span class="fl">1.93</span>, <span class="fl">2.18</span>, <span class="fl">1.94</span>, <span class="fl">1.31</span>, <span class="fl">1.57</span>, <span class="fl">1.77</span>, <span class="fl">1.47</span>)</span>
+<span id="cb60-19"><a href="#cb60-19" aria-hidden="true" tabindex="-1"></a>SC.cov <span class="ot">&lt;-</span> <span class="fu">getCov</span>(SC.corr, <span class="at">sds =</span> SC.SDs, <span class="at">names =</span> <span class="fu">paste</span>(<span class="st">"Y"</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">16</span>, <span class="at">sep=</span><span class="st">""</span>))</span>
+<span id="cb60-20"><a href="#cb60-20" aria-hidden="true" tabindex="-1"></a>HOCFA<span class="fl">.1</span>storder.model <span class="ot">&lt;-</span> </span>
+<span id="cb60-21"><a href="#cb60-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">paste0</span>(<span class="st">'F1 =~ '</span>, <span class="fu">paste0</span>(<span class="st">'Y'</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>, <span class="at">collapse=</span><span class="st">' + '</span>), <span class="st">' </span><span class="sc">\n</span><span class="st">'</span>,</span>
+<span id="cb60-22"><a href="#cb60-22" aria-hidden="true" tabindex="-1"></a>         <span class="st">' F2 =~ '</span>, <span class="fu">paste0</span>(<span class="st">'Y'</span>, <span class="dv">5</span><span class="sc">:</span><span class="dv">8</span>, <span class="at">collapse=</span><span class="st">' + '</span>), <span class="st">' </span><span class="sc">\n</span><span class="st">'</span>,</span>
+<span id="cb60-23"><a href="#cb60-23" aria-hidden="true" tabindex="-1"></a>         <span class="st">' F3 =~ '</span>, <span class="fu">paste0</span>(<span class="st">'Y'</span>, <span class="dv">9</span><span class="sc">:</span><span class="dv">12</span>, <span class="at">collapse=</span><span class="st">' + '</span>), <span class="st">' </span><span class="sc">\n</span><span class="st">'</span>,</span>
+<span id="cb60-24"><a href="#cb60-24" aria-hidden="true" tabindex="-1"></a>         <span class="st">' F4 =~ '</span>, <span class="fu">paste0</span>(<span class="st">'Y'</span>, <span class="dv">13</span><span class="sc">:</span><span class="dv">16</span>, <span class="at">collapse=</span><span class="st">' + '</span>))</span>
+<span id="cb60-25"><a href="#cb60-25" aria-hidden="true" tabindex="-1"></a>HOCFA<span class="fl">.2</span>ndorder.model <span class="ot">&lt;-</span> </span>
+<span id="cb60-26"><a href="#cb60-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">paste0</span>(<span class="st">'F1 =~ '</span>, <span class="fu">paste0</span>(<span class="st">'Y'</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>, <span class="at">collapse=</span><span class="st">' + '</span>), <span class="st">' </span><span class="sc">\n</span><span class="st">'</span>,</span>
+<span id="cb60-27"><a href="#cb60-27" aria-hidden="true" tabindex="-1"></a>         <span class="st">' F2 =~ '</span>, <span class="fu">paste0</span>(<span class="st">'Y'</span>, <span class="dv">5</span><span class="sc">:</span><span class="dv">8</span>, <span class="at">collapse=</span><span class="st">' + '</span>), <span class="st">' </span><span class="sc">\n</span><span class="st">'</span>,</span>
+<span id="cb60-28"><a href="#cb60-28" aria-hidden="true" tabindex="-1"></a>         <span class="st">' F3 =~ '</span>, <span class="fu">paste0</span>(<span class="st">'Y'</span>, <span class="dv">9</span><span class="sc">:</span><span class="dv">12</span>, <span class="at">collapse=</span><span class="st">' + '</span>), <span class="st">' </span><span class="sc">\n</span><span class="st">'</span>,</span>
+<span id="cb60-29"><a href="#cb60-29" aria-hidden="true" tabindex="-1"></a>         <span class="st">' F4 =~ '</span>, <span class="fu">paste0</span>(<span class="st">'Y'</span>, <span class="dv">13</span><span class="sc">:</span><span class="dv">16</span>, <span class="at">collapse=</span><span class="st">' + '</span>), <span class="st">' </span><span class="sc">\n</span><span class="st">'</span>,</span>
+<span id="cb60-30"><a href="#cb60-30" aria-hidden="true" tabindex="-1"></a>         <span class="st">' F5 =~ NA*F1 + F2 + F3 + F4  </span></span>
+<span id="cb60-31"><a href="#cb60-31" aria-hidden="true" tabindex="-1"></a><span class="st">      F5 ~~ 1*F5'</span>)</span>
+<span id="cb60-32"><a href="#cb60-32" aria-hidden="true" tabindex="-1"></a>HOCFA.bifactor.model <span class="ot">&lt;-</span> </span>
+<span id="cb60-33"><a href="#cb60-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">paste0</span>(<span class="st">'F1 =~ '</span>, <span class="fu">paste0</span>(<span class="st">'Y'</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>, <span class="at">collapse=</span><span class="st">' + '</span>), <span class="st">' </span><span class="sc">\n</span><span class="st">'</span>,</span>
+<span id="cb60-34"><a href="#cb60-34" aria-hidden="true" tabindex="-1"></a>         <span class="st">' F2 =~ '</span>, <span class="fu">paste0</span>(<span class="st">'Y'</span>, <span class="dv">5</span><span class="sc">:</span><span class="dv">8</span>, <span class="at">collapse=</span><span class="st">' + '</span>), <span class="st">' </span><span class="sc">\n</span><span class="st">'</span>,</span>
+<span id="cb60-35"><a href="#cb60-35" aria-hidden="true" tabindex="-1"></a>         <span class="st">' F3 =~ '</span>, <span class="fu">paste0</span>(<span class="st">'Y'</span>, <span class="dv">9</span><span class="sc">:</span><span class="dv">12</span>, <span class="at">collapse=</span><span class="st">' + '</span>), <span class="st">' </span><span class="sc">\n</span><span class="st">'</span>,</span>
+<span id="cb60-36"><a href="#cb60-36" aria-hidden="true" tabindex="-1"></a>         <span class="st">' F4 =~ '</span>, <span class="fu">paste0</span>(<span class="st">'Y'</span>, <span class="dv">13</span><span class="sc">:</span><span class="dv">16</span>, <span class="at">collapse=</span><span class="st">' + '</span>), <span class="st">' </span><span class="sc">\n</span><span class="st">'</span>,</span>
+<span id="cb60-37"><a href="#cb60-37" aria-hidden="true" tabindex="-1"></a>         <span class="st">' F5 =~ '</span>, <span class="fu">paste0</span>(<span class="st">'Y'</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">16</span>, <span class="at">collapse=</span><span class="st">' + '</span>), <span class="st">' </span><span class="sc">\n</span><span class="st">'</span>,</span>
+<span id="cb60-38"><a href="#cb60-38" aria-hidden="true" tabindex="-1"></a>         <span class="st">' F1 ~~ 0*F2</span></span>
+<span id="cb60-39"><a href="#cb60-39" aria-hidden="true" tabindex="-1"></a><span class="st">     F1 ~~ 0*F3</span></span>
+<span id="cb60-40"><a href="#cb60-40" aria-hidden="true" tabindex="-1"></a><span class="st">     F1 ~~ 0*F4</span></span>
+<span id="cb60-41"><a href="#cb60-41" aria-hidden="true" tabindex="-1"></a><span class="st">     F1 ~~ 0*F5</span></span>
+<span id="cb60-42"><a href="#cb60-42" aria-hidden="true" tabindex="-1"></a><span class="st">     F2 ~~ 0*F3</span></span>
+<span id="cb60-43"><a href="#cb60-43" aria-hidden="true" tabindex="-1"></a><span class="st">     F2 ~~ 0*F4</span></span>
+<span id="cb60-44"><a href="#cb60-44" aria-hidden="true" tabindex="-1"></a><span class="st">     F2 ~~ 0*F5</span></span>
+<span id="cb60-45"><a href="#cb60-45" aria-hidden="true" tabindex="-1"></a><span class="st">     F3 ~~ 0*F4</span></span>
+<span id="cb60-46"><a href="#cb60-46" aria-hidden="true" tabindex="-1"></a><span class="st">     F3 ~~ 0*F5</span></span>
+<span id="cb60-47"><a href="#cb60-47" aria-hidden="true" tabindex="-1"></a><span class="st">     F4 ~~ 0*F5'</span>)</span>
+<span id="cb60-48"><a href="#cb60-48" aria-hidden="true" tabindex="-1"></a>HOCFA<span class="fl">.1</span>storder.fit <span class="ot">&lt;-</span> <span class="fu">cfa</span>(HOCFA<span class="fl">.1</span>storder.model, <span class="at">sample.cov =</span> SC.cov, <span class="at">sample.nobs =</span> <span class="dv">251</span>, <span class="at">std.lv =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb60-49"><a href="#cb60-49" aria-hidden="true" tabindex="-1"></a>HOCFA<span class="fl">.2</span>ndorder.fit <span class="ot">&lt;-</span> <span class="fu">cfa</span>(HOCFA<span class="fl">.2</span>ndorder.model, <span class="at">sample.cov =</span> SC.cov, <span class="at">sample.nobs =</span> <span class="dv">251</span>, <span class="at">std.lv =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb60-50"><a href="#cb60-50" aria-hidden="true" tabindex="-1"></a>HOCFA.bifactor.fit <span class="ot">&lt;-</span> <span class="fu">cfa</span>(HOCFA.bifactor.model, <span class="at">sample.cov =</span> SC.cov, <span class="at">sample.nobs =</span> <span class="dv">251</span>, <span class="at">std.lv =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb60-51"><a href="#cb60-51" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(HOCFA<span class="fl">.1</span>storder.fit, <span class="at">fit.measures =</span> <span class="cn">TRUE</span>, <span class="at">standardized =</span> <span class="cn">TRUE</span>, <span class="at">rsquare =</span> <span class="cn">TRUE</span>)    </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>lavaan 0.6-21 ended normally after 21 iterations
 
@@ -2101,7 +2093,7 @@ R-Square:
     Y15               0.650
     Y16               0.631</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(HOCFA<span class="fl">.2</span>ndorder.fit, <span class="at">fit.measures =</span> <span class="cn">TRUE</span>, <span class="at">standardized =</span> <span class="cn">TRUE</span>, <span class="at">rsquare =</span> <span class="cn">TRUE</span>)   </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(HOCFA<span class="fl">.2</span>ndorder.fit, <span class="at">fit.measures =</span> <span class="cn">TRUE</span>, <span class="at">standardized =</span> <span class="cn">TRUE</span>, <span class="at">rsquare =</span> <span class="cn">TRUE</span>)   </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>lavaan 0.6-21 ended normally after 33 iterations
 
@@ -2230,7 +2222,7 @@ R-Square:
     F3                0.774
     F4                0.253</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(HOCFA.bifactor.fit, <span class="at">fit.measures =</span> <span class="cn">TRUE</span>, <span class="at">standardized =</span> <span class="cn">TRUE</span>, <span class="at">rsquare =</span> <span class="cn">TRUE</span>)   </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(HOCFA.bifactor.fit, <span class="at">fit.measures =</span> <span class="cn">TRUE</span>, <span class="at">standardized =</span> <span class="cn">TRUE</span>, <span class="at">rsquare =</span> <span class="cn">TRUE</span>)   </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>lavaan 0.6-21 ended normally after 37 iterations
 
@@ -2387,7 +2379,7 @@ R-Square:
 </div>
 <p>Plot the path diagram</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb67"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a>semPlot<span class="sc">::</span><span class="fu">semPaths</span>(HOCFA<span class="fl">.1</span>storder.fit)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a>semPlot<span class="sc">::</span><span class="fu">semPaths</span>(HOCFA<span class="fl">.1</span>storder.fit)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -2395,7 +2387,7 @@ R-Square:
 </figure>
 </div>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a>semPlot<span class="sc">::</span><span class="fu">semPaths</span>(HOCFA<span class="fl">.2</span>ndorder.fit)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb67"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a>semPlot<span class="sc">::</span><span class="fu">semPaths</span>(HOCFA<span class="fl">.2</span>ndorder.fit)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -2403,7 +2395,7 @@ R-Square:
 </figure>
 </div>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb69"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a>semPlot<span class="sc">::</span><span class="fu">semPaths</span>(HOCFA.bifactor.fit)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a>semPlot<span class="sc">::</span><span class="fu">semPaths</span>(HOCFA.bifactor.fit)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">

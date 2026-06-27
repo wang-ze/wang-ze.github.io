@@ -34,7 +34,7 @@ Before AWS, I was a tenured Associate Professor of Statistics, Measurement, and 
 ## Experience
 
 ### Amazon Web Services (AWS) 
-**Research Scientist/Certification Psychometrician** |2022–Present
+**Research Scientist/Certification Psychometrician** | 2022–Present
 
 - Lead psychometrics work for multiple AWS certification exams.
 - Review/Develop business requirements, design research projects, propose analytical methods, gather and clean data, develop metrics, build statistical models, and write strategy and research papers. 
@@ -98,7 +98,7 @@ A self-contained introduction to applied statistics for educational and social-s
 
 A practical introduction to structural equation modeling with worked examples in both R (`lavaan`) and Mplus. Covers measurement models, path analysis, latent variable models, model fit, and multi-group / multilevel extensions. Built around *ESC_PS 9710*, a doctoral course I taught at the University of Missouri. [Previous site →](https://zewang.netlify.app/books/sem/_book/) · [Lecture slides →](https://zewang.netlify.app/slides/sem/#1)
 
-## Selected Projects
+## Selected projects
 
 ### [Flipped Mathematics Study](https://flippedmathstudy.net/)
 
