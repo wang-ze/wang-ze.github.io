@@ -18,14 +18,14 @@ Repo is a "user site" (`wang-ze.github.io`), so the URL has no `/<repo-name>/` p
 
 Ze is a **Research Scientist at AWS (Ashburn, VA) since June 2022**. Previously tenured Associate Professor of Statistics, Measurement, and Evaluation in Education at the University of Missouri (2008–2022). Site copy in [index.qmd](index.qmd) reflects this — don't reintroduce the old academic-only framing.
 
-Ze maintains multiple tailored resume variants (e.g., role-specific ones); **none of those go on the public site**. The site doesn't host a CV PDF download by design — bio content is on-page only.
+Ze maintains multiple tailored resume variants (e.g., role-specific ones); **none of those go on the public site**. A single general CV PDF (`WangZe_CV_2026.3.pdf`) *is* committed at the repo root and linked via a "My CV" button at the bottom of [index.qmd](index.qmd); Ze refreshes that file manually and the link expects that exact filename.
 
 ## Layout
 
-- [_quarto.yml](_quarto.yml) — site config (navbar, theme, footer, format defaults).
-- [index.qmd](index.qmd) — landing / about page (Quarto `about: trestles` template; expects `profile.jpg` at repo root, not yet checked in).
-- [projects/](projects/) — portfolio. `projects/index.qmd` renders cards via Quarto's listing grid; each project lives in its own subdirectory (`projects/<slug>/index.qmd`).
-- [books/](books/) — landing page for the two open-access books, plus the rendered HTML for each book at `books/quant-foundations/` and `books/sem/` (committed). **Source files for both books are currently missing — see "Book workflow" below.** When sources are recovered, they live at `books/<slug>-src/` (gitignored); only the rendered HTML at `books/<slug>/` is committed and pushed.
+- [_quarto.yml](_quarto.yml) — site config (theme, footer, format defaults). The navbar is **icons-only** now (logo on the left; LinkedIn/GitHub/Scholar/ORCID/ResearchGate on the right) — there are no About/Projects/Books tabs.
+- [index.qmd](index.qmd) — the **single landing page** (Quarto `about: trestles` template; uses `profile.jpg` at repo root, which is committed). Everything lives here: bio, experience, education, certifications, selected publications, and inline **Books** and **Selected projects** sections. The old standalone `projects/index.qmd` and `books/index.qmd` listing pages were **deleted** when this content was folded into the landing page.
+- [projects/](projects/) — only the per-project subdirectories remain (`projects/flipped-math-study/`, `projects/latinx-workers/`). They're no longer rendered as a Quarto listing grid; the live project blurbs are written inline in [index.qmd](index.qmd). The subdirs are kept on disk but are effectively orphaned.
+- [books/](books/) — the committed rendered HTML for each book at `books/quant-foundations/` and `books/sem/` (served at `https://wang-ze.github.io/books/<slug>/`). Sources live at `books/<slug>-src/` (gitignored) — see "Book workflow" below. There is no longer a `books/index.qmd` landing page; the book blurbs are inline in [index.qmd](index.qmd).
 - [styles.css](styles.css) — small set of overrides on top of the chosen theme. Keep it small; prefer theme changes in `_quarto.yml`.
 - [.github/workflows/publish.yml](.github/workflows/publish.yml) — Quarto + GH Pages deploy via `quarto-dev/quarto-actions`.
 - `_site/`, `_freeze/`, `.quarto/` — build output and cache (gitignored).
@@ -42,12 +42,7 @@ quarto preview
 quarto render
 ```
 
-**Add a project entry:**
-```bash
-mkdir projects/<slug>
-$EDITOR projects/<slug>/index.qmd
-```
-Frontmatter must include `title`, `date`, ideally `description` and `categories`. The listing page picks these up automatically.
+**Add a project / book entry:** edit the inline `## Selected projects` or `## Books` section in [index.qmd](index.qmd) directly — add a `###` heading linking out plus a short blurb, matching the existing entries. (There is no auto-listing anymore; a Quarto `listing:` block would conflict with the page's `about: trestles` template.)
 
 **Swap themes:** edit the `theme:` line in [_quarto.yml](_quarto.yml). Bootswatch options: `cosmo`, `flatly`, `litera`, `journal`, `lumen`, `sandstone`, `simplex`, `spacelab`, `united`, `yeti`, `zephyr`, `minty`, `sketchy`.
 
@@ -58,7 +53,17 @@ The two open-access books (`quant-foundations` and `sem`) follow a "source local
 - **Sources** live at `books/quant-foundations-src/` and `books/sem-src/`. These directories are gitignored (`/books/*-src/` in [.gitignore](.gitignore)) so they never leave Ze's machine.
 - **Rendered HTML** lives at `books/quant-foundations/` and `books/sem/`. These are committed; they're what gets served at `https://wang-ze.github.io/books/<slug>/`.
 
-> **Sources recovered and ported to Quarto.** The Bookdown `.Rmd` sources were found at `/Users/ze/Documents/projects/books/` and copied + ported to `.qmd` Quarto book projects under `books/quant-foundations-src/` and `books/sem-src/` (each with a `_quarto.yml` setting `output-dir: ../<slug>/`). These `-src/` dirs are gitignored; only the rendered HTML at `books/<slug>/` is committed. The committed HTML still reflects the old pre-rendered `_book/` output until the books are re-rendered from the ported sources. (xaringan slide sources for `quant-foundations` were likewise brought over to `slides/quant-foundations-src/`, also gitignored.)
+> **Sources recovered, ported to Quarto, and rendered.** The Bookdown `.Rmd` sources were found at `/Users/ze/Documents/projects/books/` and ported to `.qmd` Quarto book projects under `books/quant-foundations-src/` and `books/sem-src/` (each with a `_quarto.yml` setting `output-dir: ../<slug>/`). These `-src/` dirs are gitignored; only the rendered HTML at `books/<slug>/` is committed. **Both books have now been re-rendered natively from these Quarto sources** — the committed `books/<slug>/` HTML is current (no longer the old pre-rendered `_book/` output). (xaringan slide sources for `quant-foundations` were likewise brought over to `slides/quant-foundations-src/`, also gitignored.)
+
+> **Per-chapter knitr setup via `_common.R`.** Quarto renders each chapter `.qmd` in its **own** R session, so chunk-option templates and `opts_chunk` defaults set only in `index.qmd` do **not** carry into the chapters. Each `books/<slug>-src/` therefore has a `_common.R` (the single source of truth for `knitr::opts_chunk$set(...)` and the `opts_template$set(...)` definitions — `no.message`, `fig.large`, `fig.small`), sourced from a hidden, **labeled** setup chunk at the top of every chapter and from `index.qmd`:
+> ````r
+> ```{r}
+> #| label: setup-common
+> #| include: false
+> source("_common.R")
+> ```
+> ````
+> The label matters: an *unlabeled* setup chunk shifts knitr's `unnamed-chunk-N` counter and renames every figure file on render. To suppress R package-load output, library() chunks carry explicit `message=FALSE, warning=FALSE` (don't rely on the `no.message` template alone for those). If you add a chapter, give it the same labeled `source("_common.R")` chunk first.
 
 > **Lecture-slide links point to the old Netlify site, not the slides rendered in this repo.** In the `## Books` section of [index.qmd](index.qmd) the "Lecture slides →" links for both books resolve to the previous site hosted on Netlify (`https://zewang.netlify.app/slides/<slug>/#1`), *not* to local `/slides/<slug>/` paths in this project. This is deliberate: the canonical, working slide decks live on the Netlify site. Don't "fix" these to point at `/slides/...` here unless the slides have actually been rendered and committed into this repo. The "Previous site →" book links similarly point at the Netlify `_book/` output.
 
@@ -85,7 +90,7 @@ The site-level `quarto render` (run by CI on every push to `main`) treats the pr
 
 When opening this repo cold, the `books/<slug>-src/` directories may not exist locally yet — Ze keeps them on the machine where book editing happens.
 
-**R dependencies.** `quant-foundations` executes its R chunks on render; `sem` is set `execute: eval: false` in its `_quarto.yml` (its Mplus chunks ran a Windows-only Mplus binary, so code is shown but not executed — the committed `books/sem/` HTML preserves the original output). Each `books/<slug>-src/` has an `install-packages.R` listing the exact CRAN packages; run `Rscript install-packages.R` once before rendering that book. Caveat: `tidyverse` and `kableExtra` (QF) pull in `ragg`/`svglite` → `textshaping`/`systemfonts`, which need native libs — `brew install harfbuzz fribidi pkg-config libtiff webp freetype libpng jpeg-turbo` on macOS — to build; everything else installs without them. (These are installed on Ze's machine; the full QF package set is in place.)
+**R dependencies.** Both books execute R on render. `quant-foundations` runs all its R chunks; `sem` runs its R/`lavaan` chunks too — only the Mplus pieces are static (the `mplus` blocks are display-only, and the handful of R chunks that read Mplus `.out` files are individually marked `eval: false`, since Mplus is Windows-only and those `.out` files don't exist here). Each `books/<slug>-src/` has an `install-packages.R` listing the exact CRAN packages; run `Rscript install-packages.R` once before rendering that book. Caveat: `tidyverse` and `kableExtra` (QF) pull in `ragg`/`svglite` → `textshaping`/`systemfonts`, which need native libs — `brew install harfbuzz fribidi pkg-config libtiff webp freetype libpng jpeg-turbo` on macOS — to build; everything else installs without them. (These are installed on Ze's machine; the full QF package set is in place.)
 
 ## Deployment (one-time setup)
 
@@ -99,7 +104,7 @@ If GH Actions fails on the first run because the `gh-pages` branch doesn't exist
 
 ## Pending work / gotchas
 
-- **Book migration.** The Bookdown sources for `quant-foundations` and `sem` live in the old repo at `/Users/ze/projects/website/content/books/`. The user picked "re-render natively in Quarto" — i.e., port `.Rmd` → `.qmd` for both books, not copy the pre-rendered HTML. This was deferred from initial scaffolding because it's a non-trivial multi-file pass; the `books/index.qmd` placeholder links to the old site until then. R toolchain may or may not be needed depending on whether code chunks need to execute.
-- **`profile.jpg`.** Already checked in at repo root (downsized copy of the old site's `Ze Wang.jpg`). The about page in [index.qmd](index.qmd) references it.
-- **`cv.pdf`.** Linked as a download from the "Selected publications" section in [index.qmd](index.qmd). The file lives at the repo root (`cv.pdf`). Ze copies the latest version of the CV there manually; the link expects that exact filename.
+- **Book migration — done.** Both Bookdown books were ported `.Rmd` → `.qmd` and natively re-rendered in Quarto; the committed `books/<slug>/` HTML is current. (See "Book workflow" above for the render/setup details.)
+- **`profile.jpg`.** Checked in at repo root (downsized copy of the old site's `Ze Wang.jpg`). The `about: trestles` header in [index.qmd](index.qmd) references it.
+- **`WangZe_CV_2026.3.pdf`.** Committed at the repo root and linked via the "My CV" button at the bottom of [index.qmd](index.qmd). Ze updates this file manually; the link expects that exact filename, so bump the link if the filename changes.
 - **Custom domain.** Not configured. If/when Ze adds one, drop a `CNAME` file at the repo root with the bare domain and configure DNS.
