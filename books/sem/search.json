@@ -4,7 +4,7 @@
     "href": "index.html",
     "title": "Structural Equation Modeling Using R and Mplus",
     "section": "",
-    "text": "Preface\nThis short book is a working document and prepared as supplementary material for the Structural Equation Modeling (SEM) course I teach at the University of Missouri (MU). I have taught the SEM course since Fall 2008. Over the years, I have used different software packages (e.g., Amos, Mplus, and R) to illustrate and apply SEM techniques. This supplementary material focuses on R and Mplus syntax.\nTo cite this book, use the following:\nWang, Z. (2021). Structural Equation Modeling Using R and Mplus. Retrievable from https://wang-ze.github.io/books/sem/",
+    "text": "Preface\nThis short book was prepared as supplementary material for the Structural Equation Modeling (SEM) course I taught at the University of Missouri (MU). I taught the SEM course from Fall 2008 to Spring 2022. Over the years, I had used different software packages (e.g., Amos, Mplus, and R) to illustrate and apply SEM techniques. This supplementary material focuses on R and Mplus syntax.\nTo cite this book, use the following:\nWang, Z. (2021). Structural Equation Modeling Using R and Mplus. Retrievable from https://wang-ze.github.io/books/sem/",
     "crumbs": [
       "Preface"
     ]
