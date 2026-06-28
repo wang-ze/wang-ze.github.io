@@ -169,9 +169,6 @@ window.Quarto = {
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Quantitative Foundations in Educational Research</a> 
-        <div class="sidebar-tools-main">
-    <a href="https://github.com/ze-wang/quant-foundations" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
-</div>
     </div>
       </div>
         <div class="mt-2 flex-shrink-0 align-items-center">
@@ -1734,15 +1731,15 @@ Multiple Comparisons of Means: Tukey Contrasts
 
 Fit: aov(formula = reading ~ -1 + training, data = dat)
 
-Quantile = 2.5204
+Quantile = 2.5226
 95% family-wise confidence level
  
 
 Linear Hypotheses:
            Estimate lwr      upr     
-B - A == 0   9.5000   1.4453  17.5547
-C - A == 0   4.6250  -3.4297  12.6797
-C - B == 0  -4.8750 -12.9297   3.1797</code></pre>
+B - A == 0   9.5000   1.4385  17.5615
+C - A == 0   4.6250  -3.4365  12.6865
+C - B == 0  -4.8750 -12.9365   3.1865</code></pre>
 </div>
 </div>
 <p>One-Way ANOVA using user-defined contrasts.</p>
@@ -1842,7 +1839,7 @@ Linear Hypotheses:
                 Estimate Std. Error t value Pr(&gt;|t|)  
 B - A == 0         9.500      3.246   2.927   0.0296 *
 C - A == 0         4.625      3.246   1.425   0.4506  
-C - B == 0        -4.875      3.246  -1.502   0.4064  
+C - B == 0        -4.875      3.246  -1.502   0.4065  
 girl - boy == 0    1.583      2.650   0.597   0.9185  
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
@@ -1986,8 +1983,8 @@ Fit: aov(formula = reading ~ -1 + gender.train, data = dat)
 
 Linear Hypotheses:
               Estimate Std. Error t value Pr(&gt;|t|)
-boy:B-A == 0     7.250      4.682   1.548    0.487
-boy:C-A == 0     6.000      4.682   1.281    0.653
+boy:B-A == 0     7.250      4.682   1.548    0.486
+boy:C-A == 0     6.000      4.682   1.281    0.654
 boy:C-B == 0    -1.250      4.682  -0.267    0.998
 girl:B-A == 0   11.750      4.682   2.509    0.103
 girl:C-A == 0    3.250      4.682   0.694    0.943
