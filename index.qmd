@@ -64,6 +64,10 @@ Before AWS, I was a tenured Associate Professor of Statistics, Measurement, and 
 - Served in leadership roles for national professional organizations.
 - Served as advisor/consultant to research firms.
 
+[<i class="bi bi-file-earmark-pdf"></i>&nbsp;My Research at MU](MU Research by Category.pdf){.btn .btn-outline-secondary}
+
+[<i class="bi bi-file-earmark-pdf"></i>&nbsp;The Classroom Engagement Inventory](CEI.pdf){.btn .btn-outline-secondary}
+
 ## Education
 
 - **PhD**, Educational Psychology (Statistics & Measurement) — University of Missouri
