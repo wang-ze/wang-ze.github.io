@@ -25,29 +25,14 @@ website:
   open-graph: true
   twitter-card: false
 
+  # Navbar is logo-only. The social links live in the `about: trestles` header
+  # on index.qmd; duplicating them up here showed every icon twice.
   navbar:
     pinned: true
     logo: logo.png
-    right:
-      - icon: linkedin
-        href: https://www.linkedin.com/in/wang-ze/
-        aria-label: LinkedIn
-      - icon: github
-        href: https://github.com/wang-ze
-        aria-label: GitHub
-      - text: '<img src="https://cdn.simpleicons.org/googlescholar/4285F4" height="20" alt="" style="vertical-align: middle;">'
-        href: https://scholar.google.com/citations?user=b8eqmyEAAAAJ&hl=en
-        aria-label: Google Scholar
-      - text: '<img src="https://cdn.simpleicons.org/orcid/A6CE39" height="20" alt="" style="vertical-align: middle;">'
-        href: https://orcid.org/0000-0002-5979-5544
-        aria-label: ORCID
-      - text: '<img src="https://cdn.simpleicons.org/researchgate/00CCBB" height="20" alt="" style="vertical-align: middle;">'
-        href: https://www.researchgate.net/profile/Ze-Wang-22
-        aria-label: ResearchGate
 
   page-footer:
     left: "&copy; Ze Wang"
-    right: "Built with [Quarto](https://quarto.org)"
 
 format:
   html:

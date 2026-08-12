@@ -22,7 +22,9 @@ Ze maintains multiple tailored resume variants (e.g., role-specific ones); **non
 
 ## Layout
 
-- [_quarto.yml](_quarto.yml) — site config (theme, footer, format defaults). The navbar is **icons-only** now (logo on the left; LinkedIn/GitHub/Scholar/ORCID/ResearchGate on the right) — there are no About/Projects/Books tabs.
+- [_quarto.yml](_quarto.yml) — site config (theme, footer, format defaults). The navbar is **logo-only** — no About/Projects/Books tabs, and no social icons either.
+The social links (LinkedIn/GitHub/Scholar/ORCID/ResearchGate) live *only* in the `about: trestles` header of [index.qmd](index.qmd); they used to be duplicated in the navbar, which made every icon appear twice on the page. Don't reintroduce them there.
+The page footer is `&copy; Ze Wang` only — the default "Built with Quarto" credit was deliberately removed.
 - [index.qmd](index.qmd) — the **single landing page** (Quarto `about: trestles` template; uses `profile.jpg` at repo root, which is committed). Everything lives here: bio, experience, education, certifications, selected publications, and inline **Books** and **Selected projects** sections. The old standalone `projects/index.qmd` and `books/index.qmd` listing pages were **deleted** when this content was folded into the landing page.
 - [projects/](projects/) — only the per-project subdirectories remain (`projects/flipped-math-study/`, `projects/latinx-workers/`). They're no longer rendered as a Quarto listing grid; the live project blurbs are written inline in [index.qmd](index.qmd). The subdirs are kept on disk but are effectively orphaned.
 - [books/](books/) — the committed rendered HTML for each book at `books/quant-foundations/` and `books/sem/` (served at `https://wang-ze.github.io/books/<slug>/`). Sources live at `books/<slug>-src/` (gitignored) — see "Book workflow" below. There is no longer a `books/index.qmd` landing page; the book blurbs are inline in [index.qmd](index.qmd).
