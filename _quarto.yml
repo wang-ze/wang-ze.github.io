@@ -5,10 +5,13 @@ project:
   # slide *source* projects (books/<slug>-src/, slides/<slug>-src/). Those are
   # gitignored so CI never sees them, but a local render would otherwise try to
   # render their .qmd/.Rmd and fail.
+  # draft.qmd is a gitignored local scratch page, so CI never sees it; excluding
+  # it here keeps local builds from writing a stray _site/draft.html too.
   render:
     - "**/*.qmd"
     - "!books/*-src/**"
     - "!slides/*-src/**"
+    - "!draft.qmd"
   # Pre-rendered books are static HTML (built separately from books/<slug>-src/).
   # List them as resources so the website render copies them into _site verbatim
   # instead of dropping them.
