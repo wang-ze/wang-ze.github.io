@@ -68,6 +68,8 @@ Before AWS, I was a tenured Associate Professor of Statistics, Measurement, and 
 
 [<i class="bi bi-file-earmark-pdf"></i>&nbsp;The Classroom Engagement Inventory](CEI.pdf){.btn .btn-outline-secondary}
 
+[<i class="bi bi-file-earmark-pdf"></i>&nbsp;Big-Fish-Little-Pond Effect with TIMSS](BFLPE.pdf){.btn .btn-outline-secondary}
+
 ## Education
 
 - **PhD**, Educational Psychology (Statistics & Measurement) — University of Missouri
