@@ -16,16 +16,16 @@ Repo is a "user site" (`wang-ze.github.io`), so the URL has no `/<repo-name>/` p
 
 ## Owner context
 
-Ze is a **Research Scientist at AWS (Ashburn, VA) since June 2022**. Previously tenured Associate Professor of Statistics, Measurement, and Evaluation in Education at the University of Missouri (2008–2022). Site copy in [index.qmd](index.qmd) reflects this — don't reintroduce the old academic-only framing.
+Ze was a **Research Scientist at AWS (Ashburn, VA) from June 2022 to July 2026**. Previously tenured Associate Professor of Statistics, Measurement, and Evaluation in Education at the University of Missouri (2008–2022). Site copy in [index.qmd](index.qmd) reflects this — don't reintroduce the old academic-only framing.
 
-Ze maintains multiple tailored resume variants (e.g., role-specific ones); **none of those go on the public site**. A single general CV PDF (`WangZe_CV_2026.3.pdf`) *is* committed at the repo root and linked via a "My CV" button at the bottom of [index.qmd](index.qmd); Ze refreshes that file manually and the link expects that exact filename.
+Ze maintains multiple tailored resume variants (e.g., role-specific ones); **none of those go on the public site**. A single general CV PDF (`WangZe_CV_2026.8.pdf`) *is* committed at the repo root and linked via a "My CV" button at the bottom of [index.qmd](index.qmd); Ze refreshes that file manually and the link expects that exact filename.
 
 ## Layout
 
 - [_quarto.yml](_quarto.yml) — site config (theme, footer, format defaults). The navbar is **logo-only** — no About/Projects/Books tabs, and no social icons either.
 The social links (LinkedIn/GitHub/Scholar/ORCID/ResearchGate) live *only* in the `about: trestles` header of [index.qmd](index.qmd); they used to be duplicated in the navbar, which made every icon appear twice on the page. Don't reintroduce them there.
 The page footer is `&copy; Ze Wang` only — the default "Built with Quarto" credit was deliberately removed.
-- [index.qmd](index.qmd) — the **single landing page** (Quarto `about: trestles` template; uses `profile.jpg` at repo root, which is committed). Everything lives here: bio, experience, education, certifications, selected publications, and inline **Books** and **Selected projects** sections. The old standalone `projects/index.qmd` and `books/index.qmd` listing pages were **deleted** when this content was folded into the landing page.
+- [index.qmd](index.qmd) — the **single landing page** (Quarto `about: trestles` template; uses `profile.jpg` at repo root, which is committed). Everything lives here: bio, core competencies, experience, education, certifications, selected publications, and inline **Books**, **Selected projects**, and **GenAI projects** sections, in that order, followed by the "My CV" button. Ze wants **GenAI projects** kept below Selected projects. The AWS experience bullets mirror the committed CV PDF, so when Ze refreshes the CV, sync them. The old standalone `projects/index.qmd` and `books/index.qmd` listing pages were **deleted** when this content was folded into the landing page.
 - [projects/](projects/) — only the per-project subdirectories remain (`projects/flipped-math-study/`, `projects/latinx-workers/`). They're no longer rendered as a Quarto listing grid; the live project blurbs are written inline in [index.qmd](index.qmd). The subdirs are kept on disk but are effectively orphaned.
 - [books/](books/) — the committed rendered HTML for each book at `books/quant-foundations/` and `books/sem/` (served at `https://wang-ze.github.io/books/<slug>/`). Sources live at `books/<slug>-src/` (gitignored) — see "Book workflow" below. There is no longer a `books/index.qmd` landing page; the book blurbs are inline in [index.qmd](index.qmd).
 - [styles.css](styles.css) — small set of overrides on top of the chosen theme. Keep it small; prefer theme changes in `_quarto.yml`.
@@ -44,7 +44,7 @@ quarto preview
 quarto render
 ```
 
-**Add a project / book entry:** edit the inline `## Selected projects` or `## Books` section in [index.qmd](index.qmd) directly — add a `###` heading linking out plus a short blurb, matching the existing entries. (There is no auto-listing anymore; a Quarto `listing:` block would conflict with the page's `about: trestles` template.)
+**Add a project / book entry:** edit the inline `## GenAI projects`, `## Selected projects`, or `## Books` section in [index.qmd](index.qmd) directly — add a `###` heading linking out plus a short blurb, matching the existing entries. Ze wants the sections kept roughly balanced in length, so keep each blurb to three or four sentences. (There is no auto-listing anymore; a Quarto `listing:` block would conflict with the page's `about: trestles` template.)
 
 **Swap themes:** edit the `theme:` line in [_quarto.yml](_quarto.yml). Bootswatch options: `cosmo`, `flatly`, `litera`, `journal`, `lumen`, `sandstone`, `simplex`, `spacelab`, `united`, `yeti`, `zephyr`, `minty`, `sketchy`.
 
@@ -108,5 +108,5 @@ If GH Actions fails on the first run because the `gh-pages` branch doesn't exist
 
 - **Book migration — done.** Both Bookdown books were ported `.Rmd` → `.qmd` and natively re-rendered in Quarto; the committed `books/<slug>/` HTML is current. (See "Book workflow" above for the render/setup details.)
 - **`profile.jpg`.** Checked in at repo root (downsized copy of the old site's `Ze Wang.jpg`). The `about: trestles` header in [index.qmd](index.qmd) references it.
-- **`WangZe_CV_2026.3.pdf`.** Committed at the repo root and linked via the "My CV" button at the bottom of [index.qmd](index.qmd). Ze updates this file manually; the link expects that exact filename, so bump the link if the filename changes.
+- **`WangZe_CV_2026.8.pdf`.** Committed at the repo root and linked via the "My CV" button at the bottom of [index.qmd](index.qmd). Ze updates this file manually; the link expects that exact filename, so bump the link if the filename changes.
 - **Custom domain.** Not configured. If/when Ze adds one, drop a `CNAME` file at the repo root with the bare domain and configure DNS.

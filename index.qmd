@@ -29,6 +29,7 @@ Before AWS, I was a tenured Associate Professor of Statistics, Measurement, and 
 - **Quantitative Research Methods**: Survey design & distribution, experimental & quasi-experimental designs, causal inference, structural equation modeling, multilevel modeling, predictive modeling.
 - **Measurement & Psychometrics**: Scale development & validation, measurement reliability, bias and fairness, job task analysis, standard setting, continuous improvement.
 - **Programming & Data**: R, Python, SQL, Mplus, Winsteps, AWS infrastructure, automated data pipeline development, and data transformation.
+- **AI Fluency**: Deep understanding of generative AI concepts, hands-on use of agentic AI tools (Claude Code), AI engineering (agents, agentic RAG, MCP, tool use), and connecting the pieces into a working AI system.
 - **Research & Product Impact**: End-to-end problem framing, technical writing, cross-functional collaboration, executive briefings, and leadership communication.
 
 ## Experience
@@ -36,17 +37,16 @@ Before AWS, I was a tenured Associate Professor of Statistics, Measurement, and 
 ### Amazon Web Services (AWS)
 **Research Scientist/Certification Psychometrician** | 2022.6 – 2026.7
 
-- Led psychometrics work for multiple AWS certification exams.
 - Reviewed/Developed business requirements, designed research projects, proposed analytical methods, gathered and cleaned data, developed metrics, built statistical models, and wrote strategy and research papers.
 - Proposed and implemented a design-based approach to headcount estimation to operate the AWS European Sovereign Cloud. Results were used by leadership to request/approve headcount.
 - Developed metrics to measure teams’ operational load and efficiency. Metrics were integrated into internal dashboards and data pipelines.
 - Built machine learning models of AWS service teams’ headcount and their operational load. Results were used to allocate headcount resources.
 - Developed and automated processes to integrate various operational data sources and to generate data at different granularity levels for reporting and statistical analysis.
 - Led a GenAI project for an internal AWS hackathon.
+- Led psychometrics work (item calibration, linking, automated test assembly) for multiple AWS certification exams.
+- Led and conducted the job task analysis; survey design, distribution, and analysis; and standard setting of the AWS Certified Generative AI Developer - Professional certification.
 - Developed an AI workflow to automate and integrate processes for psychometrics work.
 - Served as a regular reviewer for Amazon research conferences and AWS AI research proposals submitted by external researchers.
-- Presented at national professional conferences
-- Led and conducted the job task analysis; survey design, distribution, and analysis; and standard setting of the AWS Certified Generative AI Developer - Professional certification.
 
 ### University of Missouri
 **Tenured Associate Professor of Statistics, Measurement, and Evaluation in Education** | 2014 – 2022
@@ -114,4 +114,22 @@ NSF-funded research investigating how flipped-classroom instruction affects stud
 
 NSF-funded collaborative research project, *Should I Stay or Should I Go? Understanding the Retention of Latinx in Engineering Jobs*. Designed and applied quantitative methods (survey design, multilevel modeling) to understand factors driving career persistence and attrition among Latinx engineers. **Award:** NSF 2000607, $1,546,428 (2020–2025). PIs: Lisa Y. Flores (University of Missouri), Rachel L. Navarro (University of North Dakota). Role: Key Personnel.
 
-[<i class="bi bi-file-earmark-pdf"></i>&nbsp;My CV](WangZe_CV_2026.3.pdf){.btn .btn-outline-secondary}
+## GenerativeAI projects
+
+Two live apps I've built with LLMs and AI agents.
+
+### [Blokus Arena](https://huggingface.co/spaces/wang-ze/blokus-arena)
+
+A web app for playing Blokus, one of my family's favorite board games, against heuristic bots and LLM players, or for watching them battle it out.
+Two bots, *Greedy* and *Tactician*, play every game; you can take a seat with 15 seconds per move, and LLM players fill the rest.
+Every finished game feeds an ELO leaderboard that rates each bot, each LLM model, and one shared "Human" player.
+**Stack:** Python, Gradio, Docker, Hugging Face Spaces. [GitHub →](https://github.com/wang-ze/blokus)
+
+### [Avatar-Ze](https://avatar-ze.fly.dev/)
+
+A digital twin of me that you can actually talk to, built to learn how the pieces of an AI system connect.
+Agents parse information about me from the web, vectorize it, and retrieve from a vector database to answer visitors' questions, calling tools when needed.
+When a conversation needs a human, it notifies me, and I can step in myself.
+**Stack:** AI agents, agentic RAG, MCP, tool use, and a human-in-the-loop workflow, with a backend and frontend I built.
+
+[<i class="bi bi-file-earmark-pdf"></i>&nbsp;My CV](WangZe_CV_2026.8.pdf){.btn .btn-outline-secondary}
