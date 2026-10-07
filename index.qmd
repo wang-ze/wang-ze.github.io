@@ -114,9 +114,17 @@ NSF-funded research investigating how flipped-classroom instruction affects stud
 
 NSF-funded collaborative research project, *Should I Stay or Should I Go? Understanding the Retention of Latinx in Engineering Jobs*. Designed and applied quantitative methods (survey design, multilevel modeling) to understand factors driving career persistence and attrition among Latinx engineers. **Award:** NSF 2000607, $1,546,428 (2020–2025). PIs: Lisa Y. Flores (University of Missouri), Rachel L. Navarro (University of North Dakota). Role: Key Personnel.
 
-## GenerativeAI projects
+## Generative AI projects
 
-Two live apps I've built with LLMs and AI agents.
+A research package and two live apps I've built with LLMs and AI agents.
+
+### [TIMSS Item Parameter Prediction](https://github.com/wang-ze/timss-ai)
+
+An open-source Python package that predicts the IRT parameters of new mathematics items with an LLM, prompted as a content and IRT measurement expert and grounded in the most similar calibrated items found by hybrid search.
+It comes with item-level datasets of all 731 released TIMSS mathematics items (1995 to 2011, grades 4 and 8, and TIMSS Advanced), transcribed from booklet page images by an LLM, with the official IRT parameters of 724 of them.
+A 2 × 2 factorial experiment on the leave-one-out predictions of 722 items, crossing the embedding model (Gemini vs. local bge-small) with the LLM (Gemini 3.8 Flash vs. local llama3.2), found that the LLM matters far more than the embedding model, with Gemini 3.8 Flash beating the baseline on slopes and especially locations.
+Researchers can extend the design with more levels (other models, reasoning effort) and more factors (keyword, semantic, or hybrid retrieval; number of reference items; prompt design), and every one of these except the prompts is already a package setting.
+**Stack:** Python, retrieval-augmented generation, Qdrant, Gemini, OpenRouter, Ollama, FastEmbed.
 
 ### [Blokus Arena](https://huggingface.co/spaces/wang-ze/blokus-arena)
 
