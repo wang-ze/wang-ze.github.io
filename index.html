@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.10.18">
+<meta name="generator" content="quarto-1.10.19">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -41,7 +41,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-bf27225e3a48a9273f3daa8f8e829971.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="site_libs/bootstrap/bootstrap-890df4807d457dbc410f87df85df408d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
@@ -128,8 +128,9 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#flipped-mathematics-study" id="toc-flipped-mathematics-study" class="nav-link" data-scroll-target="#flipped-mathematics-study">Flipped Mathematics Study</a></li>
   <li><a href="#latinx-workers" id="toc-latinx-workers" class="nav-link" data-scroll-target="#latinx-workers">Latinx Workers</a></li>
   </ul></li>
-  <li><a href="#generativeai-projects" id="toc-generativeai-projects" class="nav-link" data-scroll-target="#generativeai-projects">GenerativeAI projects</a>
+  <li><a href="#generative-ai-projects" id="toc-generative-ai-projects" class="nav-link" data-scroll-target="#generative-ai-projects">Generative AI projects</a>
   <ul class="collapse">
+  <li><a href="#timss-item-parameter-prediction" id="toc-timss-item-parameter-prediction" class="nav-link" data-scroll-target="#timss-item-parameter-prediction">TIMSS Item Parameter Prediction</a></li>
   <li><a href="#blokus-arena" id="toc-blokus-arena" class="nav-link" data-scroll-target="#blokus-arena">Blokus Arena</a></li>
   <li><a href="#avatar-ze" id="toc-avatar-ze" class="nav-link" data-scroll-target="#avatar-ze">Avatar-Ze</a></li>
   </ul></li>
@@ -272,9 +273,13 @@ ul.task-list li input[type="checkbox"] {
 <p>NSF-funded collaborative research project, <em>Should I Stay or Should I Go? Understanding the Retention of Latinx in Engineering Jobs</em>. Designed and applied quantitative methods (survey design, multilevel modeling) to understand factors driving career persistence and attrition among Latinx engineers. <strong>Award:</strong> NSF 2000607, $1,546,428 (2020–2025). PIs: Lisa Y. Flores (University of Missouri), Rachel L. Navarro (University of North Dakota). Role: Key Personnel.</p>
 </section>
 </section>
-<section id="generativeai-projects" class="level2">
-<h2 data-anchor-id="generativeai-projects">GenerativeAI projects</h2>
-<p>Two live apps I’ve built with LLMs and AI agents.</p>
+<section id="generative-ai-projects" class="level2">
+<h2 data-anchor-id="generative-ai-projects">Generative AI projects</h2>
+<p>A research package and two live apps I’ve built with LLMs and AI agents.</p>
+<section id="timss-item-parameter-prediction" class="level3">
+<h3 data-anchor-id="timss-item-parameter-prediction"><a href="https://github.com/wang-ze/timss-ai">TIMSS Item Parameter Prediction</a></h3>
+<p>An open-source Python package that predicts the IRT parameters of new mathematics items with an LLM, prompted as a content and IRT measurement expert and grounded in the most similar calibrated items found by hybrid search. It comes with item-level datasets of all 731 released TIMSS mathematics items (1995 to 2011, grades 4 and 8, and TIMSS Advanced), transcribed from booklet page images by an LLM, with the official IRT parameters of 724 of them. A 2 × 2 factorial experiment on the leave-one-out predictions of 722 items, crossing the embedding model (Gemini vs.&nbsp;local bge-small) with the LLM (Gemini 3.8 Flash vs.&nbsp;local llama3.2), found that the LLM matters far more than the embedding model, with Gemini 3.8 Flash beating the baseline on slopes and especially locations. Researchers can extend the design with more levels (other models, reasoning effort) and more factors (keyword, semantic, or hybrid retrieval; number of reference items; prompt design), and every one of these except the prompts is already a package setting. <strong>Stack:</strong> Python, retrieval-augmented generation, Qdrant, Gemini, OpenRouter, Ollama, FastEmbed.</p>
+</section>
 <section id="blokus-arena" class="level3">
 <h3 data-anchor-id="blokus-arena"><a href="https://huggingface.co/spaces/wang-ze/blokus-arena">Blokus Arena</a></h3>
 <p>A web app for playing Blokus, one of my family’s favorite board games, against heuristic bots and LLM players, or for watching them battle it out. Two bots, <em>Greedy</em> and <em>Tactician</em>, play every game; you can take a seat with 15 seconds per move, and LLM players fill the rest. Every finished game feeds an ELO leaderboard that rates each bot, each LLM model, and one shared “Human” player. <strong>Stack:</strong> Python, Gradio, Docker, Hugging Face Spaces. <a href="https://github.com/wang-ze/blokus">GitHub →</a></p>
