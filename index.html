@@ -130,7 +130,7 @@ ul.task-list li input[type="checkbox"] {
   </ul></li>
   <li><a href="#generative-ai-projects" id="toc-generative-ai-projects" class="nav-link" data-scroll-target="#generative-ai-projects">Generative AI projects</a>
   <ul class="collapse">
-  <li><a href="#timss-item-parameter-prediction" id="toc-timss-item-parameter-prediction" class="nav-link" data-scroll-target="#timss-item-parameter-prediction">TIMSS Item Parameter Prediction</a></li>
+  <li><a href="#timss-ai-predicting-item-parameters-and-testing-llms" id="toc-timss-ai-predicting-item-parameters-and-testing-llms" class="nav-link" data-scroll-target="#timss-ai-predicting-item-parameters-and-testing-llms">TIMSS-AI: Predicting Item Parameters and Testing LLMs</a></li>
   <li><a href="#blokus-arena" id="toc-blokus-arena" class="nav-link" data-scroll-target="#blokus-arena">Blokus Arena</a></li>
   <li><a href="#avatar-ze" id="toc-avatar-ze" class="nav-link" data-scroll-target="#avatar-ze">Avatar-Ze</a></li>
   </ul></li>
@@ -276,17 +276,22 @@ ul.task-list li input[type="checkbox"] {
 <section id="generative-ai-projects" class="level2">
 <h2 data-anchor-id="generative-ai-projects">Generative AI projects</h2>
 <p>A research package and two live apps I’ve built with LLMs and AI agents.</p>
-<section id="timss-item-parameter-prediction" class="level3">
-<h3 data-anchor-id="timss-item-parameter-prediction"><a href="https://github.com/wang-ze/timss-ai">TIMSS Item Parameter Prediction</a></h3>
-<p>An open-source Python package that predicts the IRT parameters of new mathematics items with an LLM, prompted as a content and IRT measurement expert and grounded in the most similar calibrated items found by hybrid search. It comes with item-level datasets of all 731 released TIMSS mathematics items (1995 to 2011, grades 4 and 8, and TIMSS Advanced), transcribed from booklet page images by an LLM, with the official IRT parameters of 724 of them. A 2 × 2 factorial experiment on the leave-one-out predictions of 722 items, crossing the embedding model (Gemini vs.&nbsp;local bge-small) with the LLM (Gemini 3.8 Flash vs.&nbsp;local llama3.2), found that the LLM matters far more than the embedding model, with Gemini 3.8 Flash beating the baseline on slopes and especially locations. Researchers can extend the design with more levels (other models, reasoning effort) and more factors (keyword, semantic, or hybrid retrieval; number of reference items; prompt design), and every one of these except the prompts is already a package setting. <strong>Stack:</strong> Python, retrieval-augmented generation, Qdrant, Gemini, OpenRouter, Ollama, FastEmbed.</p>
+<section id="timss-ai-predicting-item-parameters-and-testing-llms" class="level3">
+<h3 data-anchor-id="timss-ai-predicting-item-parameters-and-testing-llms"><a href="https://github.com/wang-ze/timss-ai">TIMSS-AI: Predicting Item Parameters and Testing LLMs</a></h3>
+<p>An open-source Python package built on item-level datasets of all 731 released TIMSS mathematics items (1995 to 2011, grades 4 and 8, and TIMSS Advanced), transcribed from booklet page images by an LLM, with the official IRT parameters of 724 of them. It predicts the IRT parameters of new items with an LLM grounded in the most similar calibrated items found by hybrid search; in leave-one-out experiments on 722 items, Gemini 3.8 Flash beat the baselines on slopes and especially locations, and the LLM mattered far more than the embedding model.</p>
+<p>It also has LLMs take the items as a test, scored with the IRT models on the TIMSS reporting scale: with reasoning, GPT-6 Luna and Claude Haiku 5.5 cleared the Advanced International Benchmark, yet the items that are hard for LLMs are not the ones that are hard for students. Asked to answer as students, the LLMs still outscored the average real student and found different items hard, so synthetic students need more than a role prompt to resemble real ones.</p>
+<p><strong>Stack:</strong> Python, retrieval-augmented generation, Qdrant hybrid search, IRT (3PL, 2PL, GPCM), Gemini, GPT, Claude, OpenRouter, Ollama, FastEmbed.</p>
 </section>
 <section id="blokus-arena" class="level3">
 <h3 data-anchor-id="blokus-arena"><a href="https://huggingface.co/spaces/wang-ze/blokus-arena">Blokus Arena</a></h3>
-<p>A web app for playing Blokus, one of my family’s favorite board games, against heuristic bots and LLM players, or for watching them battle it out. Two bots, <em>Greedy</em> and <em>Tactician</em>, play every game; you can take a seat with 15 seconds per move, and LLM players fill the rest. Every finished game feeds an ELO leaderboard that rates each bot, each LLM model, and one shared “Human” player. <strong>Stack:</strong> Python, Gradio, Docker, Hugging Face Spaces. <a href="https://github.com/wang-ze/blokus">GitHub →</a></p>
+<p>A web app for playing Blokus, one of my family’s favorite board games, against heuristic bots and LLM players, or for watching them battle it out. Two bots, <em>Greedy</em> and <em>Tactician</em>, play every game; you can take a seat with 15 seconds per move, and LLM players fill the rest. Every finished game feeds an ELO leaderboard that rates each bot, each LLM model, and one shared “Human” player.</p>
+<p><strong>Stack:</strong> Python, Gradio, Docker, Hugging Face Spaces. <a href="https://github.com/wang-ze/blokus">GitHub →</a></p>
 </section>
 <section id="avatar-ze" class="level3">
 <h3 data-anchor-id="avatar-ze"><a href="https://avatar-ze.fly.dev/">Avatar-Ze</a></h3>
-<p>A digital twin of me that you can actually talk to, built to learn how the pieces of an AI system connect. Agents parse information about me from the web, vectorize it, and retrieve from a vector database to answer visitors’ questions, calling tools when needed. When a conversation needs a human, it notifies me, and I can step in myself. <strong>Stack:</strong> AI agents, agentic RAG, MCP, tool use, and a human-in-the-loop workflow, with a backend and frontend I built.</p>
+<p>A digital twin of me that you can actually talk to, built to learn how the pieces of an AI system connect. Agents parse information about me from the web, vectorize it, and retrieve from a vector database to answer visitors’ questions, calling tools when needed.</p>
+<p>When a conversation needs a human, it notifies me, and I can step in myself.</p>
+<p><strong>Stack:</strong> AI agents, agentic RAG, MCP, tool use, and a human-in-the-loop workflow, with a backend and frontend I built.</p>
 <p><a href="WangZe_CV_2026.8.pdf" class="btn btn-outline-secondary"><i class="bi bi-file-earmark-pdf"></i>&nbsp;My CV</a></p>
 
 
