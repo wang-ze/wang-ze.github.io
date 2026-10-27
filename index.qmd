@@ -116,7 +116,7 @@ NSF-funded collaborative research project, *Should I Stay or Should I Go? Unders
 
 ## Generative AI projects
 
-A research package and two live apps I've built with LLMs and AI agents.
+A research package, a live app, and an archived app I've built with LLMs and AI agents.
 
 ### [TIMSS-AI: Predicting Item Parameters and Testing LLMs](https://github.com/wang-ze/timss-ai)
 
@@ -136,13 +136,16 @@ Every finished game feeds an ELO leaderboard that rates each bot, each LLM model
 
 **Stack:** Python, Gradio, Docker, Hugging Face Spaces. [GitHub →](https://github.com/wang-ze/blokus)
 
-### [Avatar-Ze](https://avatar-ze.fly.dev/)
+### Avatar-Ze (archived)
 
-A digital twin of me that you can actually talk to, built to learn how the pieces of an AI system connect.
-Agents parse information about me from the web, vectorize it, and retrieve from a vector database to answer visitors' questions, calling tools when needed.
+*This project is archived and is no longer available online.*
 
-When a conversation needs a human, it notifies me, and I can step in myself.
+A digital twin of me that visitors could talk to, built to learn how the pieces of an AI system connect.
+Agents parsed information about me from the web, vectorized it, and retrieved from a vector database to answer visitors' questions, calling tools when needed.
+
+When a conversation needed a human, it notified me, and I could step in myself.
 
 **Stack:** AI agents, agentic RAG, MCP, tool use, and a human-in-the-loop workflow, with a backend and frontend I built.
 
+## My CV
 [<i class="bi bi-file-earmark-pdf"></i>&nbsp;My CV](WangZe_CV_2026.8.pdf){.btn .btn-outline-secondary}
